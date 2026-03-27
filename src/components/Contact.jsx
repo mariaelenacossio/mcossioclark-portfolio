@@ -33,9 +33,9 @@ const socialLinks = [
   },
   {
     label: "Portfolio",
-    href: "#",
+    href: "https://www.mariaelena-cossioclark.com/",
     icon: Globe,
-    handle: "mcossioclark.com",
+    handle: "mariaelena-cossioclark.com",
   },
   {
     label: "Email",
