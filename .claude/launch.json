@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Dev Server (Vite HMR)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--host"],
+      "port": 5173,
+      "autoPort": true
+    },
+    {
+      "name": "Preview Server (Production Build)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "preview", "--", "--host"],
+      "port": 4173,
+      "autoPort": true
+    }
+  ]
+}
