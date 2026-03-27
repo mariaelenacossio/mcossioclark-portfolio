@@ -13,15 +13,15 @@ const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
 const socialLinks = [
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/mariaelena-cossio-clark',
+    href: 'https://www.linkedin.com/in/mariaelena-cossio-clark/',
     icon: Linkedin,
     handle: '/in/mariaelena-cossio-clark',
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/mcossioclark',
+    href: 'https://github.com/mariaelenacossio',
     icon: Github,
-    handle: '@mcossioclark',
+    handle: '@mariaelenacossio',
   },
   {
     label: 'Portfolio',
@@ -31,9 +31,9 @@ const socialLinks = [
   },
   {
     label: 'Email',
-    href: 'mailto:hello@mcossioclark.com',
+    href: 'mailto:mariaelena.cossio@outlook.com',
     icon: Mail,
-    handle: 'hello@mcossioclark.com',
+    handle: 'mariaelena.cossio@outlook.com',
   },
 ]
 
