@@ -1,4 +1,5 @@
 import CustomCursor from './components/ui/CustomCursor'
+import Marquee from './components/ui/Marquee'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -17,7 +18,7 @@ export default function App() {
       {/* Custom cursor (desktop only) */}
       <CustomCursor />
 
-      {/* Skip to main content for keyboard users */}
+      {/* Skip to main content */}
       <a
         href="#about"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-gold focus:text-bg focus:rounded-lg focus:font-medium focus:text-sm"
@@ -29,6 +30,7 @@ export default function App() {
 
       <main id="main-content">
         <Hero />
+        <Marquee />
         <About />
         <Skills />
         <CaseStudies />
