@@ -1,207 +1,260 @@
 # Mariaelena Cossio Clark — Portfolio
 
-A premium, production-ready one-page portfolio website for a UX/UI Designer & Web Developer.
+Live → **[mariaelena-cossioclark.com](https://www.mariaelena-cossioclark.com)**
 
-**Live at:** `mcossioclark.com` *(configure with your domain)*
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Framework | React 18 + Vite |
-| Styling | Tailwind CSS |
-| Animations | Framer Motion |
-| Icons | Lucide React |
-| Contact Form | EmailJS |
-| Deployment | AWS S3 + CloudFront (or Vercel / Netlify) |
+A server-rendered portfolio for a UX/UI Designer and Frontend Engineer.
+Built around the differentiator that this person ships across design,
+code, and AI-direction in a single role.
 
 ---
 
-## Project Structure
+## Migration note
+
+This repo was migrated from **vanilla React + Vite + HashRouter on
+AWS S3 + CloudFront** to **Next.js 14 + Vercel** in June 2026. The
+git history before the `redesign:` commit is the previous Vite-based
+codebase, kept intact for reference.
+
+Why the migration:
+
+| Concern | Before (S3 + HashRouter) | Now (Next.js + Vercel) |
+|---|---|---|
+| URL shape | `/#/case-studies/mini-pancake-co` | `/case-studies/mini-pancake-co` |
+| Crawlability | Client-rendered; relied on JS | Server-rendered HTML, cleanly indexable |
+| Per-page metadata | Single `<head>` for all routes | `generateMetadata()` per route |
+| Per-page OG images | One static fallback | Per-slug `ImageResponse` at the edge |
+| Hosting cost | S3 + CloudFront + invalidations | Vercel free tier |
+| Deploy workflow | `aws s3 sync` + manual CloudFront invalidation | `git push main` → auto-deploy |
+
+The custom domain (`mariaelena-cossioclark.com`) stays the same —
+only the underlying stack changes.
+
+---
+
+## Tech stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Framework | **Next.js 14** (App Router) | Server components for the static parts, client components only where interactivity is needed |
+| Language | **TypeScript 5** | All components typed, single `lib/types.ts` for the project shape |
+| Styling | **Tailwind CSS 3** | Config-based token system in `tailwind.config.ts`; no CSS-in-JS, no UI library |
+| Animation | **Framer Motion 11** | Hero declaration, scroll reveals, mobile menu transition |
+| Icons | **Lucide React** | Tree-shaken icons, single visual vocabulary |
+| Fonts | **Clash Display + Cabinet Grotesk** | Loaded from [Fontshare](https://www.fontshare.com/) via `@import` in `globals.css` |
+| Form | **EmailJS** | Existing service ID carried over from v2 — no backend required |
+| Deployment | **Vercel** | Auto-deploy on push to `main`; per-slug OG images render at the edge |
+
+No `shadcn/ui`, no Radix, no Three.js, no CSS-in-JS. Tailwind utility
+classes only, with custom tokens.
+
+---
+
+## Design tokens
+
+Tokens live in **`tailwind.config.ts`** and are mirrored as CSS variables in
+**`app/globals.css`** so SVGs and inline styles can reference them too.
+
+```ts
+colors: {
+  ink:     '#0D0D0D', // headlines, key UI
+  paper:   '#FAFAF8', // page background (warm white)
+  coral:   '#E8502A', // primary accent
+  mist:    '#F0EEE9', // alternating section bg
+  rule:    '#E2DED8', // borders, dividers
+  muted:   '#5F5A55', // body paragraphs (passes WCAG AA)
+  caption: '#8A8480', // labels, eyebrows, tag chips (large-text only)
+}
+```
+
+### Type scale
+```
+display-xl  clamp(3.5rem, 8vw, 7rem)     lh 0.95   ls -0.03em
+display-lg  clamp(2.5rem, 5vw, 4.5rem)   lh 1.0    ls -0.025em
+display-md  clamp(1.75rem, 3vw, 2.75rem) lh 1.1    ls -0.02em
+body-lg     1.25rem                       lh 1.6
+body        1rem                          lh 1.65
+caption     0.8125rem  uppercase          lh 1.5   ls 0.04em
+```
+
+Fonts: `font-display` (Clash Display) for headlines, `font-body` (Cabinet
+Grotesk) for everything else.
+
+---
+
+## Site structure
 
 ```
-mcossioclark-portfolio/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── ui/
-│   │   │   ├── CustomCursor.jsx      # Animated custom cursor
-│   │   │   └── ScrollReveal.jsx      # Scroll-triggered animation wrapper
-│   │   ├── Navbar.jsx                # Fixed nav with scroll-aware styling
-│   │   ├── Hero.jsx                  # Animated hero with particle canvas
-│   │   ├── About.jsx                 # About section with pillar cards
-│   │   ├── Skills.jsx                # Skills categorized by UX / UI / Dev
-│   │   ├── CaseStudies.jsx           # Project grid + case study modals
-│   │   ├── Process.jsx               # 4-step design process
-│   │   ├── Contact.jsx               # EmailJS contact form + social links
-│   │   └── Footer.jsx
-│   ├── data/
-│   │   └── projects.js               # All project content + skills data
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-├── index.html
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-├── package.json
-└── .gitignore
+/                                     Homepage (single page, anchor scroll)
+  ├── #about
+  ├── #work
+  ├── #ai-workflow
+  ├── #process
+  └── #contact
+
+/case-studies/mini-pancake-co         Featured renderer (3 pivots)
+/case-studies/beyond-skincare         Standard renderer
+/case-studies/beauty-by-amy           Standard renderer
+/case-studies/relocateme              Standard renderer
+
+/robots.txt                           Auto-generated by app/robots.ts
+/sitemap.xml                          Auto-generated by app/sitemap.ts
+                                      (pulls case-study URLs from data)
+/case-studies/[slug]/opengraph-image  Dynamic per-slug OG image,
+                                      brand color + ink gradient,
+                                      generated at the edge
 ```
+
+All four case study pages are **statically generated at build time** via
+`generateStaticParams()`. No runtime SSR for the body. The only dynamic
+route is the OG image, which Vercel regenerates on demand at the edge.
 
 ---
 
-## Local Development
-
-### Prerequisites
-- Node.js 18+
-- npm 9+
-
-### Setup
+## Local development
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/mcossioclark-portfolio.git
+git clone <repo>
 cd mcossioclark-portfolio
-
-# 2. Install dependencies
 npm install
 
-# 3. Start the dev server
-npm run dev
+npm run dev          # localhost:3000 with HMR
+npm run build        # production build
+npm run start        # serve production build locally
+npm run lint         # Next.js ESLint, strict
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
----
-
-## Configure the Contact Form (EmailJS)
-
-1. Sign up at [emailjs.com](https://www.emailjs.com/) — free tier: 200 emails/month
-2. Create an **Email Service** (Gmail, Outlook, etc.)
-3. Create an **Email Template** — use variables: `{{name}}`, `{{email}}`, `{{message}}`
-4. Open `src/components/Contact.jsx` and replace the placeholders at the top:
-
-```js
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'   // e.g. 'service_abc123'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'  // e.g. 'template_xyz456'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'   // found in Account → API Keys
-```
-
----
-
-## Update Your Content
-
-All portfolio content lives in **`src/data/projects.js`**:
-
-- **`projects`** — case study cards (title, description, problem, process, solution, outcome)
-- **`skills`** — UX / UI / Development skill tags
-- **`processSteps`** — 4-step design process
-
-Social links and personal info are in `src/components/Contact.jsx` and `src/components/Navbar.jsx`.
-
----
-
-## Build for Production
-
-```bash
-npm run build
-```
-
-Output goes to the `dist/` folder — ready to upload to any static host.
-
-```bash
-# Preview the production build locally
-npm run preview
-```
+Node ≥ 18 (Next 14 requirement).
 
 ---
 
 ## Deployment
 
-### Option A: AWS S3 + CloudFront (Recommended for custom domain)
+The site auto-deploys via Vercel:
+- `main` branch → production (`mariaelena-cossioclark.com`)
+- Any other branch → preview URL via Vercel's PR previews
 
-```bash
-# 1. Build
-npm run build
+### Vercel configuration
 
-# 2. Create an S3 bucket (replace with your bucket name)
-aws s3 mb s3://mcossioclark-portfolio
+`vercel.json` declares:
+- `framework: nextjs`
+- Primary region `sfo1` (closest to Vancouver)
+- Security headers (`X-Content-Type-Options`, `X-Frame-Options`,
+  `Referrer-Policy`, `Permissions-Policy`)
+- Cache and `Content-Disposition` headers on the resume PDF so the
+  download attribute fires properly
 
-# 3. Enable static website hosting on the bucket
-aws s3 website s3://mcossioclark-portfolio \
-  --index-document index.html \
-  --error-document index.html
+> A note for future-me: the original redesign spec suggested
+> `"rewrites": [{ "source": "/(.*)", "destination": "/" }]`, but
+> that pattern is a SPA-fallback rule and would break Next.js routing
+> (every URL would render the homepage). Vercel auto-detects Next.js
+> and routes correctly without it.
 
-# 4. Upload the build
-aws s3 sync dist/ s3://mcossioclark-portfolio --delete
+### Custom domain
 
-# 5. Set public read policy
-aws s3api put-bucket-policy \
-  --bucket mcossioclark-portfolio \
-  --policy '{
-    "Version": "2012-10-17",
-    "Statement": [{
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::mcossioclark-portfolio/*"
-    }]
-  }'
+Existing custom domain (`mariaelena-cossioclark.com`) needs to be moved
+from Route 53 / CloudFront to Vercel. Steps:
+1. Add the domain in the Vercel project settings.
+2. Update the DNS A record at the registrar to point to Vercel's IP,
+   or set the nameservers to Vercel's.
+3. Wait for SSL provisioning (~minutes).
+4. Tear down the old S3 bucket + CloudFront distribution.
+
+---
+
+## Accessibility floor
+
+- All interactive elements have visible coral focus rings (global
+  `*:focus-visible` rule + explicit `focus-visible:` utilities on
+  form inputs where `focus:outline-none` was needed).
+- Color contrast: body paragraphs use `text-muted` (#5F5A55) which
+  passes WCAG AA on both paper and mist backgrounds. Eyebrows and
+  decorative labels use `text-caption` (#8A8480), which is a
+  deliberate design trade-off per the original spec.
+- Single `<h1>` per page; clean h1 → h2 → h3 nesting.
+- Section landmarks: `<main>`, `<nav aria-label="Primary">`,
+  `<footer>`, sections with `aria-labelledby`.
+- Skip-to-content link at the top of every page.
+- All Lucide icons that are decorative carry `aria-hidden="true"`.
+- `prefers-reduced-motion` is respected on every animation:
+  - Hero declaration uses `useReducedMotion()` from Framer Motion.
+  - `ScrollReveal` uses `useReducedMotion()` and drops the translate.
+  - `animate-pulse-dot` and `animate-orbit` keyframes are gated by
+    `motion-safe:` utilities so they're disabled under reduced motion.
+- Form fields have associated `<label>` elements (not placeholder-only).
+- All anchor / image / button names are discernible to screen readers.
+
+---
+
+## SEO
+
+- Root `metadata` in `app/layout.tsx` sets the canonical title,
+  description, OG, robots.
+- Each case study page exports `generateMetadata()` with per-slug
+  title, description, canonical URL, OG, and Twitter card.
+- Each case study folder includes `opengraph-image.tsx` — a
+  per-slug `ImageResponse` rendered with the project's brand color
+  as a diagonal gradient.
+- `robots.ts` and `sitemap.ts` are file-based Next metadata exports;
+  Next builds them into `/robots.txt` and `/sitemap.xml` at deploy.
+- All routes are statically generated; no JS-rendering required for
+  crawlers.
+
+---
+
+## Project structure
+
+```
+app/
+  layout.tsx                  Root: fonts, metadata, Navbar, Footer, cursor, noise
+  page.tsx                    Homepage: Hero / About / Work / HowIWork / Process / Contact
+  globals.css                 Fontshare @import, design tokens, base styles
+  robots.ts                   /robots.txt generator
+  sitemap.ts                  /sitemap.xml generator
+  case-studies/
+    [slug]/
+      page.tsx                Case study page (generateStaticParams + generateMetadata)
+      opengraph-image.tsx     Per-slug OG image at the edge
+      components/
+        CaseStudyTOC.tsx          Sticky desktop TOC with scroll-spy
+        PivotSection.tsx          One pivot block (Mini Pancake renderer)
+        FeaturedSections.tsx      Featured-project body composition
+        StandardSections.tsx      Standard 3-project body composition
+  components/
+    Navbar.tsx                Sticky nav with scroll-spy + mobile overlay
+    Hero.tsx                  Declaration + composition
+    About.tsx                 2-col + pillar grid
+    Work.tsx                  2-col project grid
+    HowIWork.tsx              AI workflow section
+    Process.tsx               4-step timeline + impact strip
+    Contact.tsx               EmailJS form + action cards + socials
+    Footer.tsx                Single-row footer with back-to-top
+    ui/
+      CustomCursor.tsx        80ms RAF lerp, variant detection on mousemove
+      ScrollReveal.tsx        Framer Motion + IntersectionObserver wrapper
+      NoiseOverlay.tsx        Server-component SVG film-grain texture
+      ProjectCard.tsx         Card on the Work grid
+
+data/
+  projects.ts                 All 4 projects, typed; processSteps; skills
+
+lib/
+  types.ts                    Project, ProjectPivot, ProjectMetric, etc.
+
+public/
+  mariaelena-cossio-clark-resume.pdf
+
+tailwind.config.ts            All design tokens
+postcss.config.js             Tailwind + autoprefixer
+next.config.mjs               reactStrictMode, hide poweredBy
+tsconfig.json                 Next 14 defaults
+vercel.json                   Framework, region, security headers
+.eslintrc.json                next/core-web-vitals
 ```
 
-**Then create a CloudFront distribution:**
-
-1. Go to AWS CloudFront → Create Distribution
-2. Origin: your S3 bucket website endpoint
-3. Enable **HTTPS** (use ACM certificate for your domain)
-4. Set Default Root Object: `index.html`
-5. Add Error Page: `404 → /index.html → 200` (for SPA routing)
-6. Point your domain's DNS (CNAME or A record) to the CloudFront URL
-
-### Option B: Vercel (One-command deploy)
-
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-### Option C: Netlify
-
-```bash
-npm install -g netlify-cli
-netlify deploy --prod --dir=dist
-```
-
 ---
 
-## Accessibility
+## Contact / credits
 
-- Semantic HTML5 landmarks
-- ARIA labels and live regions
-- Skip-to-content link for keyboard users
-- Focus-visible states on all interactive elements
-- `prefers-reduced-motion` support
-- Color contrast meets WCAG 2.1 AA
-
----
-
-## Performance
-
-- Code-split vendor and animation chunks
-- Font preloading via Google Fonts
-- Canvas particle animation (requestAnimationFrame)
-- Lazy scroll-triggered animations via `react-intersection-observer`
-- SVG favicon (no external dependency)
-
----
-
-## License
-
-MIT — feel free to use this as a template for your own portfolio.
-
----
-
-*Designed & built by Mariaelena Cossio Clark*
+**Mariaelena Cossio Clark**
+[mariaelena.cossio@outlook.com](mailto:mariaelena.cossio@outlook.com)
+[mariaelena-cossioclark.com](https://www.mariaelena-cossioclark.com) · Vancouver, BC

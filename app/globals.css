@@ -1,0 +1,113 @@
+/* ─── Fontshare: Clash Display + Cabinet Grotesk ───────────────────────── */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=cabinet-grotesk@400,500,600,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens as CSS variables (mirrored in tailwind.config.ts) ──── */
+:root {
+  --font-display: 'Clash Display', sans-serif;
+  --font-body:    'Cabinet Grotesk', sans-serif;
+
+  --color-ink:        #0D0D0D;
+  --color-paper:      #FAFAF8;
+  --color-coral:      #E8502A;
+  --color-coral-dim:  #F2A48E;
+  --color-mist:       #F0EEE9;
+  --color-rule:       #E2DED8;
+  --color-caption:    #8A8480; /* labels / eyebrows / captions (large-text only) */
+  --color-muted:      #5F5A55; /* body paragraphs — passes WCAG AA */
+
+  --color-coral-hover:#C43E1F;
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus rings — accessibility floor, applied to every interactive element. */
+  *:focus-visible {
+    outline: 2px solid var(--color-coral);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Hide the native cursor when our CustomCursor takes over.
+     The component sets data-custom-cursor='true' on <body> on mount. */
+  @media (hover: hover) and (pointer: fine) {
+    body[data-custom-cursor='true'],
+    body[data-custom-cursor='true'] a,
+    body[data-custom-cursor='true'] button,
+    body[data-custom-cursor='true'] [role='button'],
+    body[data-custom-cursor='true'] input,
+    body[data-custom-cursor='true'] textarea {
+      cursor: none;
+    }
+  }
+
+  /* Reduced motion: kill transforms, keep opacity for legibility. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::selection {
+    background-color: var(--color-coral);
+    color: var(--color-paper);
+  }
+}
+
+/* ─── Reusable component classes ──────────────────────────────────────── */
+@layer components {
+  /* Centered max-width container with responsive horizontal padding. */
+  .container-content {
+    @apply mx-auto w-full max-w-content px-6 lg:px-20;
+  }
+
+  /* Section vertical rhythm — 80 mobile, 120 desktop. */
+  .section {
+    @apply py-20 md:py-[120px];
+  }
+
+  /* Section eyebrow label. */
+  .eyebrow {
+    @apply font-body text-caption uppercase text-caption tracking-[0.04em];
+  }
+
+  /* Keyboard skip-link, hidden until focused. */
+  .skip-link {
+    @apply sr-only;
+  }
+  .skip-link:focus {
+    @apply not-sr-only fixed top-4 left-4 z-50 rounded-button bg-ink px-4 py-2 font-body text-sm text-paper;
+  }
+}
+
+/* ─── Utility extensions ───────────────────────────────────────────────── */
+@layer utilities {
+  /* Hero declaration: gradient on the word "ships" only. */
+  .text-gradient-ships {
+    background: linear-gradient(90deg, var(--color-coral) 0%, var(--color-ink) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
