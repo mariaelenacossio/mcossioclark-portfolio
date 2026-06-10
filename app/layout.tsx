@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
-import Navbar from '@/app/components/Navbar'
-import Footer from '@/app/components/Footer'
-import CustomCursor from '@/app/components/ui/CustomCursor'
-import NoiseOverlay from '@/app/components/ui/NoiseOverlay'
+import ConditionalChrome from '@/app/components/ConditionalChrome'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -24,12 +21,13 @@ export const metadata: Metadata = {
 /**
  * Root layout.
  *
- * Renders, in z-order from back to front:
- *   1. NoiseOverlay   — fixed full-page SVG noise (z=1, no JS)
- *   2. Page content   — Navbar + children + Footer (z=2+)
- *   3. CustomCursor   — fixed overlay (z=1000, desktop only)
+ * The portfolio chrome (NoiseOverlay, Navbar, Footer, CustomCursor) is
+ * rendered through <ConditionalChrome>, which suppresses all of it on
+ * `/mockups/*` routes so those internal screenshot-only screens render
+ * as bare product UIs.
  *
- * Skip-to-content link sits at the very top of <body> for keyboard users.
+ * Skip-to-content link is always present at the top of <body> for
+ * keyboard users.
  */
 export default function RootLayout({
   children,
@@ -43,15 +41,7 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <NoiseOverlay />
-
-        <div className="relative z-[2] flex min-h-dvh flex-col">
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </div>
-
-        <CustomCursor />
+        <ConditionalChrome>{children}</ConditionalChrome>
       </body>
     </html>
   )

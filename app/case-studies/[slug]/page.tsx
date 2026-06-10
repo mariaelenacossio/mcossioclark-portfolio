@@ -7,6 +7,7 @@ import type { Project } from '@/lib/types'
 import CaseStudyTOC, { type TocItem } from './components/CaseStudyTOC'
 import FeaturedSections from './components/FeaturedSections'
 import StandardSections from './components/StandardSections'
+import ImageGallery from './components/ImageGallery'
 
 /* ───────────────────────────────────────────────────────────────────────
    Static generation
@@ -183,6 +184,11 @@ export default function CaseStudyPage(
           ))}
         </div>
       </div>
+
+      {/* ── Screenshot gallery ───────────────────────────────────────── */}
+      {project.images && project.images.length > 0 && (
+        <ImageGallery images={project.images} />
+      )}
 
       {/* ── Body — 65 / 35 split with sticky TOC ──────────────────────── */}
       <div className="container-content pb-24 md:pb-32">

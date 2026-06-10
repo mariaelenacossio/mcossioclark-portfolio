@@ -127,6 +127,60 @@ Node ≥ 18 (Next 14 requirement).
 
 ---
 
+## Generating mockup screenshots
+
+The case studies show real product screens. Those screens live as
+internal Next.js routes under `app/mockups/` — they're rendered with
+`robots: 'noindex'`, no portfolio chrome, and a fixed 1280×800 frame
+so they're screenshot-ready.
+
+To capture and wire them:
+
+1. **Start the dev server**
+   ```bash
+   npm run dev
+   ```
+
+2. **Open each mockup route at 1280px viewport width**
+   - http://localhost:3000/mockups/mini-pancake-co
+   - http://localhost:3000/mockups/beyond-skincare
+   - http://localhost:3000/mockups/beauty-by-amy
+
+   In Chrome DevTools, toggle device mode (`⌘⇧M`), set width to
+   exactly **1280px**, scroll to each screen.
+
+3. **Capture each screen**
+   - macOS: `⌘⇧4` then space-bar over the screen frame, OR
+   - DevTools: command palette → "Capture node screenshot" on the
+     screen `<div>`
+
+4. **Save under `/public/projects/<slug>/`** with these filenames:
+   ```
+   public/projects/mini-pancake-co/hero.png      ← Screen 1 (Shop)
+   public/projects/mini-pancake-co/screen-2.png  ← Screen 2 (Booking)
+   public/projects/mini-pancake-co/screen-3.png  ← Screen 3 (Admin)
+
+   public/projects/beyond-skincare/hero.png      ← Screen 1 (Components)
+   public/projects/beyond-skincare/screen-2.png  ← Screen 2 (Theming)
+   public/projects/beyond-skincare/screen-3.png  ← Screen 3 (Accessibility)
+
+   public/projects/beauty-by-amy/hero.png        ← Screen 1 (Services)
+   public/projects/beauty-by-amy/screen-2.png    ← Screen 2 (Date/time)
+   public/projects/beauty-by-amy/screen-3.png    ← Screen 3 (Admin)
+   ```
+
+5. **Push** — Vercel auto-deploys.
+   The case-study pages have a server-side existence check
+   (`app/case-studies/[slug]/components/ImageGallery.tsx`) that only
+   renders the gallery items whose source files actually exist under
+   `/public`. Drop the images in and they appear on the case study —
+   no code change needed.
+
+The paths and alt text are already wired in `data/projects.ts`
+under each project's `images` array.
+
+---
+
 ## Deployment
 
 The site auto-deploys via Vercel:

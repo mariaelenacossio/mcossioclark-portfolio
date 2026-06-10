@@ -29,7 +29,7 @@ export default function Work() {
             id="work-heading"
             className="mt-4 font-display text-display-lg font-bold text-ink"
           >
-            Four projects. Real problems. Shipped.
+            Three projects. Real problems. Shipped.
           </h2>
         </ScrollReveal>
 
@@ -39,8 +39,8 @@ export default function Work() {
           </p>
         </ScrollReveal>
 
-        {/* Grid */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        {/* Grid — 1 col mobile, 2 col tablet, 3 col desktop */}
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
             <ScrollReveal key={p.id} delay={0.1 + i * 0.06}>
               <ProjectCard project={p} />

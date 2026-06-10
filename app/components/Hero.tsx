@@ -28,9 +28,9 @@ const declarationLines = [
 ]
 
 const metrics = [
-  { value: '4+',  label: 'Years of practice' },
-  { value: '20+', label: 'Projects shipped'  },
-  { value: '3',   label: 'Industries'        },
+  { value: '4+', label: 'Years of practice' },
+  { value: '3',  label: 'Projects shipped'  },
+  { value: '3',  label: 'Industries'        },
 ]
 
 /* ─── Right-column composition ──────────────────────────────────────────── */

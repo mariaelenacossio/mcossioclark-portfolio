@@ -27,6 +27,16 @@ export const projects: Project[] = [
     liveUrl:  'https://mariaelenacossio.github.io/mini-pancake-co/',
     repoUrl:  'https://github.com/mariaelenacossio/mini-pancake-co',
     liveLabel:'View Mini Pancake Co. Site',
+
+    /* Screenshots captured from /mockups/mini-pancake-co at 1280px wide.
+       The case-study page only renders the gallery when files exist
+       under /public/projects/mini-pancake-co/. */
+    images: [
+      { src: '/projects/mini-pancake-co/hero.png',     alt: 'Mini Pancake Co. shop page',                caption: 'Final product page with WhatsApp checkout',          heading: 'The shop' },
+      { src: '/projects/mini-pancake-co/screen-2.png', alt: 'Booking wizard step 3 — menu selection',     caption: '5-step booking wizard — menu selection',             heading: 'The booking flow' },
+      { src: '/projects/mini-pancake-co/screen-3.png', alt: 'Admin dashboard with orders table',         caption: 'Admin dashboard — orders management',                heading: 'The admin view' },
+    ],
+
     featured: true,
     featuredHeadline: 'Two revenue flows from one codebase — by working with WhatsApp, not against it',
     featuredSubhead:
@@ -237,6 +247,12 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/mariaelenacossio/DGL-309-design-system',
     liveLabel: 'View BEYOND Site',
 
+    images: [
+      { src: '/projects/beyond-skincare/hero.png',     alt: 'BEYOND design system component library',  caption: 'Component library — button variants',          heading: 'Component documentation' },
+      { src: '/projects/beyond-skincare/screen-2.png', alt: 'Light and dark theme comparison',          caption: 'Token-driven light/dark theming',              heading: 'Theme system' },
+      { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel',          caption: 'WCAG 2.1 AA compliance panel',                 heading: 'Accessibility audit' },
+    ],
+
     overview:
       'BEYOND is a skincare brand design system built to scale across marketing pages, product detail pages, and editorial content. Instead of shipping one website, I designed a system: atomic components, tokenised styling, documented usage rules, and a sample brand site that proves the system works end-to-end. It ships as a live React + TypeScript application with interactive documentation and is deployed via GitHub Actions to GitHub Pages.',
     problem:
@@ -371,6 +387,12 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/mariaelenacossio/beautybyamy.github.io',
     liveLabel: 'View Beauty by Amy Site',
 
+    images: [
+      { src: '/projects/beauty-by-amy/hero.png',     alt: 'Beauty by Amy service selection',  caption: 'Service selection — step 1 of 5',       heading: 'The booking flow' },
+      { src: '/projects/beauty-by-amy/screen-2.png', alt: 'Date and time picker',             caption: 'Calendar booking — step 2 of 5',         heading: 'Date & time selection' },
+      { src: '/projects/beauty-by-amy/screen-3.png', alt: 'Admin appointments dashboard',     caption: 'Admin dashboard — daily schedule view',  heading: 'The admin view' },
+    ],
+
     overview:
       'Beauty by Amy started as a four-page vanilla HTML/CSS school project for an independent nail technician. v2.0 is a full rebuild into a production-ready React app with a 5-step booking wizard, a password-gated admin dashboard, dark/light theming, and a comprehensive motion system. The same brand, but engineered for an actual business to run on.',
     problem:
@@ -482,136 +504,6 @@ export const projects: Project[] = [
       'A real product is the public site plus the admin layer. Building them in the same codebase from the same tokens is what keeps a solo build maintainable.',
       'Motion is brand. Framer Motion across page transitions, scroll reveals, and button springs is what separates a "site" from a "premium experience."',
       'localStorage is a legitimate persistence layer for portfolio and demo work. The architecture decision is to keep the data layer abstracted so swapping to a real API later is a one-file change.',
-    ],
-  },
-
-  // ─────────────────────────────────────────────────────────────────────
-  // 4 · RELOCATEME — SaaS Dashboard
-  // ─────────────────────────────────────────────────────────────────────
-  {
-    id:   'relocateme',
-    slug: 'relocateme',
-    title: 'relocateMe',
-    category: 'SaaS Dashboard · Product Design',
-    shortDescription:
-      'A unified relocation management platform that replaced 12 spreadsheets with one calm, guided dashboard — improving compliance from 61% to 94%.',
-    role: 'UX Researcher & Product Designer',
-    year: '2023',
-    duration: '14 weeks',
-    team: '2 UX designers + 3 developers + PM',
-    tags: ['SaaS', 'Dashboard Design', 'User Research', 'Information Architecture', 'React'],
-    brand: '#4A8FAE',
-
-    overview:
-      'relocateMe is a B2B SaaS platform for corporate relocation. HR managers use it to coordinate employee moves across cities and countries — a process involving dozens of documents, deadlines, vendors, and stakeholders. The legacy product was failing both sides of the equation.',
-    problem:
-      'HR managers juggled 12+ spreadsheets with no single source of truth. Employees in transit had no visibility into their own relocation progress. Compliance deadlines were frequently missed, creating legal exposure for the companies involved.',
-    goal:
-      'Design a unified, role-based dashboard that gives HR managers full visibility and control, while giving relocating employees a calm, step-by-step experience — eliminating the spreadsheet dependency entirely.',
-    hypothesis:
-      'A milestone-based progress system with role-specific views and automated compliance alerts will reduce coordination errors and improve both HR efficiency and employee satisfaction during the relocation process.',
-
-    research: {
-      methods: [
-        'Contextual inquiry (observed real relocations)',
-        'Stakeholder interviews (6 HR managers)',
-        'Employee interviews (8 people in active relocation)',
-        'Card sorting (IA restructuring)',
-        'Journey mapping (47 touchpoints identified)',
-      ],
-      participants: '6 HR managers + 8 relocating employees across 3 companies',
-      keyFindings: [
-        'HR managers spent avg. 3.5 hours/week just tracking document status across spreadsheets',
-        'Employees described the process as "stressful," "opaque," and "like shouting into a void"',
-        'Compliance documents were submitted late 39% of the time, causing legal delays',
-        'Neither party had real-time visibility — everything was email-based',
-        'The existing tool had 47 navigation items — users only used 8 regularly',
-      ],
-    },
-
-    insights: [
-      { label: 'Two worlds, one product',
-        detail: 'HR and employees had completely different mental models of relocation. One product needed two distinct views.' },
-      { label: 'Checklist over calendar',
-        detail: 'Users thought in tasks and milestones, not dates. A timeline was less useful than a progress tracker.' },
-      { label: 'Alert fatigue is real',
-        detail: 'The legacy tool sent 15+ email notifications per week per user. Users ignored all of them.' },
-      { label: 'Navigation overload',
-        detail: '47 nav items for an 8-item use case. Radical simplification was needed.' },
-    ],
-
-    persona: {
-      name: 'Rachel, 41',
-      role: 'HR Manager, Tech Company',
-      bio:  'Rachel manages relocations for a 500-person company. She coordinates 4–6 active relocations at any time, each with different deadlines and requirements. She\'s efficient, process-driven, and loses sleep over compliance.',
-      goals: [
-        'Single view of all active relocations',
-        'Know which documents are overdue before they become a problem',
-        'Spend less time chasing employees for paperwork',
-      ],
-      frustrations: [
-        'Spreadsheets that go out of sync',
-        'Employees who don\'t know what they need to submit',
-        'No audit trail when things go wrong',
-      ],
-    },
-
-    userFlow:
-      'HR: Login → Dashboard (all relocations) → Select Employee → Document Checklist → Send Alert → Track Completion\nEmployee: Login → My Relocation → Current Step → Upload Document → See Next Milestone',
-
-    wireframes: [
-      { phase: 'Lo-fi',
-        description: 'Explored 3 dashboard layouts: list, card grid, and kanban. Card sorting sessions determined the IA with HR managers.' },
-      { phase: 'Mid-fi',
-        description: 'Separate wireframes for HR and employee views. Milestone tracker tested with 6 users — all preferred it over calendar.' },
-      { phase: 'Hi-fi',
-        description: 'Full component library built. Role-based login routes to the correct dashboard. Tested full flow with both user types.' },
-    ],
-
-    iterations: [
-      { version: 'v1', title: 'Unified view for both roles',
-        insight: 'HR managers felt overwhelmed by employee-level detail. Employees felt exposed seeing HR-only compliance data.',
-        change:  'Built role-based routing. Same login, completely different dashboard experience per role.' },
-      { version: 'v2', title: 'Calendar-based progress view',
-        insight: 'Users didn\'t connect with dates — they thought in milestones. "Am I on Step 3 or Step 5?"',
-        change:  'Replaced calendar with a 5-phase milestone tracker (Initiated → In Transit → Settled → Closed). Instantly clearer.' },
-      { version: 'v3', title: 'Milestone tracker + smart alerts',
-        insight: 'Users praised the clarity. HR loved the "overdue" highlight. Employees understood their next step.',
-        change:  'Added proactive deadline alerts (3 levels: upcoming, due today, overdue). Shipped.' },
-    ],
-
-    designSystem: {
-      colors: [
-        '#0F1923 (Navy)',
-        '#4A8FAE (Steel blue)',
-        '#22C55E (Compliance green)',
-        '#F59E0B (Alert amber)',
-        '#EF4444 (Overdue red)',
-      ],
-      typography: 'Inter throughout — optimized for data-dense dashboard readability at all sizes',
-      components: [
-        'Milestone Progress Tracker',
-        'Document Checklist Card',
-        'Status Badge (3 states)',
-        'Alert Banner (3 severity levels)',
-        'Role-Based Sidebar Nav',
-      ],
-    },
-
-    outcome:
-      'Compliance document submission improved from 61% to 94%. Average relocation completed 3 weeks faster. SUS score jumped from 42 to 78. HR managers reduced coordination time by 60%. Product became the vendor\'s primary selling point in sales demos.',
-
-    metrics: [
-      { value: '94%',   label: 'Compliance Rate (was 61%)' },
-      { value: '3 wks', label: 'Faster Relocations'        },
-      { value: '78',    label: 'SUS Score (was 42)'        },
-      { value: '-60%',  label: 'HR Coordination Time'      },
-    ],
-
-    learnings: [
-      'Designing for two user types in one product requires clear role-based mental models — not just different screens, but different information architectures.',
-      'Progress indicators outperform calendars when users think in milestones, not dates.',
-      'Radical IA simplification (47 → 8 nav items) doesn\'t lose features — it surfaces what actually matters.',
     ],
   },
 ]

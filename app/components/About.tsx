@@ -1,16 +1,16 @@
+import Image from 'next/image'
 import { Search, Code2, Layers, Cpu } from 'lucide-react'
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
  * About section.
  *
- * Per spec:
- *  - Background --color-paper
- *  - 2-col desktop (45/55), 1-col mobile
- *  - Left: eyebrow + headline (display-md, max-w 400) + 3 paragraphs
- *    of body copy + 4 pill tags
- *  - Right: 4 pillar cards in a 2x2 grid (background --color-mist,
- *    rounded-card, shadow-card, hover lift -4px)
+ * Layout:
+ *  - Upper: 2-col desktop (45/55), 1-col mobile
+ *      Left  → eyebrow + headline + 3 paragraphs + 4 pill tags
+ *      Right → profile photo (4:5 aspect, mist bg, availability pill
+ *              floating bottom-left over the image)
+ *  - Lower: 4 pillar cards in a row (4 desktop / 2 tablet / 1 mobile)
  */
 
 const PILLARS = [
@@ -51,9 +51,11 @@ export default function About() {
       className="bg-paper"
     >
       <div className="container-content section">
+
+        {/* ── Upper grid: copy + profile photo ─────────────────────────── */}
         <div className="grid items-start gap-12 lg:grid-cols-[45fr_55fr] lg:gap-20">
 
-          {/* ── Left column: copy ────────────────────────────────────── */}
+          {/* Left column: copy */}
           <div>
             <ScrollReveal>
               <p className="eyebrow text-caption">About</p>
@@ -100,31 +102,59 @@ export default function About() {
             </ScrollReveal>
           </div>
 
-          {/* ── Right column: 2x2 pillar grid ────────────────────────── */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {PILLARS.map((p, i) => {
-              const Icon = p.icon
-              return (
-                <ScrollReveal key={p.title} delay={0.1 + i * 0.08}>
-                  <article
-                    className="h-full rounded-card bg-mist p-7 shadow-card transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-card-hover"
-                  >
-                    <span className="inline-flex h-8 w-8 items-center justify-center text-coral">
-                      <Icon size={20} aria-hidden="true" />
-                    </span>
-                    <h3 className="mt-4 font-display text-[1.125rem] font-semibold text-ink">
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 font-body text-body text-muted">
-                      {p.desc}
-                    </p>
-                  </article>
-                </ScrollReveal>
-              )
-            })}
-          </div>
-
+          {/* Right column: profile photo with floating availability pill.
+              The mist-colored container reads as a soft background even if
+              /profile.jpg hasn't been added to /public/ yet. */}
+          <ScrollReveal delay={0.1}>
+            <div className="relative">
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[16px] bg-mist">
+                <Image
+                  src="/profile.jpg"
+                  alt="Mariaelena Cossio Clark — UX/UI Designer & Frontend Engineer"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  priority
+                />
+              </div>
+              {/* Availability pill — floats bottom-left over the image */}
+              <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-pill border border-rule bg-paper px-4 py-2 shadow-card">
+                <span
+                  className="inline-block h-2 w-2 rounded-full bg-emerald-500 motion-safe:animate-pulse-dot"
+                  aria-hidden="true"
+                />
+                <span className="font-body text-xs font-medium text-ink">
+                  Available for new roles
+                </span>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
+
+        {/* ── Lower row: 4 pillar cards ───────────────────────────────── */}
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {PILLARS.map((p, i) => {
+            const Icon = p.icon
+            return (
+              <ScrollReveal key={p.title} delay={0.1 + i * 0.08}>
+                <article
+                  className="h-full rounded-card bg-mist p-7 shadow-card transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-card-hover"
+                >
+                  <span className="inline-flex h-8 w-8 items-center justify-center text-coral">
+                    <Icon size={20} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-4 font-display text-[1.125rem] font-semibold text-ink">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 font-body text-body text-muted">
+                    {p.desc}
+                  </p>
+                </article>
+              </ScrollReveal>
+            )
+          })}
+        </div>
+
       </div>
     </section>
   )

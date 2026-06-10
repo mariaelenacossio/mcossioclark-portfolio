@@ -10,6 +10,18 @@ export interface ProjectMetric {
   label: string
 }
 
+/** A case-study screenshot or product mockup image. */
+export interface ProjectImage {
+  /** Path under /public — e.g. '/projects/mini-pancake-co/hero.png' */
+  src:      string
+  /** Required alt text — describes the screen for screen readers. */
+  alt:      string
+  /** One-line caption shown below the image. */
+  caption:  string
+  /** Optional heading shown above the image (groups screens by context). */
+  heading?: string
+}
+
 export interface ProjectInsight {
   label:  string
   detail: string
@@ -90,6 +102,12 @@ export interface Project {
   liveUrl?:    string
   repoUrl?:    string
   liveLabel?: string
+
+  // ── Screenshot gallery (rendered on the case-study page) ─────
+  /** Ordered list of product mockup screenshots — rendered as a
+   *  gallery between the metrics row and the body sections. Empty or
+   *  missing → the gallery section is skipped entirely. */
+  images?:           ProjectImage[]
 
   // ── Featured project ─────────────────────────────────────────
   /** When true, the homepage shows this project's headline on the card. */
