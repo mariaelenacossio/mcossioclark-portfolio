@@ -12,14 +12,12 @@ export interface ProjectMetric {
 
 /** A case-study screenshot or product mockup image. */
 export interface ProjectImage {
-  /** Path under /public — e.g. '/projects/mini-pancake-co/hero.png' */
-  src:      string
+  /** Path under /public — e.g. '/projects/mini-pancake-co/screen-1.png' */
+  src:     string
   /** Required alt text — describes the screen for screen readers. */
-  alt:      string
+  alt:     string
   /** One-line caption shown below the image. */
-  caption:  string
-  /** Optional heading shown above the image (groups screens by context). */
-  heading?: string
+  caption: string
 }
 
 export interface ProjectInsight {

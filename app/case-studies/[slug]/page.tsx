@@ -1,13 +1,33 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 import { projects, getProject } from '@/data/projects'
-import type { Project } from '@/lib/types'
+import type { Project, ProjectImage } from '@/lib/types'
 import CaseStudyTOC, { type TocItem } from './components/CaseStudyTOC'
 import FeaturedSections from './components/FeaturedSections'
 import StandardSections from './components/StandardSections'
 import ImageGallery from './components/ImageGallery'
+
+/**
+ * Server-side filter — only keep images whose source files exist under
+ * /public. Runs at build time. Lets the user drop a screenshot into
+ * public/projects/<slug>/ and have it appear on next deploy with no
+ * code change.
+ */
+function existingImages(images: ProjectImage[] | undefined): ProjectImage[] {
+  if (!images || images.length === 0) return []
+  const publicDir = path.join(process.cwd(), 'public')
+  return images.filter(img => {
+    try {
+      return fs.existsSync(path.join(publicDir, img.src))
+    } catch {
+      return false
+    }
+  })
+}
 
 /* ───────────────────────────────────────────────────────────────────────
    Static generation
@@ -185,10 +205,8 @@ export default function CaseStudyPage(
         </div>
       </div>
 
-      {/* ── Screenshot gallery ───────────────────────────────────────── */}
-      {project.images && project.images.length > 0 && (
-        <ImageGallery images={project.images} />
-      )}
+      {/* ── Screenshot gallery — server-filters to only existing files ─ */}
+      <ImageGallery images={existingImages(project.images)} />
 
       {/* ── Body — 65 / 35 split with sticky TOC ──────────────────────── */}
       <div className="container-content pb-24 md:pb-32">

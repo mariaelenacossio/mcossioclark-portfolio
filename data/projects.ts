@@ -29,12 +29,12 @@ export const projects: Project[] = [
     liveLabel:'View Mini Pancake Co. Site',
 
     /* Screenshots captured from /mockups/mini-pancake-co at 1280px wide.
-       The case-study page only renders the gallery when files exist
-       under /public/projects/mini-pancake-co/. */
+       The case-study page server-filters to only show entries whose
+       files actually exist under /public/projects/mini-pancake-co/. */
     images: [
-      { src: '/projects/mini-pancake-co/hero.png',     alt: 'Mini Pancake Co. shop page',                caption: 'Final product page with WhatsApp checkout',          heading: 'The shop' },
-      { src: '/projects/mini-pancake-co/screen-2.png', alt: 'Booking wizard step 3 — menu selection',     caption: '5-step booking wizard — menu selection',             heading: 'The booking flow' },
-      { src: '/projects/mini-pancake-co/screen-3.png', alt: 'Admin dashboard with orders table',         caption: 'Admin dashboard — orders management',                heading: 'The admin view' },
+      { src: '/projects/mini-pancake-co/screen-1.png', alt: 'Mini Pancake Co. shop page with WhatsApp checkout', caption: 'Product page with WhatsApp checkout integration' },
+      { src: '/projects/mini-pancake-co/screen-2.png', alt: 'Booking wizard step 3 — menu selection',           caption: '5-step event booking wizard — menu selection'    },
+      { src: '/projects/mini-pancake-co/screen-3.png', alt: 'Admin dashboard with orders table',                caption: 'Admin dashboard — order and revenue management'   },
     ],
 
     featured: true,
@@ -248,9 +248,9 @@ export const projects: Project[] = [
     liveLabel: 'View BEYOND Site',
 
     images: [
-      { src: '/projects/beyond-skincare/hero.png',     alt: 'BEYOND design system component library',  caption: 'Component library — button variants',          heading: 'Component documentation' },
-      { src: '/projects/beyond-skincare/screen-2.png', alt: 'Light and dark theme comparison',          caption: 'Token-driven light/dark theming',              heading: 'Theme system' },
-      { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel',          caption: 'WCAG 2.1 AA compliance panel',                 heading: 'Accessibility audit' },
+      { src: '/projects/beyond-skincare/screen-1.png', alt: 'BEYOND design system — button variants in primary, secondary, and CTA styles', caption: 'Component library — button variants across all states' },
+      { src: '/projects/beyond-skincare/screen-2.png', alt: 'Light and dark theme comparison of the same product card',                    caption: 'Token-driven light and dark theme comparison'           },
+      { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel with contrast checker and component checklist', caption: 'WCAG 2.1 AA compliance audit panel'                     },
     ],
 
     overview:
@@ -388,9 +388,9 @@ export const projects: Project[] = [
     liveLabel: 'View Beauty by Amy Site',
 
     images: [
-      { src: '/projects/beauty-by-amy/hero.png',     alt: 'Beauty by Amy service selection',  caption: 'Service selection — step 1 of 5',       heading: 'The booking flow' },
-      { src: '/projects/beauty-by-amy/screen-2.png', alt: 'Date and time picker',             caption: 'Calendar booking — step 2 of 5',         heading: 'Date & time selection' },
-      { src: '/projects/beauty-by-amy/screen-3.png', alt: 'Admin appointments dashboard',     caption: 'Admin dashboard — daily schedule view',  heading: 'The admin view' },
+      { src: '/projects/beauty-by-amy/screen-1.png', alt: 'Beauty by Amy service selection grid', caption: 'Service selection — step 1 of 5'              },
+      { src: '/projects/beauty-by-amy/screen-2.png', alt: 'Date and time picker with calendar',   caption: 'Calendar booking — date and time picker'      },
+      { src: '/projects/beauty-by-amy/screen-3.png', alt: 'Admin daily appointments dashboard',    caption: 'Admin dashboard — daily appointments view'    },
     ],
 
     overview:
