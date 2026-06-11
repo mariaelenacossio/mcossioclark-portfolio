@@ -3,48 +3,40 @@ import ScrollReveal from '@/app/components/ui/ScrollReveal'
 import ProjectCard from '@/app/components/ui/ProjectCard'
 
 /**
- * Work / Selected work section.
+ * Editorial Bold MC — Work section.
  *
- * Per spec:
- *  - Background --color-mist (alternating section tone)
- *  - Eyebrow + headline (display-lg) + sub-copy
- *  - Project grid: 2 columns desktop, 1 column mobile, gap 24px
- *  - Project order is owned by `data/projects.ts` (mini-pancake first)
+ *  - bg-ink (dark)
+ *  - py-28 md:py-36
+ *  - Eyebrow (coral) + Bebas display headline + sub-copy
+ *  - 3-col project card grid on desktop, single column mobile
  */
 export default function Work() {
   return (
     <section
       id="work"
       aria-labelledby="work-heading"
-      className="bg-mist"
+      className="bg-ink py-28 md:py-36"
     >
-      <div className="container-content section">
-        {/* Header */}
-        <ScrollReveal>
-          <p className="eyebrow text-caption">Selected work</p>
-        </ScrollReveal>
+      <div className="container-content">
 
-        <ScrollReveal delay={0.05}>
+        <ScrollReveal>
+          <span className="font-body text-caption uppercase tracking-widest text-coral">
+            Selected work
+          </span>
           <h2
             id="work-heading"
-            className="mt-4 font-display text-display-lg font-bold text-ink"
+            className="mt-3 font-display text-display uppercase leading-none text-paper"
           >
             Three projects. Real problems. Shipped.
           </h2>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.1}>
-          <p className="mt-5 max-w-xl font-body text-body-lg text-muted">
-            Each one is a full story — from research through to a live product.
+          <p className="mt-4 max-w-[500px] font-body text-body-lg text-ghost">
+            Each one is a full story from research through to a live product.
           </p>
         </ScrollReveal>
 
-        {/* Grid — 1 col mobile, 2 col tablet, 3 col desktop */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p, i) => (
-            <ScrollReveal key={p.id} delay={0.1 + i * 0.06}>
-              <ProjectCard project={p} />
-            </ScrollReveal>
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {projects.map(p => (
+            <ProjectCard key={p.id} project={p} />
           ))}
         </div>
       </div>

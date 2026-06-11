@@ -23,16 +23,16 @@ interface PivotSectionProps {
 export default function PivotSection({ pivot, id }: PivotSectionProps) {
   return (
     <section id={id} className="scroll-mt-24">
-      <h2 className="font-display text-display-md font-semibold text-ink mb-6">
-        <span className="text-coral">Pivot {pivot.n}</span> — {pivot.challenge}
+      <h2 className="font-display text-display uppercase text-ink mb-6">
+        <span className="text-coral">Pivot {pivot.n}</span> · {pivot.challenge}
       </h2>
 
-      <p className="font-body text-body text-muted leading-[1.7] mb-8">
+      <p className="font-body text-body text-ghost leading-[1.7] mb-8">
         {pivot.problem}
       </p>
 
       {/* Options considered */}
-      <h3 className="font-display text-[1.375rem] font-semibold text-ink mb-4">
+      <h3 className="font-display text-title uppercase text-ink mb-4">
         Options I considered
       </h3>
 
@@ -43,7 +43,7 @@ export default function PivotSection({ pivot, id }: PivotSectionProps) {
             className={`rounded-card p-5 transition-colors ${
               opt.chosen
                 ? 'border-[1.5px] border-coral bg-coral/[0.04]'
-                : 'border border-rule bg-paper'
+                : 'border border-stone bg-paper'
             }`}
           >
             <div className="flex items-start gap-4">
@@ -52,7 +52,7 @@ export default function PivotSection({ pivot, id }: PivotSectionProps) {
                 className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                   opt.chosen
                     ? 'bg-coral text-paper'
-                    : 'border border-rule bg-mist text-caption'
+                    : 'border border-stone bg-stone text-caption'
                 }`}
                 aria-hidden="true"
               >
@@ -71,7 +71,7 @@ export default function PivotSection({ pivot, id }: PivotSectionProps) {
                     </span>
                   )}
                 </p>
-                <p className="mt-1.5 font-body text-body text-muted leading-[1.6]">
+                <p className="mt-1.5 font-body text-body text-ghost leading-[1.6]">
                   {opt.tradeoff}
                 </p>
               </div>
@@ -81,10 +81,10 @@ export default function PivotSection({ pivot, id }: PivotSectionProps) {
       </ul>
 
       {/* Decision */}
-      <h3 className="font-display text-[1.375rem] font-semibold text-ink mb-4">
+      <h3 className="font-display text-title uppercase text-ink mb-4">
         What I shipped &amp; why
       </h3>
-      <p className="font-body text-body text-muted leading-[1.7]">
+      <p className="font-body text-body text-ghost leading-[1.7]">
         {pivot.decision}
       </p>
     </section>

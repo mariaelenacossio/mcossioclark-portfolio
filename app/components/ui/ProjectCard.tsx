@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import type { Project } from '@/lib/types'
 
@@ -9,83 +10,70 @@ interface ProjectCardProps {
 }
 
 /**
- * Single project card on the Work grid.
+ * Editorial Bold MC project card.
  *
- * Per spec:
- *  - Image area 240px desktop / 200px mobile, background = brand color
- *    at 8% opacity, with a simple abstract shape (centered) in the
- *    brand color at 30% opacity. NO recreations of the old SVG mockups.
- *  - Content area: 28px padding, year badge (coral) + category tag
- *    (caption), title, 2-line short description, 2 metric tiles inline,
- *    first 3 tags as pills, "Read case study ->" link in coral.
- *  - Whole card is clickable -> /case-studies/[slug] (not a modal).
- *  - Hover: translateY(-6px) + shadow lift over 250ms. Arrow nudges
- *    right 4px.
+ *  - Dark card surface on the Work grid's dark ink background
+ *  - Real mockup image (first project image) header, brand-tinted bg
+ *  - Card content: year + category pills, Bebas title, body description,
+ *    2 metric tiles, 3 tags, "Read case study →" coral footer
+ *  - Hover: card lifts -8px, image scales 1.05, title shifts to coral
  */
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { brand } = project
-  // Pre-compute hex-alpha colors to avoid runtime style flicker
-  const brand08 = `${brand}14` // 8%  alpha
-  const brand30 = `${brand}4D` // 30% alpha
+  const brandTint = `${brand}15` // 8% alpha background behind the image
 
   return (
     <Link
       href={`/case-studies/${project.slug}`}
       aria-label={`Read case study: ${project.title}`}
-      className="group relative block h-full overflow-hidden rounded-card bg-paper shadow-card transition-[transform,box-shadow] duration-[250ms] ease-out hover:-translate-y-1.5 hover:shadow-card-hover no-underline"
+      className="group block overflow-hidden rounded-2xl bg-card no-underline transition-transform duration-300 hover:-translate-y-2"
     >
-      {/* ── Image area ───────────────────────────────────────────────── */}
+      {/* Image header */}
       <div
-        className="relative flex h-[200px] w-full items-center justify-center md:h-[240px]"
-        style={{ backgroundColor: brand08 }}
-        aria-hidden="true"
+        className="relative h-52 overflow-hidden"
+        style={{ backgroundColor: brandTint }}
       >
-        {/* Abstract composition: large circle + small offset square +
-            a thin arc — same vocabulary as the hero composition but
-            tinted to the project's brand color. */}
-        <svg
-          viewBox="0 0 200 200"
-          className="h-1/2 w-1/2"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="100" cy="100" r="70" fill={brand30} />
-          <circle cx="100" cy="100" r="32" fill={brand} fillOpacity="0.55" />
-          <circle
-            cx="100"
-            cy="100"
-            r="90"
-            stroke={brand}
-            strokeWidth="1"
-            strokeOpacity="0.35"
-            strokeDasharray="240 320"
+        {project.images?.[0] ? (
+          <Image
+            src={project.images[0].src}
+            alt={project.title}
+            fill
+            className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
-        </svg>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className="h-24 w-24 rounded-full opacity-40"
+              style={{ backgroundColor: brand }}
+            />
+          </div>
+        )}
       </div>
 
-      {/* ── Content area ─────────────────────────────────────────────── */}
-      <div className="flex flex-col gap-4 p-7">
-        {/* Year + category */}
-        <div className="flex flex-wrap items-center gap-2">
+      {/* Content */}
+      <div className="p-6">
+        {/* Year + category pills */}
+        <div className="flex flex-wrap gap-2">
           <span
-            className="rounded-pill px-3 py-1 font-body text-caption uppercase"
-            style={{ backgroundColor: brand08, color: 'var(--color-coral)' }}
+            className="rounded-full px-3 py-1 font-body text-caption"
+            style={{ color: project.brand, backgroundColor: brandTint }}
           >
             {project.year}
           </span>
-          <span className="rounded-pill bg-mist px-3 py-1 font-body text-caption text-caption">
+          <span className="rounded-full bg-paper/5 px-3 py-1 font-body text-caption text-ghost">
             {project.category}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="font-display text-[1.375rem] font-semibold text-ink">
+        <h3 className="mt-3 font-display text-title uppercase leading-none text-paper transition-colors duration-200 group-hover:text-coral">
           {project.title}
         </h3>
 
-        {/* Short description, clamped to 2 lines */}
+        {/* Description — clamped to 2 lines */}
         <p
-          className="font-body text-body text-muted"
+          className="mt-2 font-body text-caption text-ghost"
           style={{
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -96,40 +84,35 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.shortDescription}
         </p>
 
-        {/* Metric tiles */}
-        <div className="flex flex-wrap gap-2">
+        {/* Metrics */}
+        <div className="mt-4 flex gap-3">
           {project.metrics.slice(0, 2).map(m => (
-            <div
-              key={m.label}
-              className="flex-1 rounded-button bg-mist px-4 py-2.5"
-            >
-              <div className="font-display text-[1.25rem] font-bold leading-none text-ink">
-                {m.value}
-              </div>
-              <div className="mt-1 font-body text-caption text-caption">
+            <div key={m.label} className="rounded-lg bg-paper/5 px-4 py-2">
+              <span className="block font-display text-xl leading-none text-paper">{m.value}</span>
+              <span className="mt-1 block font-body text-[0.65rem] uppercase text-ghost">
                 {m.label}
-              </div>
+              </span>
             </div>
           ))}
         </div>
 
         {/* Tags */}
-        <ul role="list" className="flex flex-wrap gap-1.5">
+        <div className="mt-4 flex flex-wrap gap-1.5">
           {project.tags.slice(0, 3).map(t => (
-            <li
+            <span
               key={t}
-              className="rounded-pill border border-rule bg-mist px-2.5 py-1 font-body text-caption text-caption"
+              className="rounded-full bg-paper/5 px-3 py-1 font-body text-[0.7rem] text-ghost"
             >
               {t}
-            </li>
+            </span>
           ))}
-        </ul>
+        </div>
 
         {/* CTA */}
-        <div className="mt-2 inline-flex items-center gap-1.5 font-body text-coral">
-          <span className="font-medium">Read case study</span>
+        <div className="mt-5 flex items-center gap-1.5 font-body text-sm font-medium text-coral">
+          Read case study
           <ArrowRight
-            size={16}
+            size={14}
             aria-hidden="true"
             className="transition-transform duration-150 group-hover:translate-x-1"
           />

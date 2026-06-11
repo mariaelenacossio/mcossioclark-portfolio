@@ -1,94 +1,90 @@
-/* ─── Fontshare: Clash Display + Cabinet Grotesk ───────────────────────── */
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=cabinet-grotesk@400,500,600,700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design tokens as CSS variables (mirrored in tailwind.config.ts) ──── */
-:root {
-  --font-display: 'Clash Display', sans-serif;
-  --font-body:    'Cabinet Grotesk', sans-serif;
-
-  --color-ink:        #0D0D0D;
-  --color-paper:      #FAFAF8;
-  --color-coral:      #E8502A;
-  --color-coral-dim:  #F2A48E;
-  --color-mist:       #F0EEE9;
-  --color-rule:       #E2DED8;
-  --color-caption:    #8A8480; /* labels / eyebrows / captions (large-text only) */
-  --color-muted:      #5F5A55; /* body paragraphs — passes WCAG AA */
-
-  --color-coral-hover:#C43E1F;
+/* ─── Reset ────────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ─── Base ─────────────────────────────────────────────────────────────── */
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+body {
+  background-color: #F7F5F1;
+  color: #111110;
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Focus rings — accessibility floor, applied to every interactive element. */
-  *:focus-visible {
-    outline: 2px solid var(--color-coral);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
+/* ─── Display / headline elements — Bebas Neue all-caps ────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display), sans-serif;
+  text-transform: uppercase;
+  font-weight: 400; /* Bebas Neue ships only one weight */
+}
 
-  /* Hide the native cursor when our CustomCursor takes over.
-     The component sets data-custom-cursor='true' on <body> on mount. */
-  @media (hover: hover) and (pointer: fine) {
-    body[data-custom-cursor='true'],
-    body[data-custom-cursor='true'] a,
-    body[data-custom-cursor='true'] button,
-    body[data-custom-cursor='true'] [role='button'],
-    body[data-custom-cursor='true'] input,
-    body[data-custom-cursor='true'] textarea {
-      cursor: none;
-    }
-  }
+/* ─── Coral text selection ─────────────────────────────────────────────── */
+::selection {
+  background: #D94F2B;
+  color: #F7F5F1;
+}
 
-  /* Reduced motion: kill transforms, keep opacity for legibility. */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
+/* ─── Focus rings — accessibility floor ────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #D94F2B;
+  outline-offset: 3px;
+}
 
-  ::selection {
-    background-color: var(--color-coral);
-    color: var(--color-paper);
+/* ─── Subtle noise texture — fixed, very faint, sits above content ───── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Hide native cursor when CustomCursor takes over ──────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  body[data-custom-cursor='true'],
+  body[data-custom-cursor='true'] a,
+  body[data-custom-cursor='true'] button,
+  body[data-custom-cursor='true'] [role='button'],
+  body[data-custom-cursor='true'] input,
+  body[data-custom-cursor='true'] textarea {
+    cursor: none;
+  }
+}
+
+/* ─── prefers-reduced-motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 /* ─── Reusable component classes ──────────────────────────────────────── */
 @layer components {
-  /* Centered max-width container with responsive horizontal padding. */
+  /* Section-width content container. */
   .container-content {
-    @apply mx-auto w-full max-w-content px-6 lg:px-20;
+    @apply mx-auto w-full max-w-content px-6 md:px-16;
   }
 
-  /* Section vertical rhythm — 80 mobile, 120 desktop. */
-  .section {
-    @apply py-20 md:py-[120px];
-  }
-
-  /* Section eyebrow label. */
+  /* Section eyebrow label (coral on light backgrounds, etc). */
   .eyebrow {
-    @apply font-body text-caption uppercase text-caption tracking-[0.04em];
+    @apply font-body text-caption uppercase;
+    letter-spacing: 0.15em;
   }
 
   /* Keyboard skip-link, hidden until focused. */
@@ -96,18 +92,6 @@
     @apply sr-only;
   }
   .skip-link:focus {
-    @apply not-sr-only fixed top-4 left-4 z-50 rounded-button bg-ink px-4 py-2 font-body text-sm text-paper;
-  }
-}
-
-/* ─── Utility extensions ───────────────────────────────────────────────── */
-@layer utilities {
-  /* Hero declaration: gradient on the word "ships" only. */
-  .text-gradient-ships {
-    background: linear-gradient(90deg, var(--color-coral) 0%, var(--color-ink) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    @apply not-sr-only fixed top-4 left-4 z-[10000] rounded-button bg-ink px-4 py-2 font-body text-sm text-paper;
   }
 }

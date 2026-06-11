@@ -1,100 +1,92 @@
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * How I work with AI section.
+ * Editorial Bold MC — How I Work With AI.
  *
- * Per spec:
- *  - Background --color-paper
- *  - Eyebrow "AI workflow"
- *  - Headline "I don't use AI. I direct it." (display-md)
- *  - Subhead max-w 560
- *  - Three workflow cards in a row (desktop), stacked (mobile)
- *    - Background --color-mist, rounded-card, p-32px
- *    - No shadow, no border
- *    - Left-aligned: step number (coral) + heading + body
- *  - Tool strip below: label "Tools I direct" + pills with brand names
+ *  - bg-paper, py-28 md:py-36
+ *  - Eyebrow (coral) + Bebas display headline
+ *  - 3 stone cards with giant ghost numbers in the corner + content
+ *  - Tool strip below: label + 6 pill chips
  */
 
 const STEPS = [
   {
     n: '01',
-    title: 'Research synthesis',
-    body:
-      'I feed raw interview transcripts and session recordings into AI pipelines I\'ve built. Themes, patterns, and contradictions surface in minutes instead of days.',
+    label: 'Research synthesis',
+    body: "I feed raw interview transcripts into pipelines I've built. Themes and patterns surface in minutes. The judgment on what matters is still mine.",
   },
   {
     n: '02',
-    title: 'Rapid prototyping',
-    body:
-      'I describe interaction logic in plain language and get working prototypes back. I review, redirect, and refine — the judgment layer is mine. The production layer is delegated.',
+    label: 'Rapid prototyping',
+    body: 'I describe interaction logic and get working prototypes back. I review, redirect, and refine. The thinking layer is mine. The production layer is delegated.',
   },
   {
     n: '03',
-    title: 'Shipping with agents',
-    body:
-      'Components, copy variants, accessibility audits — I run these through agent workflows I\'ve configured. I\'m the captain. The agents are the crew.',
+    label: 'Shipping with agents',
+    body: 'Components, copy, accessibility audits. Agent workflows handle the repeatable work. I decide what gets built. Not how many hours it takes.',
   },
 ] as const
 
-const TOOLS = ['Claude', 'Cursor', 'Framer', 'v0', 'GitHub Copilot', 'Figma AI']
+const TOOLS = ['Claude', 'Cursor', 'v0', 'Framer', 'GitHub Copilot', 'Figma AI']
 
 export default function HowIWork() {
   return (
     <section
       id="ai-workflow"
       aria-labelledby="ai-heading"
-      className="bg-paper"
+      className="bg-paper py-28 md:py-36"
     >
-      <div className="container-content section">
-        {/* Header */}
-        <ScrollReveal>
-          <p className="eyebrow text-caption">AI workflow</p>
-        </ScrollReveal>
+      <div className="container-content">
 
-        <ScrollReveal delay={0.05}>
+        <ScrollReveal>
+          <span className="font-body text-caption uppercase tracking-widest text-coral">
+            AI workflow
+          </span>
           <h2
             id="ai-heading"
-            className="mt-4 font-display text-display-md font-semibold text-ink"
+            className="mt-3 max-w-[900px] font-display text-display uppercase leading-none text-ink"
           >
-            I don't use AI. I direct it.
+            Other designers use AI to go faster. I use it to do things I couldn&apos;t do alone.
           </h2>
-        </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <p className="mt-5 max-w-[560px] font-body text-body-lg text-muted">
-            Most designers use AI to go faster. I use it to go further —
-            handling research synthesis, prototype generation, and
-            production code while I focus on the decisions that require
-            judgment.
-          </p>
-        </ScrollReveal>
+          {/* Three cards */}
+          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {STEPS.map(s => (
+              <article
+                key={s.n}
+                className="relative overflow-hidden rounded-2xl bg-stone p-8"
+              >
+                {/* Giant ghost number in the corner */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-2 -top-2 select-none font-display text-[6rem] leading-none text-ink/5"
+                >
+                  {s.n}
+                </span>
 
-        {/* Three workflow cards */}
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {STEPS.map((s, i) => (
-            <ScrollReveal key={s.n} delay={0.1 + i * 0.07}>
-              <article className="h-full rounded-card bg-mist p-8">
-                <p className="eyebrow text-coral">{s.n}</p>
-                <h3 className="mt-3 font-display text-[1.125rem] font-semibold text-ink">
-                  {s.title}
+                <p className="relative font-body text-caption uppercase tracking-widest text-coral">
+                  Step {s.n}
+                </p>
+                <h3 className="relative mt-2 font-display text-title uppercase leading-none text-ink">
+                  {s.label}
                 </h3>
-                <p className="mt-3 font-body text-body text-muted">
+                <p className="relative mt-3 font-body text-body leading-relaxed text-ghost">
                   {s.body}
                 </p>
               </article>
-            </ScrollReveal>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Tool strip */}
-        <ScrollReveal delay={0.3}>
-          <div className="mt-6 flex flex-col gap-4 rounded-card bg-mist px-8 py-6 md:flex-row md:items-center md:gap-6">
-            <p className="eyebrow text-caption shrink-0">Tools I direct</p>
+          {/* Tool strip */}
+          <div className="mt-8">
+            <p className="mb-3 font-body text-caption uppercase tracking-widest text-ghost">
+              Tools I direct
+            </p>
             <ul role="list" className="flex flex-wrap gap-2">
               {TOOLS.map(tool => (
                 <li
                   key={tool}
-                  className="rounded-pill border border-rule bg-paper px-3.5 py-1.5 font-body text-caption text-caption"
+                  className="rounded-full border border-stone bg-stone px-4 py-1.5 font-body text-caption text-ghost"
                 >
                   {tool}
                 </li>

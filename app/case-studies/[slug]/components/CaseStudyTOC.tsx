@@ -65,8 +65,10 @@ export default function CaseStudyTOC({ items }: CaseStudyTOCProps) {
       aria-label="On this page"
       className="sticky top-24 hidden self-start lg:block"
     >
-      <p className="eyebrow text-caption">On this page</p>
-      <ul role="list" className="mt-4 flex flex-col gap-2.5 border-l border-rule pl-4">
+      <p className="font-body text-caption uppercase tracking-widest text-coral">
+        On this page
+      </p>
+      <ul role="list" className="mt-4 flex flex-col gap-2.5 border-l border-stone pl-4">
         {items.map(item => {
           const isActive = active === item.id
           return (
@@ -77,7 +79,7 @@ export default function CaseStudyTOC({ items }: CaseStudyTOCProps) {
                 className={`block font-body text-caption transition-colors duration-150 no-underline ${
                   isActive
                     ? 'text-ink font-medium'
-                    : 'text-caption hover:text-ink'
+                    : 'text-ghost hover:text-ink'
                 }`}
               >
                 {item.label}

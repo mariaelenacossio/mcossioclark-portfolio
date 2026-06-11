@@ -9,7 +9,7 @@ import type { Project, ProcessStep, SkillsMap } from '@/lib/types'
  */
 export const projects: Project[] = [
   // ─────────────────────────────────────────────────────────────────────
-  // 1 · MINI PANCAKE CO. — featured
+  // 1 · MINI PANCAKE CO., featured
   // ─────────────────────────────────────────────────────────────────────
   {
     id:   'mini-pancake-co',
@@ -17,7 +17,7 @@ export const projects: Project[] = [
     title: 'Mini Pancake Co.',
     category: 'E-Commerce + Booking · React Rebuild',
     shortDescription:
-      'A complete React rebuild of a 5-page college site into a production e-commerce + event booking platform for a mini pancake business in Mazatlán — with WhatsApp checkout, a 5-step booking wizard, and a 3-tab admin dashboard.',
+      'A complete React rebuild of a 5-page college site into a production e-commerce + event booking platform for a mini pancake business in Mazatlán, with WhatsApp checkout, a 5-step booking wizard, and a 3-tab admin dashboard.',
     role: 'Designer & Frontend Engineer · Solo',
     year: '2024',
     duration: '8 weeks',
@@ -33,12 +33,12 @@ export const projects: Project[] = [
        files actually exist under /public/projects/mini-pancake-co/. */
     images: [
       { src: '/projects/mini-pancake-co/screen-1.png', alt: 'Mini Pancake Co. shop page with WhatsApp checkout', caption: 'Product page with WhatsApp checkout integration' },
-      { src: '/projects/mini-pancake-co/screen-2.png', alt: 'Booking wizard step 3 — menu selection',           caption: '5-step event booking wizard — menu selection'    },
-      { src: '/projects/mini-pancake-co/screen-3.png', alt: 'Admin dashboard with orders table',                caption: 'Admin dashboard — order and revenue management'   },
+      { src: '/projects/mini-pancake-co/screen-2.png', alt: 'Booking wizard step 3, menu selection',           caption: '5-step event booking wizard, menu selection'    },
+      { src: '/projects/mini-pancake-co/screen-3.png', alt: 'Admin dashboard with orders table',                caption: 'Admin dashboard, order and revenue management'   },
     ],
 
     featured: true,
-    featuredHeadline: 'Two revenue flows from one codebase — by working with WhatsApp, not against it',
+    featuredHeadline: 'Two revenue flows from one codebase, by working with WhatsApp, not against it',
     featuredSubhead:
       'A college HTML site rebuilt as a production e-commerce + booking platform for a Mazatlán mini-pancake business. Three different problems, three different solutions, one running product.',
 
@@ -60,7 +60,7 @@ export const projects: Project[] = [
             chosen: true },
         ],
         decision:
-          'React 18 + Vite + Tailwind + Framer Motion, HashRouter for GitHub Pages compatibility, Context for cart and bookings, localStorage as the persistence layer. The architecture decision is to keep the data layer abstracted — a single context module — so swapping to a real backend later is a one-file change, not a rewrite.',
+          'React 18 + Vite + Tailwind + Framer Motion, HashRouter for GitHub Pages compatibility, Context for cart and bookings, localStorage as the persistence layer. The architecture decision is to keep the data layer abstracted, a single context module, so swapping to a real backend later is a one-file change, not a rewrite.',
       },
       {
         n: '02',
@@ -68,37 +68,37 @@ export const projects: Project[] = [
         problem:
           'Built a clean React product grid, search, sort, detail modal with topping picker, and cart. Wired it up to a generic checkout form. The owner pushed back: customers don\'t use forms here, they WhatsApp. The cart was a dead end.',
         options: [
-          { label: 'Stripe Checkout — proper card payments',
+          { label: 'Stripe Checkout, proper card payments',
             tradeoff: 'Adds a payment processor fee, requires KYC, breaks the WhatsApp habit customers already trust. Solves a problem nobody had.',
             chosen: false },
           { label: 'Email order to the owner via EmailJS',
-            tradeoff: 'Owner doesn\'t check email in the workflow loop — orders would land in a channel she\'s not in. Same dead-end as the form.',
+            tradeoff: 'Owner doesn\'t check email in the workflow loop, orders would land in a channel she\'s not in. Same dead-end as the form.',
             chosen: false },
           { label: 'WhatsApp deep link with a pre-filled order message (items, toppings, quantities, total)',
-            tradeoff: 'No card payments captured digitally — but matches the existing trusted channel exactly. The cart becomes an order builder, not a payment form.',
+            tradeoff: 'No card payments captured digitally, but matches the existing trusted channel exactly. The cart becomes an order builder, not a payment form.',
             chosen: true },
         ],
         decision:
-          'Replaced the form with a single CTA that opens WhatsApp with a pre-formatted message. One tap, customer lands in the chat they already trust, owner\'s workflow is preserved, and the cart logic still produces a clean structured order. The site becomes a storefront and an order builder — the channel stays where it already worked.',
+          'Replaced the form with a single CTA that opens WhatsApp with a pre-formatted message. One tap, customer lands in the chat they already trust, owner\'s workflow is preserved, and the cart logic still produces a clean structured order. The site becomes a storefront and an order builder, the channel stays where it already worked.',
       },
       {
         n: '03',
         challenge: 'Admin',
         problem:
-          'The shop covered retail. Party bookings — the higher-revenue flow — still went through DMs with no structure. The owner had no view of pending vs confirmed bookings. The site was half a product.',
+          'The shop covered retail. Party bookings, the higher-revenue flow, still went through DMs with no structure. The owner had no view of pending vs confirmed bookings. The site was half a product.',
         options: [
           { label: 'Push bookings into a Notion database via API',
             tradeoff: 'Owner now has to learn Notion. Adds a third tool to the stack. Free, but introduces friction in the daily workflow.',
             chosen: false },
           { label: 'Auto-generate a Google Sheet from each submission',
-            tradeoff: 'Solves capture but not management — owner can see bookings, can\'t actually confirm/cancel/track from the spreadsheet without manual edits.',
+            tradeoff: 'Solves capture but not management, owner can see bookings, can\'t actually confirm/cancel/track from the spreadsheet without manual edits.',
             chosen: false },
           { label: 'Build a password-gated admin dashboard inside the same React app, persisting to localStorage',
-            tradeoff: 'Bookings live in the device that opened the dashboard — but for a single-owner business, that\'s the right tradeoff. Full CRUD, no extra tools, same brand.',
+            tradeoff: 'Bookings live in the device that opened the dashboard, but for a single-owner business, that\'s the right tradeoff. Full CRUD, no extra tools, same brand.',
             chosen: true },
         ],
         decision:
-          'Built the 5-step booking wizard (Package → Date+Time with 7-day-min → Event details → Contact → Review) and the admin at /#/admin: stat tiles for total/pending/confirmed/revenue, full bookings table with confirm/cancel/delete, and packages overview. Same component library as the public site — every admin screen still feels on-brand.',
+          'Built the 5-step booking wizard (Package → Date+Time with 7-day-min → Event details → Contact → Review) and the admin at /#/admin: stat tiles for total/pending/confirmed/revenue, full bookings table with confirm/cancel/delete, and packages overview. Same component library as the public site, every admin screen still feels on-brand.',
       },
     ],
 
@@ -109,18 +109,18 @@ export const projects: Project[] = [
       { name: 'Framer Motion 11',         why: 'Page transitions, modal entrances, scroll reveals via useInView. The motion system is what differentiates from a generic shop template.' },
       { name: 'React Router 6 (HashRouter)', why: 'GitHub Pages can\'t handle BrowserRouter without server-side rewrites. HashRouter ships with zero infra config.' },
       { name: 'date-fns 3',               why: 'Calendar logic for the 7-day-minimum date picker. Smaller bundle than Moment, tree-shakable.' },
-      { name: 'localStorage + Context',   why: 'Persistence layer that mimics an API. The data layer is abstracted in one module — swappable for a real backend later.' },
+      { name: 'localStorage + Context',   why: 'Persistence layer that mimics an API. The data layer is abstracted in one module, swappable for a real backend later.' },
       { name: 'GitHub Actions → GitHub Pages', why: 'Push to main, site rebuilds. No CI/CD config to maintain.' },
     ],
 
     overview:
-      'Mini Pancake Co. is a small mini pancake business in Mazatlán, Mexico. v1 was a 5-page vanilla HTML/Bootstrap college site — pretty, static, useless for the actual business. v2 is a full React single-page application: product catalog with cart, WhatsApp-integrated checkout, a 5-step event booking wizard for parties, and an admin dashboard. Two real revenue streams (retail orders + party packages) running off one codebase.',
+      'Mini Pancake Co. is a small mini pancake business in Mazatlán, Mexico. v1 was a 5-page vanilla HTML/Bootstrap college site, pretty, static, useless for the actual business. v2 is a full React single-page application: product catalog with cart, WhatsApp-integrated checkout, a 5-step event booking wizard for parties, and an admin dashboard. Two real revenue streams (retail orders + party packages) running off one codebase.',
     problem:
-      'The college version had no commerce, no booking, no admin — just five static pages. The owner was managing every order over WhatsApp manually, with no way to show packages, take party reservations, or track what had been confirmed. The site looked nice and did nothing.',
+      'The college version had no commerce, no booking, no admin, just five static pages. The owner was managing every order over WhatsApp manually, with no way to show packages, take party reservations, or track what had been confirmed. The site looked nice and did nothing.',
     goal:
-      'Ship two products from one codebase: a working e-commerce shop with cart and WhatsApp checkout, and a 5-step event booking wizard for party packages — both with a private admin dashboard so the owner can actually run the business from the site.',
+      'Ship two products from one codebase: a working e-commerce shop with cart and WhatsApp checkout, and a 5-step event booking wizard for party packages, both with a private admin dashboard so the owner can actually run the business from the site.',
     hypothesis:
-      'WhatsApp is already the channel — fighting it is the wrong move. If the cart submits a pre-formatted WhatsApp message instead of a payment, customers stay in the channel they trust, the owner keeps her workflow, and the site becomes the storefront and order builder rather than another tool to manage.',
+      'WhatsApp is already the channel, fighting it is the wrong move. If the cart submits a pre-formatted WhatsApp message instead of a payment, customers stay in the channel they trust, the owner keeps her workflow, and the site becomes the storefront and order builder rather than another tool to manage.',
 
     research: {
       methods: [
@@ -132,19 +132,19 @@ export const projects: Project[] = [
       ],
       participants: 'Owner + informal testing on the booking flow with 5 friends/family',
       keyFindings: [
-        'The original was 5 static HTML pages — index, menu, partypack, about, contact — nothing was interactive',
-        'Every existing order already happened over WhatsApp — replacing that flow would lose customers, not help them',
+        'The original was 5 static HTML pages, index, menu, partypack, about, contact, nothing was interactive',
+        'Every existing order already happened over WhatsApp, replacing that flow would lose customers, not help them',
         'Party bookings (50/75/100 guests) were a real revenue stream with no system to manage them',
-        'Owner had no way to see pending vs confirmed bookings — everything lived in chat history',
+        'Owner had no way to see pending vs confirmed bookings, everything lived in chat history',
         'Shopify-style product detail with topping pickers (2–3 selections) was the right pattern for the menu',
       ],
     },
 
     insights: [
       { label: 'Don\'t fight the channel',
-        detail: 'Customers already buy through WhatsApp. The cart\'s job isn\'t to replace WhatsApp — it\'s to build a clean order, then hand off into the conversation customers were going to have anyway.' },
+        detail: 'Customers already buy through WhatsApp. The cart\'s job isn\'t to replace WhatsApp, it\'s to build a clean order, then hand off into the conversation customers were going to have anyway.' },
       { label: 'Two products, one app',
-        detail: 'Retail orders and party bookings are different shapes — one is a cart, the other is a wizard with date/time + guest count. Same brand, same tokens, separate flows.' },
+        detail: 'Retail orders and party bookings are different shapes, one is a cart, the other is a wizard with date/time + guest count. Same brand, same tokens, separate flows.' },
       { label: 'The owner needs an admin',
         detail: 'Without a dashboard, the site is a marketing brochure. Adding stats, booking CRUD, and package overview is what turned it into a real business tool.' },
       { label: 'Tokens scale with the brand',
@@ -172,22 +172,22 @@ export const projects: Project[] = [
 
     wireframes: [
       { phase: 'Lo-fi',
-        description: 'Mapped the two parallel flows on paper — retail (cart-based) and event (wizard-based) — then sketched the admin IA so all three shared the same component primitives. Decided HashRouter for GitHub Pages compatibility.' },
+        description: 'Mapped the two parallel flows on paper, retail (cart-based) and event (wizard-based), then sketched the admin IA so all three shared the same component primitives. Decided HashRouter for GitHub Pages compatibility.' },
       { phase: 'Mid-fi',
         description: 'Built the design tokens (brand orange + peach + rose + neutrals), then composed atoms (Button, Input, Card, Badge) and the two flows from those primitives. Validated the WhatsApp pre-fill flow end-to-end.' },
       { phase: 'Hi-fi',
-        description: 'Layered Framer Motion across the app — page transitions, animated cart drawer, scroll reveals via AnimatedSection, modal entrances. Wired the admin dashboard to localStorage with full booking CRUD. Deployed via GitHub Actions.' },
+        description: 'Layered Framer Motion across the app, page transitions, animated cart drawer, scroll reveals via AnimatedSection, modal entrances. Wired the admin dashboard to localStorage with full booking CRUD. Deployed via GitHub Actions.' },
     ],
 
     iterations: [
-      { version: 'v1', title: 'Vanilla HTML + Bootstrap — 5 static pages',
-        insight: 'The college version had index.html, menu.html, partypack.html, about.html, contact.html. All static. Adding a product or changing a price meant editing HTML directly. There was no order capture at all — just phone numbers and WhatsApp links.',
+      { version: 'v1', title: 'Vanilla HTML + Bootstrap, 5 static pages',
+        insight: 'The college version had index.html, menu.html, partypack.html, about.html, contact.html. All static. Adding a product or changing a price meant editing HTML directly. There was no order capture at all, just phone numbers and WhatsApp links.',
         change:  'Decision: keep the brand and the WhatsApp habit, throw out the implementation. Restart in React with HashRouter (so GitHub Pages would serve it correctly), Context for state, and localStorage for persistence.' },
       { version: 'v2', title: 'React shop, no checkout integration',
-        insight: 'Got the product grid, search, sort, detail modal, and cart working — but checkout was a generic submit form. Owner pushed back: "Customers don\'t use forms. They WhatsApp." The cart was a dead end without honoring the real channel.',
+        insight: 'Got the product grid, search, sort, detail modal, and cart working, but checkout was a generic submit form. Owner pushed back: "Customers don\'t use forms. They WhatsApp." The cart was a dead end without honoring the real channel.',
         change:  'Replaced the checkout submit with a WhatsApp deep link that pre-fills the message: items, toppings, quantities, total. One tap, customer lands in the existing chat, owner workflow unchanged. Cart became an order builder, not a payment form.' },
       { version: 'v3', title: 'Booking wizard + admin dashboard',
-        insight: 'The shop covered retail. Party bookings — the higher-revenue flow — still went through DMs with no structure. And the owner had no view of confirmed vs pending bookings. The site was half a product.',
+        insight: 'The shop covered retail. Party bookings, the higher-revenue flow, still went through DMs with no structure. And the owner had no view of confirmed vs pending bookings. The site was half a product.',
         change:  'Built the 5-step booking wizard (Package → Date+Time → Event details → Contact → Review) with a 7-day-minimum date picker. Added the password-gated admin at /#/admin: stat tiles (Total / Pending / Confirmed / Revenue), bookings table with confirm/cancel/delete, and a packages overview. Shipped.' },
     ],
 
@@ -200,7 +200,7 @@ export const projects: Project[] = [
         '#FFF6EE (brand-50 / page tint)',
         '#1A1714 (neutral-900 / ink)',
       ],
-      typography: 'Nunito (display, 700–900) + Inter (body, 300–600) — rounded warmth for the brand voice, neutral sans for product detail and forms',
+      typography: 'Nunito (display, 700–900) + Inter (body, 300–600), rounded warmth for the brand voice, neutral sans for product detail and forms',
       components: [
         'Atoms: Button (brand shadow), Input, Badge, Card',
         'Shop: ProductCard, ProductModal (topping picker), CartDrawer, CartBadge',
@@ -221,14 +221,14 @@ export const projects: Project[] = [
     ],
 
     learnings: [
-      'Build with the channel, not against it. WhatsApp checkout sounds unconventional but matches how customers actually buy — and the result is higher conversion than forcing a card form into a small-business context.',
+      'Build with the channel, not against it. WhatsApp checkout sounds unconventional but matches how customers actually buy, and the result is higher conversion than forcing a card form into a small-business context.',
       'Two flows, one design system. Encoding the brand into Tailwind tokens once let the e-commerce, the booking wizard, and the admin all stay visually consistent without re-deciding anything per screen.',
       'A site without an admin is just a brochure. The moment a small business has any real volume, the dashboard is what turns the site into a tool they can actually run revenue through.',
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // 2 · BEYOND SKINCARE — Design System
+  // 2 · BEYOND SKINCARE, Design System
   // ─────────────────────────────────────────────────────────────────────
   {
     id:   'beyond-skincare',
@@ -236,7 +236,7 @@ export const projects: Project[] = [
     title: 'BEYOND Skincare',
     category: 'Design System · Component Library',
     shortDescription:
-      'A production-grade design system for a skincare brand — 20+ atomic components, design tokens, full dark/light theming, and WCAG 2.1 AA compliance. Built with React, TypeScript, and Tailwind.',
+      'A production-grade design system for a skincare brand, 20+ atomic components, design tokens, full dark/light theming, and WCAG 2.1 AA compliance. Built with React, TypeScript, and Tailwind.',
     role: 'Design System Lead · Designer & Developer',
     year: '2024',
     duration: '12 weeks',
@@ -248,7 +248,7 @@ export const projects: Project[] = [
     liveLabel: 'View BEYOND Site',
 
     images: [
-      { src: '/projects/beyond-skincare/screen-1.png', alt: 'BEYOND design system — button variants in primary, secondary, and CTA styles', caption: 'Component library — button variants across all states' },
+      { src: '/projects/beyond-skincare/screen-1.png', alt: 'BEYOND design system, button variants in primary, secondary, and CTA styles', caption: 'Component library, button variants across all states' },
       { src: '/projects/beyond-skincare/screen-2.png', alt: 'Light and dark theme comparison of the same product card',                    caption: 'Token-driven light and dark theme comparison'           },
       { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel with contrast checker and component checklist', caption: 'WCAG 2.1 AA compliance audit panel'                     },
     ],
@@ -256,11 +256,11 @@ export const projects: Project[] = [
     overview:
       'BEYOND is a skincare brand design system built to scale across marketing pages, product detail pages, and editorial content. Instead of shipping one website, I designed a system: atomic components, tokenised styling, documented usage rules, and a sample brand site that proves the system works end-to-end. It ships as a live React + TypeScript application with interactive documentation and is deployed via GitHub Actions to GitHub Pages.',
     problem:
-      'Brand sites often start clean and decay fast. Colours drift, spacing stops being consistent, accessibility gets patched in later, and components get forked for one-off pages. The first BEYOND explorations suffered from the same thing — no token layer, no component reuse rules, and no way for a future teammate to ship on-brand UI without reinventing it.',
+      'Brand sites often start clean and decay fast. Colours drift, spacing stops being consistent, accessibility gets patched in later, and components get forked for one-off pages. The first BEYOND explorations suffered from the same thing, no token layer, no component reuse rules, and no way for a future teammate to ship on-brand UI without reinventing it.',
     goal:
       'Build a design system that enforces the brand visually and technically: one source of truth for tokens, one component library for UI, built-in dark/light theming, and a documentation site that doubles as a live sandbox.',
     hypothesis:
-      'If the brand language is encoded as design tokens and composable components — atoms, molecules, organisms — a single designer-developer can ship a full website, a documentation site, and a theming layer in one codebase without the UI fragmenting over time.',
+      'If the brand language is encoded as design tokens and composable components, atoms, molecules, organisms, a single designer-developer can ship a full website, a documentation site, and a theming layer in one codebase without the UI fragmenting over time.',
 
     research: {
       methods: [
@@ -272,17 +272,17 @@ export const projects: Project[] = [
       ],
       participants: 'Instructor + classmate reviewers + self-directed research',
       keyFindings: [
-        'Successful systems separate brand tokens from component logic — the two should be independently versionable',
+        'Successful systems separate brand tokens from component logic, the two should be independently versionable',
         'Dark mode breaks when colour is hardcoded; it works when every colour goes through a semantic token',
         'Atomic design scales better than flat component lists when the library grows past ~15 components',
-        'Interactive docs beat static docs — developers copy working code, not screenshots',
+        'Interactive docs beat static docs, developers copy working code, not screenshots',
         'WCAG 2.1 AA has to be designed in from the start; retrofitting contrast and focus states is 3× the work',
       ],
     },
 
     insights: [
       { label: 'Tokens before components',
-        detail: 'The system has to start with a tokens layer — colours, typography, spacing, shadows, radii. Components consume tokens. That split is what lets dark mode, rebrands, and theming work without touching component code.' },
+        detail: 'The system has to start with a tokens layer, colours, typography, spacing, shadows, radii. Components consume tokens. That split is what lets dark mode, rebrands, and theming work without touching component code.' },
       { label: 'Atomic design actually holds up',
         detail: 'Splitting into atoms / molecules / organisms made the library easier to reason about as it grew to 20+ components. Each layer has a clear job.' },
       { label: 'Docs are product',
@@ -294,7 +294,7 @@ export const projects: Project[] = [
     persona: {
       name: 'Maya, 29',
       role: 'Frontend Developer on the BEYOND team',
-      bio:  'Maya ships landing pages and campaign sites for BEYOND on a two-week cadence. She doesn\'t want to pick colours or re-derive spacing every sprint — she wants a library to import from and clear rules for when to use what.',
+      bio:  'Maya ships landing pages and campaign sites for BEYOND on a two-week cadence. She doesn\'t want to pick colours or re-derive spacing every sprint, she wants a library to import from and clear rules for when to use what.',
       goals: [
         'Ship on-brand pages without pulling a designer in for every decision',
         'Trust that dark mode and accessibility already work',
@@ -312,11 +312,11 @@ export const projects: Project[] = [
 
     wireframes: [
       { phase: 'Lo-fi',
-        description: 'Mapped the token architecture on paper first — colour scales, type scale, spacing scale, shadow scale, radii. Sketched the documentation IA: six top-level docs categories plus a sample brand site.' },
+        description: 'Mapped the token architecture on paper first, colour scales, type scale, spacing scale, shadow scale, radii. Sketched the documentation IA: six top-level docs categories plus a sample brand site.' },
       { phase: 'Mid-fi',
         description: 'Built the token layer in code (src/tokens) before any components existed. Wired Tailwind to consume the tokens. Mid-fi UI sketches for each atomic component with variant matrices.' },
       { phase: 'Hi-fi',
-        description: 'Shipped the full component library — atoms, molecules, organisms — plus the BEYOND sample site using only system components. Deployed via GitHub Actions to GitHub Pages.' },
+        description: 'Shipped the full component library, atoms, molecules, organisms, plus the BEYOND sample site using only system components. Deployed via GitHub Actions to GitHub Pages.' },
     ],
 
     iterations: [
@@ -340,7 +340,7 @@ export const projects: Project[] = [
         '#111827 (Neutral ink)',
         '#fafbfc (Neutral surface)',
       ],
-      typography: 'Open Sans (UI + body) + JetBrains Mono (code) — 15-step type scale from label-sm (11px) through display-lg (clamp 40→64px)',
+      typography: 'Open Sans (UI + body) + JetBrains Mono (code), 15-step type scale from label-sm (11px) through display-lg (clamp 40→64px)',
       components: [
         'Atoms: Button, IconButton, Input, Badge, Avatar, Tag',
         'Molecules: FormField, SearchBar, ProductCard, Toast, Tabs',
@@ -361,14 +361,14 @@ export const projects: Project[] = [
     ],
 
     learnings: [
-      'A design system only holds together if tokens come first. Everything else — theming, accessibility, rebrands — becomes easier the moment you stop hardcoding values in components.',
+      'A design system only holds together if tokens come first. Everything else, theming, accessibility, rebrands, becomes easier the moment you stop hardcoding values in components.',
       'Atomic design is not academic. Once a library passes ~15 components, splitting into atoms, molecules, and organisms starts paying back in clarity.',
       'Documentation is part of the product. Interactive docs that show live components plus their code lower the friction for anyone building on top of the system.',
     ],
   },
 
   // ─────────────────────────────────────────────────────────────────────
-  // 3 · BEAUTY BY AMY — Booking Platform
+  // 3 · BEAUTY BY AMY, Booking Platform
   // ─────────────────────────────────────────────────────────────────────
   {
     id:   'beauty-by-amy',
@@ -376,7 +376,7 @@ export const projects: Project[] = [
     title: 'Beauty by Amy',
     category: 'Booking Platform · Full-Stack Frontend',
     shortDescription:
-      'A complete React rebuild of a 4-page college project into a production booking platform — 5-step wizard, admin dashboard with full CRUD, dark mode, and a Framer Motion-driven motion system.',
+      'A complete React rebuild of a 4-page college project into a production booking platform, 5-step wizard, admin dashboard with full CRUD, dark mode, and a Framer Motion-driven motion system.',
     role: 'Designer & Frontend Engineer · Solo',
     year: '2024',
     duration: '8 weeks',
@@ -388,19 +388,19 @@ export const projects: Project[] = [
     liveLabel: 'View Beauty by Amy Site',
 
     images: [
-      { src: '/projects/beauty-by-amy/screen-1.png', alt: 'Beauty by Amy service selection grid', caption: 'Service selection — step 1 of 5'              },
-      { src: '/projects/beauty-by-amy/screen-2.png', alt: 'Date and time picker with calendar',   caption: 'Calendar booking — date and time picker'      },
-      { src: '/projects/beauty-by-amy/screen-3.png', alt: 'Admin daily appointments dashboard',    caption: 'Admin dashboard — daily appointments view'    },
+      { src: '/projects/beauty-by-amy/screen-1.png', alt: 'Beauty by Amy service selection grid', caption: 'Service selection, step 1 of 5'              },
+      { src: '/projects/beauty-by-amy/screen-2.png', alt: 'Date and time picker with calendar',   caption: 'Calendar booking, date and time picker'      },
+      { src: '/projects/beauty-by-amy/screen-3.png', alt: 'Admin daily appointments dashboard',    caption: 'Admin dashboard, daily appointments view'    },
     ],
 
     overview:
       'Beauty by Amy started as a four-page vanilla HTML/CSS school project for an independent nail technician. v2.0 is a full rebuild into a production-ready React app with a 5-step booking wizard, a password-gated admin dashboard, dark/light theming, and a comprehensive motion system. The same brand, but engineered for an actual business to run on.',
     problem:
-      'The original site looked like what it was — a course assignment. Static pages, no booking, no way for Amy to manage her schedule, no mobile parity. Inquiries lived in DMs and texts. There was no system, just a pretty wrapper around manual coordination.',
+      'The original site looked like what it was, a course assignment. Static pages, no booking, no way for Amy to manage her schedule, no mobile parity. Inquiries lived in DMs and texts. There was no system, just a pretty wrapper around manual coordination.',
     goal:
-      'Ship a real product. Public site that earns trust on first impression, a booking flow Amy\'s clients can complete on a phone in under two minutes, and an admin layer Amy can actually run her appointments from — all in one codebase, fully responsive, fully accessible.',
+      'Ship a real product. Public site that earns trust on first impression, a booking flow Amy\'s clients can complete on a phone in under two minutes, and an admin layer Amy can actually run her appointments from, all in one codebase, fully responsive, fully accessible.',
     hypothesis:
-      'A mobile-first booking wizard with progressive disclosure, an admin dashboard built from the same component library, and a token-driven design system will turn a static portfolio site into something Amy can use as her actual business backend — without needing a dedicated booking SaaS.',
+      'A mobile-first booking wizard with progressive disclosure, an admin dashboard built from the same component library, and a token-driven design system will turn a static portfolio site into something Amy can use as her actual business backend, without needing a dedicated booking SaaS.',
 
     research: {
       methods: [
@@ -412,9 +412,9 @@ export const projects: Project[] = [
       ],
       participants: 'Amy (the client) + informal usability checks on the booking flow with 5 friends/family in the target demographic',
       keyFindings: [
-        'The v1 was a 4-page static site — no booking system at all, no admin, nothing persistent',
+        'The v1 was a 4-page static site, no booking system at all, no admin, nothing persistent',
         'Successful booking products use 3–5 step wizards, not single-page mega-forms',
-        'Service businesses need an admin dashboard, not just a public site — bookings have to land somewhere',
+        'Service businesses need an admin dashboard, not just a public site, bookings have to land somewhere',
         'Motion design carries premium perception: page transitions, spring physics, staggered reveals',
         'Dark mode is now a baseline expectation for portfolio-grade work',
       ],
@@ -422,11 +422,11 @@ export const projects: Project[] = [
 
     insights: [
       { label: 'Two products, one codebase',
-        detail: 'A booking platform is really two apps — a public-facing site and an admin app. Building them from the same component library and design tokens kept the brand consistent and the build small.' },
+        detail: 'A booking platform is really two apps, a public-facing site and an admin app. Building them from the same component library and design tokens kept the brand consistent and the build small.' },
       { label: 'Persistence without a backend',
         detail: 'localStorage handles bookings, clients, and availability. Lets the demo work without infrastructure, while the architecture stays ready to swap in a real API.' },
       { label: 'Motion is part of the brand',
-        detail: 'Framer Motion isn\'t decoration — staggered reveals, spring buttons, page transitions are what makes the experience feel premium instead of generic.' },
+        detail: 'Framer Motion isn\'t decoration, staggered reveals, spring buttons, page transitions are what makes the experience feel premium instead of generic.' },
       { label: 'Tokens travel further than CSS',
         detail: 'Encoding brand color and spacing into Tailwind tokens meant dark mode, hover states, focus rings, and the entire admin layer all stayed on-brand without me re-deciding anything.' },
     ],
@@ -434,7 +434,7 @@ export const projects: Project[] = [
     persona: {
       name: 'Camila, 31',
       role: 'Long-time client booking on her phone',
-      bio:  'Camila found Amy through Instagram. She wants to book a fill in under two minutes from her phone between meetings. She\'s used to Fresha and won\'t tolerate friction — slow loads, hidden pricing, or having to text to confirm.',
+      bio:  'Camila found Amy through Instagram. She wants to book a fill in under two minutes from her phone between meetings. She\'s used to Fresha and won\'t tolerate friction, slow loads, hidden pricing, or having to text to confirm.',
       goals: [
         'Book in under two minutes on a phone',
         'See pricing and duration upfront before committing',
@@ -452,19 +452,19 @@ export const projects: Project[] = [
 
     wireframes: [
       { phase: 'Lo-fi',
-        description: 'Sketched the 5-step wizard and the admin IA in parallel — wanted to make sure the same component primitives served both. Mapped out booking states and admin tabs side by side.' },
+        description: 'Sketched the 5-step wizard and the admin IA in parallel, wanted to make sure the same component primitives served both. Mapped out booking states and admin tabs side by side.' },
       { phase: 'Mid-fi',
         description: 'Built the design tokens and core atoms (Button, Input, Card, Badge) in Tailwind first, then composed the booking step screens and the dashboard layout from those primitives.' },
       { phase: 'Hi-fi',
-        description: 'Layered Framer Motion across the entire app — page transitions, scroll reveals, spring hover states. Added dark mode via a single Tailwind class. Tested full flow on real devices before deploy.' },
+        description: 'Layered Framer Motion across the entire app, page transitions, scroll reveals, spring hover states. Added dark mode via a single Tailwind class. Tested full flow on real devices before deploy.' },
     ],
 
     iterations: [
-      { version: 'v1', title: 'Vanilla HTML/CSS — 4 static pages',
+      { version: 'v1', title: 'Vanilla HTML/CSS, 4 static pages',
         insight: 'The college version had no booking, no persistence, no admin. Beautiful as a layout exercise, useless as a product. Every interaction was a phone call.',
         change:  'Decision: throw out the implementation, keep the brand. Restart in React with a real architecture: routing, context, persistence, and an admin layer from day one.' },
-      { version: 'v2', title: 'React rebuild — wizard, no motion',
-        insight: 'Got the 5-step wizard working with bare components. Functionally complete but felt mechanical — every page change was a hard cut. The brand promise was "premium", the experience felt like a form.',
+      { version: 'v2', title: 'React rebuild, wizard, no motion',
+        insight: 'Got the 5-step wizard working with bare components. Functionally complete but felt mechanical, every page change was a hard cut. The brand promise was "premium", the experience felt like a form.',
         change:  'Layered Framer Motion across the app: page transitions with custom easing, staggered scroll reveals, spring physics on buttons, animated success state. Same logic, completely different feel.' },
       { version: 'v3', title: 'Admin dashboard + dark mode',
         insight: 'Public site shipping was only half the product. Without an admin layer, Amy still had to track bookings in a notebook. And dark mode had become a baseline expectation for portfolio work.',
@@ -480,7 +480,7 @@ export const projects: Project[] = [
         '#F5F3F1 (warm-100 / alt sections)',
         '#1A1714 (warm-900 / primary text)',
       ],
-      typography: 'Playfair Display (display headings) + DM Sans (UI + body) — editorial serif for brand moments, neutral sans for everything functional',
+      typography: 'Playfair Display (display headings) + DM Sans (UI + body), editorial serif for brand moments, neutral sans for everything functional',
       components: [
         'Atoms: Button (spring), Input, Badge, Card, NavLink',
         'Booking: ServiceCard, DatePicker, TimeSlotGrid, ProgressStepper, SuccessState',
@@ -517,7 +517,7 @@ export const processSteps: ProcessStep[] = [
   {
     number: '01',
     title:  'Discover',
-    description: 'Listen before everything. Interviews, audits, recordings — find the actual problem.',
+    description: 'Listen before everything. Interviews, audits, recordings, find the actual problem.',
     detail: 'Methods vary by project: user interviews, contextual inquiry, surveys, heuristic evaluations, and analytics.',
   },
   {

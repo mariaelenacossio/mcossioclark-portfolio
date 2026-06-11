@@ -1,18 +1,37 @@
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
-import { processSteps } from '@/data/projects'
 
 /**
- * Process section.
+ * Editorial Bold MC — Process section.
  *
- * Per spec:
- *  - Background --color-mist
- *  - Eyebrow + headline (display-md) + subhead
- *  - 4 steps as a horizontal timeline desktop / vertical stack mobile
- *  - Each step: 48px circle (2px rule border, paper bg, coral number);
- *    on hover the circle fills coral and the number turns paper
- *  - Thin horizontal rule connects the circle midpoints (desktop)
- *  - Impact strip below with 4 stats
+ *  - bg-stone, py-28 md:py-36
+ *  - Eyebrow (coral) + Bebas display headline
+ *  - 4 paper-colored cards in a 2×2 grid (single col mobile),
+ *    each with a giant ghost number top-right
+ *  - Impact strip below: 4 stats with coral numbers
  */
+
+const STEPS = [
+  {
+    n: '01',
+    title: 'Discover',
+    body: 'Listen before everything. Interviews, audits, recordings. The actual problem is rarely in the brief.',
+  },
+  {
+    n: '02',
+    title: 'Define',
+    body: 'Turn raw research into a problem statement. Get alignment before opening Figma. Saves most of the revision cycles.',
+  },
+  {
+    n: '03',
+    title: 'Design',
+    body: 'Lo-fi first, always. Sketch, test early, find the gaps. By the time something looks polished it has been validated multiple times.',
+  },
+  {
+    n: '04',
+    title: 'Deliver',
+    body: "Clean specs, real handoffs, and code when it matters. When I build it I stay close until it's live.",
+  },
+] as const
 
 const IMPACT = [
   { value: '+34%', label: 'Conversion lift'   },
@@ -26,78 +45,52 @@ export default function Process() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="bg-mist"
+      className="bg-stone py-28 md:py-36"
     >
-      <div className="container-content section">
-        {/* Header */}
-        <ScrollReveal>
-          <p className="eyebrow text-caption">Process</p>
-        </ScrollReveal>
+      <div className="container-content">
 
-        <ScrollReveal delay={0.05}>
+        <ScrollReveal>
+          <span className="font-body text-caption uppercase tracking-widest text-coral">
+            Process
+          </span>
           <h2
             id="process-heading"
-            className="mt-4 font-display text-display-md font-semibold text-ink"
+            className="mt-3 font-display text-display uppercase leading-none text-ink"
           >
-            Same process every time. Because it works.
+            The process is boring on purpose. The results aren&apos;t.
           </h2>
-        </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <p className="mt-5 max-w-2xl font-body text-body-lg text-muted">
-            Understand the problem before touching Figma. Validate before
-            building. Stay close through delivery.
-          </p>
-        </ScrollReveal>
-
-        {/* Steps — horizontal timeline */}
-        <div className="relative mt-16">
-          {/* Connecting rule, runs through the midpoints of the circles.
-              Hidden on mobile (vertical stack). */}
-          <div
-            className="absolute left-0 right-0 hidden h-px bg-rule md:block"
-            style={{ top: '24px' /* half of 48px circle */ }}
-            aria-hidden="true"
-          />
-
-          <div className="grid gap-10 md:grid-cols-4 md:gap-6">
-            {processSteps.map((step, i) => (
-              <ScrollReveal key={step.number} delay={0.1 + i * 0.08}>
-                <div className="group relative">
-                  {/* Circle */}
-                  <div
-                    className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-rule bg-paper transition-colors duration-150 group-hover:border-coral group-hover:bg-coral"
-                  >
-                    <span className="font-display font-semibold text-coral transition-colors duration-150 group-hover:text-paper">
-                      {step.number}
-                    </span>
-                  </div>
-
-                  {/* Step content */}
-                  <h3 className="mt-5 font-display text-[1.125rem] font-semibold text-ink">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 max-w-[220px] font-body text-body text-muted">
-                    {step.description}
-                  </p>
-                </div>
-              </ScrollReveal>
+          {/* 4 cards — 2×2 grid on desktop */}
+          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {STEPS.map(s => (
+              <article
+                key={s.n}
+                className="relative overflow-hidden rounded-2xl bg-paper p-8"
+              >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-6 top-4 select-none font-display text-[5rem] leading-none text-ink/5"
+                >
+                  {s.n}
+                </span>
+                <h3 className="relative font-display text-title uppercase leading-none text-ink">
+                  {s.title}
+                </h3>
+                <p className="relative mt-3 font-body text-body text-ghost">
+                  {s.body}
+                </p>
+              </article>
             ))}
           </div>
-        </div>
 
-        {/* Impact strip */}
-        <ScrollReveal delay={0.4}>
-          <div className="mt-16 flex flex-wrap items-stretch divide-x divide-rule overflow-hidden rounded-card border border-rule bg-paper">
+          {/* Impact strip */}
+          <div className="mt-10 grid grid-cols-2 gap-6 rounded-2xl bg-paper p-8 md:grid-cols-4">
             {IMPACT.map(s => (
-              <div
-                key={s.label}
-                className="flex flex-1 flex-col gap-1 px-6 py-6 min-w-[140px]"
-              >
-                <span className="font-display text-[1.5rem] font-bold leading-none text-ink">
+              <div key={s.label}>
+                <span className="block font-display text-[2.5rem] leading-none text-coral">
                   {s.value}
                 </span>
-                <span className="font-body text-caption uppercase text-caption">
+                <span className="mt-1 block font-body text-caption uppercase tracking-wider text-ghost">
                   {s.label}
                 </span>
               </div>
