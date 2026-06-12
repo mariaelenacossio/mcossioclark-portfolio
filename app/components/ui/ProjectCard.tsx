@@ -19,9 +19,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       aria-label={`Read case study: ${project.title}`}
       className="group block overflow-hidden rounded-2xl bg-mist shadow-warm transition-all duration-300 hover:-translate-y-2 hover:shadow-warm-hover no-underline"
     >
-      {/* Image */}
+      {/* Image — 16/10 matches the 1280x800 mockup screenshots, so the
+          full frame shows instead of a cropped top slice */}
       <div
-        className="relative h-60 overflow-hidden"
+        className="relative aspect-[16/10] overflow-hidden"
         style={{ backgroundColor: project.brand + '15' }}
       >
         {project.images?.[0] && (
@@ -29,7 +30,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             src={project.images[0].src}
             alt={project.title}
             fill
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         )}

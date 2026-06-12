@@ -46,15 +46,15 @@ export default function About() {
                 id="about-heading"
                 className="mt-3 max-w-[480px] font-display text-display italic leading-tight text-ink"
               >
-                I got into design because I was bad at handing off.
+                I design with code in mind, because I write it too.
               </h2>
 
               <div className="mt-6 max-w-[460px] space-y-4 font-body text-body leading-relaxed text-ghost">
                 <p>
-                  Seriously. Early on I kept watching my designs come back from dev
-                  looking nothing like what I intended. So I learned to code. Not
-                  enough to talk to developers, actually enough to ship production
-                  React. That changed everything.
+                  Early on I kept watching my designs come back from dev looking
+                  nothing like what I intended. So I learned to code properly. Not
+                  enough to talk to developers, enough to ship production React.
+                  That changed how I design.
                 </p>
                 <p>
                   I&apos;ve worked across e-commerce, SaaS, and service businesses.
