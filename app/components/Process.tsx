@@ -1,99 +1,91 @@
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
+import CountUpStat from '@/app/components/ui/CountUpStat'
 
 /**
- * Editorial Bold MC - Process section.
- *
- *  - bg-stone, py-28 md:py-36
- *  - Eyebrow (coral) + Bebas display headline
- *  - 4 paper-colored cards in a 2×2 grid (single col mobile),
- *    each with a giant ghost number top-right
- *  - Impact strip below: 4 stats with coral numbers
+ * Process. Paper background, four mist cards with ghost numbers as
+ * texture, impact strip with count-up stats below.
  */
 
 const STEPS = [
   {
-    n: '01',
-    title: 'Discover',
-    body: 'Listen before everything. Interviews, audits, recordings. The actual problem is rarely in the brief.',
+    number: '01', title: 'Discover',
+    body: 'Listen first. Interviews, recordings, analytics. The actual problem is rarely the stated one.',
   },
   {
-    n: '02',
-    title: 'Define',
-    body: 'Turn raw research into a problem statement. Get alignment before opening Figma. Saves most of the revision cycles.',
+    number: '02', title: 'Define',
+    body: 'Turn the research into something everyone agrees on before opening Figma. Saves most of the revision cycles.',
   },
   {
-    n: '03',
-    title: 'Design',
-    body: 'Lo-fi first, always. Sketch, test early, find the gaps. By the time something looks polished it has been validated multiple times.',
+    number: '03', title: 'Design',
+    body: 'Lo-fi first, every time. Test early, find the gaps, then refine. By the time it looks polished it has been validated.',
   },
   {
-    n: '04',
-    title: 'Deliver',
-    body: "Clean specs, real handoffs, and code when it matters. When I build it I stay close until it's live.",
+    number: '04', title: 'Deliver',
+    body: 'Clean specs, annotated files, and code when the handoff actually matters. I stay close until it is live.',
   },
 ] as const
 
-const IMPACT = [
-  { value: '+34%', label: 'Conversion lift'   },
-  { value: '+52%', label: 'Booking growth'    },
-  { value: '94%',  label: 'WCAG compliance'   },
-  { value: '20+',  label: 'Projects shipped'  },
-]
+const STATS = [
+  { value: '+34%', label: 'Conversion lift'  },
+  { value: '+52%', label: 'Booking growth'   },
+  { value: '94%',  label: 'WCAG compliance'  },
+  { value: '20+',  label: 'Projects shipped' },
+] as const
 
 export default function Process() {
   return (
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="bg-stone py-28 md:py-36"
+      className="bg-paper py-24 md:py-32"
     >
       <div className="container-content">
-
         <ScrollReveal>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
             Process
           </span>
+
           <h2
             id="process-heading"
-            className="mt-3 font-display text-display uppercase leading-none text-ink"
+            className="mt-3 font-display text-display italic leading-tight text-ink"
           >
-            The process is boring on purpose. The results aren&apos;t.
+            Same four steps every time. Boring on purpose.
           </h2>
 
-          {/* 4 cards - 2×2 grid on desktop */}
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {STEPS.map(s => (
-              <article
-                key={s.n}
-                className="relative overflow-hidden rounded-2xl bg-paper p-8"
+          <p className="mt-4 max-w-[420px] font-body text-body-lg leading-relaxed text-ghost">
+            The results are less boring.
+          </p>
+
+          {/* Four cards */}
+          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {STEPS.map(step => (
+              <div
+                key={step.number}
+                className="relative overflow-hidden rounded-2xl bg-mist p-8"
               >
+                {/* Ghost step number */}
                 <span
+                  className="pointer-events-none absolute right-6 top-5 select-none font-display text-[4.5rem] italic leading-none text-ink/5"
                   aria-hidden="true"
-                  className="pointer-events-none absolute right-6 top-4 select-none font-display text-[5rem] leading-none text-ink/5"
                 >
-                  {s.n}
+                  {step.number}
                 </span>
-                <h3 className="relative font-display text-title uppercase leading-none text-ink">
-                  {s.title}
+
+                <h3 className="font-display text-title italic leading-tight text-ink">
+                  {step.title}
                 </h3>
-                <p className="relative mt-3 font-body text-body text-ghost">
-                  {s.body}
+
+                <p className="mt-3 max-w-[320px] font-body text-body leading-relaxed text-ghost">
+                  {step.body}
                 </p>
-              </article>
+              </div>
             ))}
           </div>
 
-          {/* Impact strip */}
-          <div className="mt-10 grid grid-cols-2 gap-6 rounded-2xl bg-paper p-8 md:grid-cols-4">
-            {IMPACT.map(s => (
-              <div key={s.label}>
-                <span className="block font-display text-[2.5rem] leading-none text-coral">
-                  {s.value}
-                </span>
-                <span className="mt-1 block font-body text-caption uppercase tracking-wider text-ghost">
-                  {s.label}
-                </span>
-              </div>
+          {/* Impact strip with count-up */}
+          <div className="mt-10 grid grid-cols-2 gap-6 rounded-2xl bg-mist p-8 text-center md:grid-cols-4">
+            {STATS.map(stat => (
+              <CountUpStat key={stat.label} value={stat.value} label={stat.label} />
             ))}
           </div>
         </ScrollReveal>

@@ -68,7 +68,7 @@ export default function CaseStudyTOC({ items }: CaseStudyTOCProps) {
       <p className="font-body text-caption uppercase tracking-widest text-coral">
         On this page
       </p>
-      <ul role="list" className="mt-4 flex flex-col gap-2.5 border-l border-stone pl-4">
+      <ul role="list" className="mt-4 flex flex-col gap-2.5 border-l border-line pl-4">
         {items.map(item => {
           const isActive = active === item.id
           return (

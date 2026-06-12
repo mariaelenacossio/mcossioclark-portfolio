@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
@@ -10,101 +8,67 @@ interface ProjectCardProps {
 }
 
 /**
- * Editorial Bold MC project card.
- *
- *  - Dark card surface on the Work grid's dark ink background
- *  - Real mockup image (first project image) header, brand-tinted bg
- *  - Card content: year + category pills, Bebas title, body description,
- *    2 metric tiles, 3 tags, "Read case study →" coral footer
- *  - Hover: card lifts -8px, image scales 1.05, title shifts to coral
+ * Project card. Mist surface, warm shadow, real screenshot at the top
+ * (brand-tint fallback), italic serif title that warms to coral on
+ * hover. Whole card lifts on hover; image scales gently.
  */
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const { brand } = project
-  const brandTint = `${brand}15` // 8% alpha background behind the image
-
   return (
     <Link
-      href={`/case-studies/${project.slug}`}
+      href={`/case-studies/${project.id}`}
       aria-label={`Read case study: ${project.title}`}
-      className="group block overflow-hidden rounded-2xl bg-card no-underline transition-transform duration-300 hover:-translate-y-2"
+      className="group block overflow-hidden rounded-2xl bg-mist shadow-warm transition-all duration-300 hover:-translate-y-2 hover:shadow-warm-hover no-underline"
     >
-      {/* Image header */}
+      {/* Image */}
       <div
-        className="relative h-52 overflow-hidden"
-        style={{ backgroundColor: brandTint }}
+        className="relative h-60 overflow-hidden"
+        style={{ backgroundColor: project.brand + '15' }}
       >
-        {project.images?.[0] ? (
+        {project.images?.[0] && (
           <Image
             src={project.images[0].src}
             alt={project.title}
             fill
-            className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="h-24 w-24 rounded-full opacity-40"
-              style={{ backgroundColor: brand }}
-            />
-          </div>
         )}
       </div>
 
       {/* Content */}
       <div className="p-6">
-        {/* Year + category pills */}
-        <div className="flex flex-wrap gap-2">
-          <span
-            className="rounded-full px-3 py-1 font-body text-caption"
-            style={{ color: project.brand, backgroundColor: brandTint }}
-          >
+        <div className="flex items-center gap-2">
+          <span className="font-body text-caption text-ghost">
             {project.year}
           </span>
-          <span className="rounded-full bg-paper/5 px-3 py-1 font-body text-caption text-ghost">
+          <span className="text-caption text-ghost/50" aria-hidden="true">·</span>
+          <span className="font-body text-caption text-ghost">
             {project.category}
           </span>
         </div>
 
-        {/* Title */}
-        <h3 className="mt-3 font-display text-title uppercase leading-none text-paper transition-colors duration-200 group-hover:text-coral">
+        <h3 className="mt-2 font-display text-title italic leading-tight text-ink transition-colors duration-200 group-hover:text-coral">
           {project.title}
         </h3>
 
-        {/* Description - clamped to 2 lines */}
-        <p
-          className="mt-2 font-body text-caption text-ghost"
-          style={{
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}
-        >
+        <p className="mt-2 line-clamp-2 font-body text-caption leading-relaxed text-ghost">
           {project.shortDescription}
         </p>
 
         {/* Metrics */}
-        <div className="mt-4 flex gap-3">
+        <div className="mt-5 flex gap-3">
           {project.metrics.slice(0, 2).map(m => (
-            <div key={m.label} className="rounded-lg bg-paper/5 px-4 py-2">
-              <span className="block font-display text-xl leading-none text-paper">{m.value}</span>
-              <span className="mt-1 block font-body text-[0.65rem] uppercase text-ghost">
-                {m.label}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {project.tags.slice(0, 3).map(t => (
-            <span
-              key={t}
-              className="rounded-full bg-paper/5 px-3 py-1 font-body text-[0.7rem] text-ghost"
+            <div
+              key={m.label}
+              className="flex-1 rounded-xl bg-paper px-4 py-2.5 text-center shadow-sm"
             >
-              {t}
-            </span>
+              <div className="font-display text-xl leading-none text-ink">
+                {m.value}
+              </div>
+              <div className="mt-1 font-body text-[0.7rem] text-ghost">
+                {m.label}
+              </div>
+            </div>
           ))}
         </div>
 
@@ -112,7 +76,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="mt-5 flex items-center gap-1.5 font-body text-sm font-medium text-coral">
           Read case study
           <ArrowRight
-            size={14}
+            size={13}
             aria-hidden="true"
             className="transition-transform duration-150 group-hover:translate-x-1"
           />

@@ -3,36 +3,19 @@ import { Search, Code2, Layers, Cpu } from 'lucide-react'
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC - About section.
- *
- *  - bg-paper, py-28 md:py-36
- *  - 2-col desktop, stacked mobile
- *  - Left: eyebrow + Bebas headline + 3 paragraphs + 4 stone pill tags
- *  - Right: profile photo (3:4) with availability pill floating
- *    bottom-left, plus a 2×2 pillar card grid below the photo
+ * About section. Mist background, honest personal story on the left,
+ * profile photo with availability pill + 2x2 pillar grid on the right.
  */
 
 const PILLARS = [
-  {
-    icon: Search,
-    title: 'Research first',
-    desc: 'Talk to users before touching Figma.',
-  },
-  {
-    icon: Code2,
-    title: 'Code fluency',
-    desc: "I know what's painful to build.",
-  },
-  {
-    icon: Layers,
-    title: 'Systems thinking',
-    desc: 'Components and tokens, not one-off screens.',
-  },
-  {
-    icon: Cpu,
-    title: 'AI direction',
-    desc: "I run agents. I don't just use tools.",
-  },
+  { Icon: Search, title: 'Research first',
+    body: 'Talk to users before Figma.' },
+  { Icon: Code2,  title: 'Code fluency',
+    body: 'I know what is painful to build.' },
+  { Icon: Layers, title: 'Systems thinking',
+    body: 'Tokens and components, not one-off screens.' },
+  { Icon: Cpu,    title: 'AI direction',
+    body: 'I run agents. I do not just use tools.' },
 ] as const
 
 const TAGS = [
@@ -47,34 +30,41 @@ export default function About() {
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="bg-paper py-28 md:py-36"
+      className="bg-mist py-24 md:py-32"
     >
       <div className="container-content">
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
+        <ScrollReveal>
+          <div className="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 
-          {/* Left column: copy */}
-          <div>
-            <ScrollReveal>
-              <span className="eyebrow font-body text-caption uppercase tracking-widest text-coral">
-                About
+            {/* Left: story */}
+            <div>
+              <span className="font-body text-caption uppercase tracking-widest text-coral">
+                About me
               </span>
 
               <h2
                 id="about-heading"
-                className="mt-4 font-display text-display uppercase leading-none text-ink"
+                className="mt-3 max-w-[480px] font-display text-display italic leading-tight text-ink"
               >
-                Most products fail in the space between the designer and the developer. I work in that space.
+                I got into design because I was bad at handing off.
               </h2>
 
-              <div className="mt-8 space-y-5 font-body text-body leading-relaxed text-ghost">
+              <div className="mt-6 max-w-[460px] space-y-4 font-body text-body leading-relaxed text-ghost">
                 <p>
-                  I&apos;m based in Vancouver. Before I open Figma I talk to users. Before I ship I read the code review. Four years of that has made me useful in rooms where most designers go quiet.
+                  Seriously. Early on I kept watching my designs come back from dev
+                  looking nothing like what I intended. So I learned to code. Not
+                  enough to talk to developers, actually enough to ship production
+                  React. That changed everything.
                 </p>
                 <p>
-                  I&apos;ve shipped e-commerce, SaaS dashboards, and service platforms. The brief is always wrong about something. Finding what before the build starts is the job.
+                  I&apos;ve worked across e-commerce, SaaS, and service businesses.
+                  The brief is almost always wrong about something. Finding out
+                  what before the build starts is most of the job.
                 </p>
                 <p>
-                  I run AI agents for research synthesis, prototype generation, and production code. Not because it&apos;s faster. Because it lets me work at a scale that used to take a team.
+                  I also run AI agents as part of how I work, for research synthesis,
+                  rapid prototyping, and production code. Not to go faster.
+                  To do things that used to take a team.
                 </p>
               </div>
 
@@ -82,59 +72,56 @@ export default function About() {
                 {TAGS.map(tag => (
                   <li
                     key={tag}
-                    className="rounded-full bg-stone px-4 py-1.5 font-body text-caption text-ink"
+                    className="rounded-full border border-line bg-paper px-4 py-1.5 font-body text-caption text-ink"
                   >
                     {tag}
                   </li>
                 ))}
               </ul>
-            </ScrollReveal>
-          </div>
+            </div>
 
-          {/* Right column: photo + pillar cards */}
-          <div>
-            <ScrollReveal delay={0.1}>
-              {/* Profile photo */}
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+            {/* Right: photo + pillars */}
+            <div>
+              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-warm">
                 <Image
                   src="/profile.jpg"
                   alt="Mariaelena Cossio Clark"
                   fill
                   className="object-cover object-top"
-                  priority
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
-                {/* Availability pill - floats bottom-left */}
-                <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-stone bg-paper/90 px-4 py-2 font-body text-caption text-ink backdrop-blur-sm">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500 motion-safe:animate-pulse-dot" aria-hidden="true" />
+                {/* Floating availability pill */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-line bg-paper/90 px-4 py-2 font-body text-caption text-ink backdrop-blur-sm">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full bg-emerald-500 motion-safe:animate-pulse"
+                    aria-hidden="true"
+                  />
                   Available for new roles
                 </div>
               </div>
 
-              {/* 2×2 pillar grid below the photo */}
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                {PILLARS.map(p => {
-                  const Icon = p.icon
-                  return (
-                    <article
-                      key={p.title}
-                      className="group cursor-default rounded-xl bg-stone p-5 transition-colors duration-200 hover:bg-stone/80"
-                    >
-                      <Icon size={18} className="text-coral" aria-hidden="true" />
-                      <h3 className="mt-3 block font-display text-lg uppercase text-ink">
-                        {p.title}
-                      </h3>
-                      <p className="mt-1 font-body text-caption text-ghost">
-                        {p.desc}
-                      </p>
-                    </article>
-                  )
-                })}
+              {/* 2x2 pillar grid */}
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                {PILLARS.map(p => (
+                  <div
+                    key={p.title}
+                    className="cursor-default rounded-xl bg-paper p-5 shadow-warm transition-all duration-200 hover:-translate-y-1 hover:shadow-warm-hover"
+                  >
+                    <p.Icon size={18} className="text-coral" aria-hidden="true" />
+                    <h3 className="mt-3 font-body text-sm font-semibold text-ink">
+                      {p.title}
+                    </h3>
+                    <p className="mt-1 font-body text-caption text-ghost">
+                      {p.body}
+                    </p>
+                  </div>
+                ))}
               </div>
-            </ScrollReveal>
-          </div>
+            </div>
 
-        </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

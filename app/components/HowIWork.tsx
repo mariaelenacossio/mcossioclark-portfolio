@@ -1,29 +1,25 @@
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC - How I Work With AI.
- *
- *  - bg-paper, py-28 md:py-36
- *  - Eyebrow (coral) + Bebas display headline
- *  - 3 stone cards with giant ghost numbers in the corner + content
- *  - Tool strip below: label + 6 pill chips
+ * How I work with AI. Director/crew framing, mist background, three
+ * paper cards with large ghost numbers as background texture.
  */
 
 const STEPS = [
   {
-    n: '01',
-    label: 'Research synthesis',
-    body: "I feed raw interview transcripts into pipelines I've built. Themes and patterns surface in minutes. The judgment on what matters is still mine.",
+    number: '01',
+    title: 'Research synthesis',
+    body: 'I feed raw interview transcripts into pipelines I have built. Themes surface in minutes. What I do with them takes longer.',
   },
   {
-    n: '02',
-    label: 'Rapid prototyping',
-    body: 'I describe interaction logic and get working prototypes back. I review, redirect, and refine. The thinking layer is mine. The production layer is delegated.',
+    number: '02',
+    title: 'Rapid prototyping',
+    body: 'Describe the interaction, get a working prototype back. Review, redirect, refine. The judgment is mine. The production layer is delegated.',
   },
   {
-    n: '03',
-    label: 'Shipping with agents',
-    body: 'Components, copy, accessibility audits. Agent workflows handle the repeatable work. I decide what gets built. Not how many hours it takes.',
+    number: '03',
+    title: 'Shipping with agents',
+    body: 'Components, copy variants, accessibility audits. I am the captain. The agents are the crew. Someone still has to know where the ship is going.',
   },
 ] as const
 
@@ -34,64 +30,74 @@ export default function HowIWork() {
     <section
       id="ai-workflow"
       aria-labelledby="ai-heading"
-      className="bg-paper py-28 md:py-36"
+      className="bg-mist py-24 md:py-32"
     >
       <div className="container-content">
-
         <ScrollReveal>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
-            AI workflow
+            How I work with AI
           </span>
+
           <h2
             id="ai-heading"
-            className="mt-3 max-w-[900px] font-display text-display uppercase leading-none text-ink"
+            className="mt-3 max-w-[680px] font-display text-display italic leading-tight text-ink"
           >
-            Other designers use AI to go faster. I use it to do things I couldn&apos;t do alone.
+            I use AI the way a director uses a crew.
           </h2>
 
+          <p className="mt-4 max-w-[540px] font-body text-body-lg leading-relaxed text-ghost">
+            I&apos;m not faster because of AI. I&apos;m capable of more.
+            Research synthesis, rapid prototyping, accessibility
+            audits, I have agent workflows for all of it. My job
+            is knowing what to build and whether the output is
+            any good.
+          </p>
+
           {/* Three cards */}
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {STEPS.map(s => (
-              <article
-                key={s.n}
-                className="relative overflow-hidden rounded-2xl bg-stone p-8"
+          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+            {STEPS.map(step => (
+              <div
+                key={step.number}
+                className="relative overflow-hidden rounded-2xl bg-paper p-8 shadow-warm"
               >
-                {/* Giant ghost number in the corner */}
+                {/* Ghost number texture */}
                 <span
+                  className="pointer-events-none absolute -right-1 -top-3 select-none font-display text-[7rem] italic leading-none text-ink/5"
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-2 -top-2 select-none font-display text-[6rem] leading-none text-ink/5"
                 >
-                  {s.n}
+                  {step.number}
                 </span>
 
-                <p className="relative font-body text-caption uppercase tracking-widest text-coral">
-                  Step {s.n}
-                </p>
-                <h3 className="relative mt-2 font-display text-title uppercase leading-none text-ink">
-                  {s.label}
+                <span className="font-body text-caption uppercase tracking-widest text-coral">
+                  {step.number}
+                </span>
+
+                <h3 className="mt-2 font-display text-title italic leading-tight text-ink">
+                  {step.title}
                 </h3>
-                <p className="relative mt-3 font-body text-body leading-relaxed text-ghost">
-                  {s.body}
+
+                <p className="mt-3 font-body text-body leading-relaxed text-ghost">
+                  {step.body}
                 </p>
-              </article>
+              </div>
             ))}
           </div>
 
-          {/* Tool strip */}
+          {/* Tool pills */}
           <div className="mt-8">
             <p className="mb-3 font-body text-caption uppercase tracking-widest text-ghost">
               Tools I direct
             </p>
-            <ul role="list" className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2">
               {TOOLS.map(tool => (
-                <li
+                <span
                   key={tool}
-                  className="rounded-full border border-stone bg-stone px-4 py-1.5 font-body text-caption text-ghost"
+                  className="rounded-full border border-line bg-mist px-4 py-1.5 font-body text-caption text-ghost"
                 >
                   {tool}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         </ScrollReveal>
       </div>

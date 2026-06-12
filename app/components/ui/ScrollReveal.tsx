@@ -1,52 +1,37 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
-import type { ReactNode, ElementType } from 'react'
+import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 
 interface ScrollRevealProps {
-  as?:        ElementType
+  /** Kept for call-site compatibility; fade timing is uniform now. */
   delay?:     number
-  duration?:  number
-  /** Y translate (px). Default 20 per Editorial Bold MC spec. */
-  y?:         number
   className?: string
   children:   ReactNode
 }
 
 /**
- * Section / element entrance animation.
+ * Gentle fade-only section reveal. No y transform; the aesthetic is
+ * calm, not dramatic.
  *
- * Per Editorial Bold MC spec:
- *  - opacity 0 → 1, translateY 20px → 0
- *  - viewport threshold 0.1
- *  - once-only, no replay on scroll-back
- *  - duration 0.6s ease [0.16, 1, 0.3, 1]
- *  - prefers-reduced-motion: opacity only, no y transform
+ *  - opacity 0 → 1 over 0.5s easeOut
+ *  - triggers at 8% visibility, once only
+ *  - already reduced-motion-friendly (opacity only)
  */
 export default function ScrollReveal({
-  as = 'div',
   delay = 0,
-  duration = 0.6,
-  y = 20,
   className,
   children,
 }: ScrollRevealProps) {
-  const reduceMotion = useReducedMotion()
-  const Tag = motion[as as keyof typeof motion] as typeof motion.div
-
   return (
-    <Tag
+    <motion.div
       className={className}
-      initial={{ opacity: 0, y: reduceMotion ? 0 : y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{
-        duration: reduceMotion ? 0.001 : duration,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.08 }}
+      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
     >
       {children}
-    </Tag>
+    </motion.div>
   )
 }

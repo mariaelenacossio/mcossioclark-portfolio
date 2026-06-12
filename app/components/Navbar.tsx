@@ -16,13 +16,14 @@ const NAV_LINKS = [
 const SECTION_IDS = NAV_LINKS.map(l => l.href.slice(1))
 
 /**
- * Editorial Bold MC navbar.
+ * Always-visible paper navbar. Never transparent, so links read on
+ * both the light homepage and light case-study pages.
  *
- * Always-visible ink/95 background with backdrop-blur. Never
- * transparent, so links stay readable on light case-study pages too.
- *
- * Scroll-spy keeps the active section's link in coral via
- * IntersectionObserver.
+ *  - Logo: "Mariaelena" in italic serif (M. on small screens)
+ *  - Links: ghost base, coral hover with slide-in underline,
+ *    ink + medium when the section is active (scroll-spy)
+ *  - CTA: "Say hello" pill, ink fill, coral on hover
+ *  - On case-study pages the section links resolve to /#section
  */
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -31,7 +32,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const onHome = pathname === '/'
 
-  /* Scroll-spy, only on the homepage */
+  /* Scroll-spy, homepage only */
   useEffect(() => {
     if (!onHome) return
     const visible = new Map<string, number>()
@@ -58,30 +59,29 @@ export default function Navbar() {
     return () => observers.forEach(o => o.disconnect())
   }, [onHome])
 
-  // Close the mobile menu on route change
+  /* Close the mobile menu on route change */
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
   const sectionHref = (hash: string) => (onHome ? hash : `/${hash}`)
 
   return (
     <>
-      <header
-        className="fixed inset-x-0 top-0 z-50 border-b border-card bg-ink/95 backdrop-blur-sm"
-      >
+      <header className="sticky top-0 z-50 w-full border-b border-line bg-paper/95 backdrop-blur-sm">
         <nav
           aria-label="Primary"
           className="container-content flex h-16 items-center justify-between"
         >
-          {/* Lettermark */}
+          {/* Logo */}
           <Link
             href="/"
             aria-label="Mariaelena Cossio Clark home"
-            className="font-display text-2xl tracking-wider text-paper no-underline"
+            className="font-display text-lg italic text-ink no-underline"
           >
-            MC
+            <span className="hidden sm:inline">Mariaelena</span>
+            <span className="sm:hidden">M.</span>
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop links */}
           <ul role="list" className="hidden items-center gap-8 md:flex">
             {NAV_LINKS.map(link => {
               const isActive = activeSection === link.href.slice(1)
@@ -91,7 +91,9 @@ export default function Navbar() {
                     href={sectionHref(link.href)}
                     aria-current={isActive ? 'true' : undefined}
                     className={`group relative font-body text-sm transition-colors duration-150 no-underline ${
-                      isActive ? 'text-coral' : 'text-ghost hover:text-coral'
+                      isActive
+                        ? 'font-medium text-ink'
+                        : 'text-ghost hover:text-coral'
                     }`}
                   >
                     {link.label}
@@ -99,6 +101,7 @@ export default function Navbar() {
                       className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-coral transition-transform duration-200 ${
                         isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                       }`}
+                      aria-hidden="true"
                     />
                   </a>
                 </li>
@@ -110,9 +113,9 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <a
               href={sectionHref('#contact')}
-              className="hidden rounded-lg border border-paper/30 px-5 py-2 font-body text-sm text-paper transition-colors duration-150 hover:bg-paper hover:text-ink md:inline-flex no-underline"
+              className="hidden rounded-full bg-ink px-5 py-2 font-body text-sm text-paper transition-colors duration-200 hover:bg-coral md:inline-flex no-underline"
             >
-              Let&apos;s talk
+              Say hello 👋
             </a>
 
             <button
@@ -121,9 +124,9 @@ export default function Navbar() {
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-paper md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </nav>
@@ -140,17 +143,27 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-ink px-6 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-7 bg-paper px-6 md:hidden"
           >
+            {/* Close button, top-right */}
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close menu"
+              className="absolute right-5 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-ink"
+            >
+              <X size={22} />
+            </button>
+
             {NAV_LINKS.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={sectionHref(link.href)}
                 onClick={() => setMobileOpen(false)}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.06 + i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display text-display text-paper no-underline"
+                transition={{ delay: 0.05 + i * 0.05, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display text-3xl italic text-ink no-underline"
               >
                 {link.label}
               </motion.a>
@@ -158,12 +171,12 @@ export default function Navbar() {
             <motion.a
               href={sectionHref('#contact')}
               onClick={() => setMobileOpen(false)}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.06 + NAV_LINKS.length * 0.05, duration: 0.4 }}
-              className="mt-4 rounded-lg border border-paper/30 bg-transparent px-6 py-3 font-body text-base text-paper"
+              transition={{ delay: 0.05 + NAV_LINKS.length * 0.05, duration: 0.35 }}
+              className="mt-3 rounded-full bg-ink px-6 py-3 font-body text-base text-paper no-underline"
             >
-              Let&apos;s talk
+              Say hello 👋
             </motion.a>
           </motion.div>
         )}

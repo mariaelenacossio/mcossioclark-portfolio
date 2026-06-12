@@ -113,10 +113,10 @@ export default function CaseStudyPage(
       <div className="container-content pt-8">
         <Link
           href="/#work"
-          className="inline-flex items-center gap-2 font-body text-caption text-ghost transition-colors duration-150 hover:text-ink no-underline"
+          className="inline-flex items-center gap-1.5 font-body text-sm text-ghost transition-colors duration-150 hover:text-coral no-underline"
         >
           <ArrowLeft size={14} aria-hidden="true" />
-          Work
+          Back to work
         </Link>
       </div>
 
@@ -130,7 +130,7 @@ export default function CaseStudyPage(
             {project.category}
           </p>
 
-          <h1 className="mt-3 font-display text-display uppercase leading-none text-ink">
+          <h1 className="mt-3 font-display text-display italic leading-tight text-ink">
             {project.title}
           </h1>
 
@@ -148,7 +148,7 @@ export default function CaseStudyPage(
             ].map(({ k, v }) => (
               <li
                 key={k}
-                className="rounded-full bg-stone px-4 py-1.5 font-body text-caption text-ghost"
+                className="rounded-full border border-line bg-mist px-4 py-1.5 font-body text-caption text-ghost"
               >
                 <span className="font-medium text-ink">{k}:</span> {v}
               </li>
@@ -163,7 +163,7 @@ export default function CaseStudyPage(
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border border-ink/30 bg-transparent px-5 py-2 font-body text-sm text-ink transition-colors duration-150 hover:bg-ink hover:text-paper no-underline"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-2.5 font-body text-sm text-paper transition-colors duration-200 hover:bg-coral no-underline"
                 >
                   {project.liveLabel ?? 'View live site'}
                   <ExternalLink size={14} aria-hidden="true" />
@@ -174,7 +174,7 @@ export default function CaseStudyPage(
                   href={project.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border border-ink/15 bg-transparent px-5 py-2 font-body text-sm text-ink transition-colors duration-150 hover:border-ink/40 no-underline"
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-transparent px-6 py-2.5 font-body text-sm text-ink transition-colors duration-200 hover:border-ink no-underline"
                 >
                   <Github size={14} aria-hidden="true" />
                   View source
@@ -184,10 +184,10 @@ export default function CaseStudyPage(
           )}
 
           {/* Metrics */}
-          <div className="mt-10 grid grid-cols-2 gap-4 rounded-2xl bg-stone p-6 md:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-4 rounded-2xl bg-mist p-6 md:grid-cols-4">
             {project.metrics.map(m => (
               <div key={m.label}>
-                <div className="font-display text-[2rem] leading-none text-coral">
+                <div className="font-display text-[1.875rem] italic leading-none text-coral">
                   {m.value}
                 </div>
                 <div className="mt-1 font-body text-caption uppercase tracking-wider text-ghost">
@@ -230,14 +230,14 @@ function NextProjectCta({ currentSlug }: { currentSlug: string }) {
   if (!next || next.slug === currentSlug) return null
 
   return (
-    <section className="border-t border-stone bg-stone">
+    <section className="border-t border-line bg-mist">
       <div className="container-content py-16 md:py-20">
         <div className="grid items-center gap-6 md:grid-cols-2">
           <div>
             <p className="font-body text-caption uppercase tracking-widest text-coral">
               Next case study
             </p>
-            <h2 className="mt-3 font-display text-display uppercase leading-none text-ink">
+            <h2 className="mt-3 font-display text-display italic leading-tight text-ink">
               {next.title}
             </h2>
             <p className="mt-3 max-w-md font-body text-body text-ghost">

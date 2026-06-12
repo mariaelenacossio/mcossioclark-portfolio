@@ -8,14 +8,8 @@ import {
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC - Contact section.
- *
- *  - bg-ink (dark), py-28 md:py-36
- *  - Eyebrow (coral) + Bebas display headline
- *  - 2-col layout: form on left, action cards stacked on right
- *  - Form: dark card inputs with coral focus border + coral submit button
- *  - Action cards: dark card surfaces with coral icons
- *  - Social row at the bottom of the right column
+ * Contact. Mist background, form on the left, action cards on the
+ * right. EmailJS config carried over unchanged.
  */
 
 const EMAILJS_SERVICE_ID  = 'service_6y1v4fl'
@@ -23,28 +17,32 @@ const EMAILJS_TEMPLATE_ID = 'template_h21q9f2'
 const EMAILJS_PUBLIC_KEY  = 'SnvNb_Z2_pFivYnV0'
 
 const SOCIALS = [
-  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/mariaelena-cossio-clark/' },
-  { icon: Github,   label: 'GitHub',   href: 'https://github.com/mariaelenacossio' },
-  { icon: Mail,     label: 'Email',    href: 'mailto:mariaelena.cossio@outlook.com' },
+  { Icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/mariaelena-cossio-clark/' },
+  { Icon: Github,   label: 'GitHub',   href: 'https://github.com/mariaelenacossio' },
+  { Icon: Mail,     label: 'Email',    href: 'mailto:mariaelena.cossio@outlook.com' },
 ] as const
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 type FieldErrors = Partial<Record<'name' | 'email' | 'message', string>>
 
+const inputClasses = (hasError: boolean) =>
+  `w-full rounded-xl border bg-paper px-5 py-4 font-body text-body text-ink outline-none transition-colors duration-150 placeholder:text-ghost/40 ${
+    hasError ? 'border-coral/60' : 'border-line focus:border-ink'
+  }`
+
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null)
-  const [form, setForm]     = useState({ name: '', email: '', message: '' })
+  const [form,   setForm]   = useState({ name: '', email: '', message: '' })
   const [errors, setErrors] = useState<FieldErrors>({})
   const [status, setStatus] = useState<Status>('idle')
 
   const validate = (): FieldErrors => {
     const e: FieldErrors = {}
-    if (!form.name.trim())  e.name  = 'Name is required.'
+    if (!form.name.trim())  e.name = 'Name is required.'
     if (!form.email.trim()) e.email = 'Email is required.'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email address.'
-    if (!form.message.trim() || form.message.trim().length < 10) {
-      e.message = 'Message must be at least 10 characters.'
-    }
+    if (!form.message.trim() || form.message.trim().length < 10)
+      e.message = 'Message needs at least 10 characters.'
     return e
   }
 
@@ -75,39 +73,45 @@ export default function Contact() {
     }
   }
 
-  /* Shared input styling for all 3 fields. */
-  const inputBase =
-    'w-full rounded-xl border bg-card px-5 py-4 font-body text-body text-paper placeholder:text-ghost/40 outline-none transition-colors duration-150 focus:border-coral'
-  const inputClass = (hasError: boolean) =>
-    `${inputBase} ${hasError ? 'border-coral/70' : 'border-card'}`
-
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="bg-ink py-28 md:py-36"
+      className="bg-mist py-24 md:py-32"
     >
       <div className="container-content">
-
         <ScrollReveal>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
             Contact
           </span>
+
           <h2
             id="contact-heading"
-            className="mt-3 max-w-[800px] font-display text-display uppercase leading-none text-paper"
+            className="mt-3 max-w-[680px] font-display text-display italic leading-tight text-ink"
           >
-            Got a role, a project, or just a question about how I work? I read everything.
+            Working on something? Let&apos;s talk.
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-[1fr_380px]">
+          <p className="mt-4 max-w-[500px] font-body text-body-lg leading-relaxed text-ghost">
+            Whether it is a role, a project, or a question about
+            how I work, I read everything and I am usually fast.
+          </p>
 
-            {/* ── Form ───────────────────────────────────────────────── */}
+          <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-[1fr_340px]">
+
+            {/* Form */}
             {status === 'success' ? (
-              <div className="flex items-center justify-center rounded-2xl bg-card p-12">
-                <p className="font-display text-display uppercase text-paper text-center">
-                  Sent. Back within 24 hours.
+              <div className="flex flex-col items-center justify-center rounded-2xl bg-paper p-10 text-center shadow-warm">
+                <p className="font-display text-2xl italic text-ink">
+                  Sent. I&apos;ll get back to you soon.
                 </p>
+                <button
+                  type="button"
+                  onClick={() => setStatus('idle')}
+                  className="mt-5 font-body text-caption text-ghost transition-colors duration-150 hover:text-ink"
+                >
+                  Send another message
+                </button>
               </div>
             ) : (
               <form
@@ -121,16 +125,15 @@ export default function Contact() {
                   <div
                     role="alert"
                     aria-live="assertive"
-                    className="rounded-xl border border-coral/40 bg-coral/10 px-4 py-3 font-body text-caption text-coral"
+                    className="rounded-xl border border-coral/60 bg-paper px-5 py-3 font-body text-caption text-ink"
                   >
                     Something went wrong. Please try again, or email me directly.
                   </div>
                 )}
 
-                {/* Name */}
                 <div>
                   <label htmlFor="name" className="mb-2 block font-body text-caption uppercase tracking-widest text-ghost">
-                    Name
+                    Name *
                   </label>
                   <input
                     id="name"
@@ -143,8 +146,7 @@ export default function Contact() {
                     aria-required="true"
                     aria-invalid={!!errors.name}
                     aria-describedby={errors.name ? 'name-error' : undefined}
-                    className={inputClass(!!errors.name)}
-                    placeholder="Your name"
+                    className={inputClasses(!!errors.name)}
                   />
                   {errors.name && (
                     <p id="name-error" role="alert" aria-live="polite" className="mt-1 font-body text-caption text-coral">
@@ -153,10 +155,9 @@ export default function Contact() {
                   )}
                 </div>
 
-                {/* Email */}
                 <div>
                   <label htmlFor="email" className="mb-2 block font-body text-caption uppercase tracking-widest text-ghost">
-                    Email
+                    Email *
                   </label>
                   <input
                     id="email"
@@ -169,8 +170,7 @@ export default function Contact() {
                     aria-required="true"
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? 'email-error' : undefined}
-                    className={inputClass(!!errors.email)}
-                    placeholder="you@email.com"
+                    className={inputClasses(!!errors.email)}
                   />
                   {errors.email && (
                     <p id="email-error" role="alert" aria-live="polite" className="mt-1 font-body text-caption text-coral">
@@ -179,10 +179,9 @@ export default function Contact() {
                   )}
                 </div>
 
-                {/* Message */}
                 <div>
                   <label htmlFor="message" className="mb-2 block font-body text-caption uppercase tracking-widest text-ghost">
-                    Message
+                    Message *
                   </label>
                   <textarea
                     id="message"
@@ -194,8 +193,7 @@ export default function Contact() {
                     aria-required="true"
                     aria-invalid={!!errors.message}
                     aria-describedby={errors.message ? 'message-error' : undefined}
-                    className={`${inputClass(!!errors.message)} resize-none`}
-                    placeholder="Tell me about your project, role, or question."
+                    className={`${inputClasses(!!errors.message)} resize-none`}
                   />
                   {errors.message && (
                     <p id="message-error" role="alert" aria-live="polite" className="mt-1 font-body text-caption text-coral">
@@ -204,38 +202,34 @@ export default function Contact() {
                   )}
                 </div>
 
-                {/* Submit */}
                 <button
                   type="submit"
                   disabled={status === 'sending'}
                   aria-busy={status === 'sending'}
-                  className={`mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-coral py-4 font-body font-medium text-paper transition-colors duration-150 hover:bg-[#B83D21] ${
-                    status === 'sending' ? 'cursor-not-allowed opacity-60' : ''
-                  }`}
+                  className="mt-2 w-full rounded-full bg-ink py-4 font-body font-medium text-paper transition-colors duration-200 hover:bg-coral disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {status === 'sending' ? (
-                    <>
+                    <span className="inline-flex items-center gap-2">
                       <Loader2 size={16} className="animate-spin" aria-hidden="true" />
                       Sending
-                    </>
+                    </span>
                   ) : (
-                    'Send message'
+                    'Send it'
                   )}
                 </button>
               </form>
             )}
 
-            {/* ── Right: action cards + socials ──────────────────────── */}
-            <div className="flex flex-col gap-4">
-
+            {/* Action cards + socials */}
+            <div>
               <a
                 href="https://calendar.app.google/id6C7Yo52yfSXAqT9"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-2xl border border-card bg-card p-7 no-underline transition-colors duration-200 hover:border-coral/20"
+                className="block rounded-2xl border border-line bg-paper p-6 shadow-warm transition-all duration-200 hover:-translate-y-1 hover:shadow-warm-hover no-underline"
               >
-                <CalendarDays size={22} className="text-coral" aria-hidden="true" />
-                <h3 className="mt-3 font-display text-title uppercase leading-none text-paper">
+                <CalendarDays size={20} className="text-coral" aria-hidden="true" />
+                <h3 className="mt-3 font-body text-sm font-semibold text-ink">
                   Book a 30-min call
                 </h3>
                 <p className="mt-1 font-body text-caption text-ghost">
@@ -246,10 +240,10 @@ export default function Contact() {
               <a
                 href="/mariaelena-cossio-clark-resume.pdf"
                 download="Mariaelena-Cossio-Clark-Resume.pdf"
-                className="group block rounded-2xl border border-card bg-card p-7 no-underline transition-colors duration-200 hover:border-coral/20"
+                className="mt-4 block rounded-2xl border border-line bg-paper p-6 shadow-warm transition-all duration-200 hover:-translate-y-1 hover:shadow-warm-hover no-underline"
               >
-                <FileText size={22} className="text-coral" aria-hidden="true" />
-                <h3 className="mt-3 font-display text-title uppercase leading-none text-paper">
+                <FileText size={20} className="text-coral" aria-hidden="true" />
+                <h3 className="mt-3 font-body text-sm font-semibold text-ink">
                   Download resume
                 </h3>
                 <p className="mt-1 font-body text-caption text-ghost">
@@ -257,22 +251,20 @@ export default function Contact() {
                 </p>
               </a>
 
-              {/* Socials row */}
-              <ul role="list" className="mt-6 flex gap-6">
-                {SOCIALS.map(({ icon: Icon, label, href }) => (
-                  <li key={label}>
-                    <a
-                      href={href}
-                      target={href.startsWith('http') ? '_blank' : undefined}
-                      rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center gap-2 font-body text-caption text-ghost no-underline transition-colors duration-150 hover:text-paper"
-                    >
-                      <Icon size={16} aria-hidden="true" />
-                      {label}
-                    </a>
-                  </li>
+              <div className="mt-6 flex gap-5">
+                {SOCIALS.map(({ Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="inline-flex items-center gap-1.5 font-body text-sm text-ghost transition-colors duration-150 hover:text-ink no-underline"
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                    {label}
+                  </a>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </ScrollReveal>
