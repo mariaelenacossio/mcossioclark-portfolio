@@ -3,7 +3,7 @@
  *
  * One inline SVG <feTurbulence> noise pattern rendered as a fixed,
  * pointer-events-none, 3% opacity overlay. Mounted once in the root
- * layout — sits above the background but below content thanks to z-index.
+ * layout - sits above the background but below content thanks to z-index.
  *
  * Rendered as a Server Component (no client-side JS).
  */
@@ -19,7 +19,7 @@ export default function NoiseOverlay() {
         preserveAspectRatio="none"
       >
         <filter id="noise-filter">
-          {/* Fractal noise — baseFrequency tuned for a subtle film-grain feel.
+          {/* Fractal noise - baseFrequency tuned for a subtle film-grain feel.
               numOctaves higher = denser texture. */}
           <feTurbulence
             type="fractalNoise"

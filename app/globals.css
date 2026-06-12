@@ -50,17 +50,7 @@ body::after {
   z-index: 9999;
 }
 
-/* ─── Hide native cursor when CustomCursor takes over ──────────────────── */
-@media (hover: hover) and (pointer: fine) {
-  body[data-custom-cursor='true'],
-  body[data-custom-cursor='true'] a,
-  body[data-custom-cursor='true'] button,
-  body[data-custom-cursor='true'] [role='button'],
-  body[data-custom-cursor='true'] input,
-  body[data-custom-cursor='true'] textarea {
-    cursor: none;
-  }
-}
+/* Browser default cursor everywhere. No custom cursor styles. */
 
 /* ─── prefers-reduced-motion ───────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

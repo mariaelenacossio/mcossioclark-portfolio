@@ -3,7 +3,7 @@ import ScrollReveal from '@/app/components/ui/ScrollReveal'
 import ProjectCard from '@/app/components/ui/ProjectCard'
 
 /**
- * Editorial Bold MC — Work section.
+ * Editorial Bold MC - Work section.
  *
  *  - bg-ink (dark)
  *  - py-28 md:py-36

@@ -1,7 +1,7 @@
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC — How I Work With AI.
+ * Editorial Bold MC - How I Work With AI.
  *
  *  - bg-paper, py-28 md:py-36
  *  - Eyebrow (coral) + Bebas display headline

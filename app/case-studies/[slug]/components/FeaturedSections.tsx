@@ -6,7 +6,7 @@ interface FeaturedSectionsProps {
 }
 
 /**
- * Featured-project case study body — used for projects with
+ * Featured-project case study body - used for projects with
  * `pivots` + `techStack` arrays defined (Mini Pancake Co.).
  *
  * Section order:

@@ -12,9 +12,9 @@ export interface ProjectMetric {
 
 /** A case-study screenshot or product mockup image. */
 export interface ProjectImage {
-  /** Path under /public — e.g. '/projects/mini-pancake-co/screen-1.png' */
+  /** Path under /public - e.g. '/projects/mini-pancake-co/screen-1.png' */
   src:     string
-  /** Required alt text — describes the screen for screen readers. */
+  /** Required alt text - describes the screen for screen readers. */
   alt:     string
   /** One-line caption shown below the image. */
   caption: string
@@ -93,7 +93,7 @@ export interface Project {
   duration:         string
   team:             string
   tags:             string[]
-  /** Brand color in hex — drives card accents and the case-study hero. */
+  /** Brand color in hex - drives card accents and the case-study hero. */
   brand:            string
 
   // ── External links ───────────────────────────────────────────
@@ -102,7 +102,7 @@ export interface Project {
   liveLabel?: string
 
   // ── Screenshot gallery (rendered on the case-study page) ─────
-  /** Ordered list of product mockup screenshots — rendered as a
+  /** Ordered list of product mockup screenshots - rendered as a
    *  gallery between the metrics row and the body sections. Empty or
    *  missing → the gallery section is skipped entirely. */
   images?:           ProjectImage[]

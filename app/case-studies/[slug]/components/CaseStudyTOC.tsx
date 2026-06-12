@@ -46,7 +46,7 @@ export default function CaseStudyTOC({ items }: CaseStudyTOCProps) {
           setActive(top[0])
         },
         {
-          // Same offset pattern as Navbar — account for the sticky header
+          // Same offset pattern as Navbar - account for the sticky header
           rootMargin: '-80px 0px -40% 0px',
           threshold: [0.1, 0.3, 0.5, 0.7],
         },

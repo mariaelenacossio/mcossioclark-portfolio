@@ -71,7 +71,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.title}
         </h3>
 
-        {/* Description — clamped to 2 lines */}
+        {/* Description - clamped to 2 lines */}
         <p
           className="mt-2 font-body text-caption text-ghost"
           style={{

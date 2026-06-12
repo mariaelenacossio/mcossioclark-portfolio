@@ -5,14 +5,14 @@ import type { CSSProperties, ReactNode } from 'react'
  *
  * Every mockup page renders 3 screens stacked vertically. Each screen
  * is a fixed 1280×800 frame with a subtle drop shadow, preceded by a
- * caption ("Screen 1 of 3 — Shop", etc).
+ * caption ("Screen 1 of 3 - Shop", etc).
  *
  * Mockups intentionally use system-ui (not the portfolio's Clash
- * Display + Cabinet Grotesk) — they're standalone product UIs, not
+ * Display + Cabinet Grotesk) - they're standalone product UIs, not
  * portfolio decorations.
  */
 
-/** Font stack for mockup pages — never load Fontshare fonts here. */
+/** Font stack for mockup pages - never load Fontshare fonts here. */
 export const SYSTEM_FONT: CSSProperties = {
   fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 }
@@ -27,7 +27,7 @@ interface MockupShellProps {
 }
 
 /**
- * Outer page shell — sits on a neutral gray background that lets the
+ * Outer page shell - sits on a neutral gray background that lets the
  * white 1280×800 screen frames pop with their drop shadows.
  */
 export function MockupShell({ title, brand, children }: MockupShellProps) {
@@ -73,9 +73,9 @@ export function MockupShell({ title, brand, children }: MockupShellProps) {
 }
 
 interface ScreenProps {
-  /** Numbered caption above the screen ("Screen 1 of 3 — Shop"). */
+  /** Numbered caption above the screen ("Screen 1 of 3 - Shop"). */
   caption: string
-  /** The screen UI itself — should fill 1280×800. */
+  /** The screen UI itself - should fill 1280×800. */
   children: ReactNode
 }
 

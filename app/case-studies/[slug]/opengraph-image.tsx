@@ -6,7 +6,7 @@ import { getProject } from '@/data/projects'
  *
  * Uses Next's <ImageResponse> (Vercel's @vercel/og under the hood)
  * to produce a 1200x630 PNG branded with the project's accent color.
- * No external fonts loaded — we use the runtime default to keep the
+ * No external fonts loaded - we use the runtime default to keep the
  * generation fast and free of network calls.
  */
 
@@ -20,7 +20,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 
   // Brand color background with a darker overlay panel for the copy.
   // Fallback to coral if a project couldn't be resolved (shouldn't
-  // happen — every slug here is statically generated).
+  // happen - every slug here is statically generated).
   const brand = project?.brand ?? '#E8502A'
   const title    = project?.title             ?? 'Mariaelena Cossio Clark'
   const subtitle = project?.shortDescription  ?? 'UX/UI Designer & Frontend Engineer'

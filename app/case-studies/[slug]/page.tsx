@@ -12,7 +12,7 @@ import StandardSections from './components/StandardSections'
 import ImageGallery from './components/ImageGallery'
 
 /**
- * Server-side filter — only keep images whose source files exist under
+ * Server-side filter - only keep images whose source files exist under
  * /public. Runs at build time. Lets the user drop a screenshot into
  * public/projects/<slug>/ and have it appear on next deploy with no
  * code change.
@@ -90,7 +90,7 @@ function buildToc(project: Project): TocItem[] {
 }
 
 /**
- * Editorial Bold MC — Case Study page.
+ * Editorial Bold MC - Case Study page.
  *
  *  - paper background, top section centered with max-w-[880px]
  *  - Eyebrow (coral), Bebas display title, body-lg description
@@ -199,7 +199,7 @@ export default function CaseStudyPage(
         </div>
       </header>
 
-      {/* Gallery — sits in its own constrained container */}
+      {/* Gallery - sits in its own constrained container */}
       <div className="mx-auto max-w-[880px] px-6 md:px-16">
         <ImageGallery images={existingImages(project.images)} />
       </div>

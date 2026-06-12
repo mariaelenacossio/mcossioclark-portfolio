@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import type { ProjectImage } from '@/lib/types'
 
 interface ImageGalleryProps {
-  /** Pre-filtered list — only images whose files actually exist. */
+  /** Pre-filtered list - only images whose files actually exist. */
   images: ProjectImage[]
 }
 

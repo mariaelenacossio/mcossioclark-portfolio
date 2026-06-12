@@ -3,7 +3,7 @@ import { Search, Code2, Layers, Cpu } from 'lucide-react'
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC — About section.
+ * Editorial Bold MC - About section.
  *
  *  - bg-paper, py-28 md:py-36
  *  - 2-col desktop, stacked mobile
@@ -104,7 +104,7 @@ export default function About() {
                   priority
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                {/* Availability pill — floats bottom-left */}
+                {/* Availability pill - floats bottom-left */}
                 <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-stone bg-paper/90 px-4 py-2 font-body text-caption text-ink backdrop-blur-sm">
                   <span className="h-2 w-2 rounded-full bg-emerald-500 motion-safe:animate-pulse-dot" aria-hidden="true" />
                   Available for new roles

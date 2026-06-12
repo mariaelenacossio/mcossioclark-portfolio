@@ -3,7 +3,7 @@ import type { ProjectPivot } from '@/lib/types'
 
 interface PivotSectionProps {
   pivot: ProjectPivot
-  /** Section anchor id — used by the TOC. */
+  /** Section anchor id - used by the TOC. */
   id:    string
 }
 
@@ -11,10 +11,10 @@ interface PivotSectionProps {
  * One pivot block in the featured case study.
  *
  * Structure (top to bottom):
- *   <h2>  Pivot 01 — Architecture
+ *   <h2>  Pivot 01 - Architecture
  *   <p>   The problem
  *   <h3>  Options I considered
- *   <ul>  3 options — the chosen one wears a coral border + check icon
+ *   <ul>  3 options - the chosen one wears a coral border + check icon
  *   <h3>  What I shipped & why
  *   <p>   The decision
  *
@@ -47,7 +47,7 @@ export default function PivotSection({ pivot, id }: PivotSectionProps) {
             }`}
           >
             <div className="flex items-start gap-4">
-              {/* Marker — check for chosen, letter for not */}
+              {/* Marker - check for chosen, letter for not */}
               <span
                 className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                   opt.chosen

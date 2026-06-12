@@ -18,30 +18,20 @@ const SECTION_IDS = NAV_LINKS.map(l => l.href.slice(1))
 /**
  * Editorial Bold MC navbar.
  *
- * Transparent at the very top; switches to ink/95 with a backdrop-blur
- * and a hairline card-color bottom border once the page scrolls past
- * the first 48px. Always sticky.
+ * Always-visible ink/95 background with backdrop-blur. Never
+ * transparent, so links stay readable on light case-study pages too.
  *
  * Scroll-spy keeps the active section's link in coral via
  * IntersectionObserver.
  */
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('')
 
   const pathname = usePathname()
   const onHome = pathname === '/'
 
-  /* Scroll past 48px → opaque ink background */
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  /* Scroll-spy — only on the homepage */
+  /* Scroll-spy, only on the homepage */
   useEffect(() => {
     if (!onHome) return
     const visible = new Map<string, number>()
@@ -76,11 +66,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-200 ${
-          scrolled
-            ? 'border-b border-card bg-ink/95 backdrop-blur-sm'
-            : 'border-b border-transparent bg-transparent'
-        }`}
+        className="fixed inset-x-0 top-0 z-50 border-b border-card bg-ink/95 backdrop-blur-sm"
       >
         <nav
           aria-label="Primary"
@@ -105,7 +91,7 @@ export default function Navbar() {
                     href={sectionHref(link.href)}
                     aria-current={isActive ? 'true' : undefined}
                     className={`group relative font-body text-sm transition-colors duration-150 no-underline ${
-                      isActive ? 'text-coral' : 'text-ghost hover:text-paper'
+                      isActive ? 'text-coral' : 'text-ghost hover:text-coral'
                     }`}
                   >
                     {link.label}

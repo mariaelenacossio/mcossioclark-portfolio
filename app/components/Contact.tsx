@@ -8,7 +8,7 @@ import {
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC — Contact section.
+ * Editorial Bold MC - Contact section.
  *
  *  - bg-ink (dark), py-28 md:py-36
  *  - Eyebrow (coral) + Bebas display headline

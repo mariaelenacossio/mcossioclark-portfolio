@@ -6,7 +6,7 @@ import Process   from '@/app/components/Process'
 import Contact   from '@/app/components/Contact'
 
 /**
- * Homepage — composes the six homepage sections in the order specified
+ * Homepage - composes the six homepage sections in the order specified
  * by the redesign brief.
  *
  *   Hero       → bg paper       (no border-t, sits below sticky nav)

@@ -1,7 +1,7 @@
 import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
- * Editorial Bold MC — Process section.
+ * Editorial Bold MC - Process section.
  *
  *  - bg-stone, py-28 md:py-36
  *  - Eyebrow (coral) + Bebas display headline
@@ -60,7 +60,7 @@ export default function Process() {
             The process is boring on purpose. The results aren&apos;t.
           </h2>
 
-          {/* 4 cards — 2×2 grid on desktop */}
+          {/* 4 cards - 2×2 grid on desktop */}
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
             {STEPS.map(s => (
               <article
