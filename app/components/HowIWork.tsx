@@ -1,4 +1,3 @@
-import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
  * How I work with AI. Director/crew framing, mist background, three
@@ -33,7 +32,7 @@ export default function HowIWork() {
       className="bg-mist py-24 md:py-32"
     >
       <div className="container-content">
-        <ScrollReveal>
+        <>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
             How I work with AI
           </span>
@@ -99,7 +98,7 @@ export default function HowIWork() {
               ))}
             </div>
           </div>
-        </ScrollReveal>
+        </>
       </div>
     </section>
   )

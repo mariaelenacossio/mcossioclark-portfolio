@@ -1,5 +1,4 @@
 import { projects } from '@/data/projects'
-import ScrollReveal from '@/app/components/ui/ScrollReveal'
 import ProjectCard from '@/app/components/ui/ProjectCard'
 
 /**
@@ -14,7 +13,7 @@ export default function Work() {
       className="bg-paper py-24 md:py-32"
     >
       <div className="container-content">
-        <ScrollReveal>
+        <>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
             Selected work
           </span>
@@ -36,7 +35,7 @@ export default function Work() {
               <ProjectCard key={p.id} project={p} />
             ))}
           </div>
-        </ScrollReveal>
+        </>
       </div>
     </section>
   )

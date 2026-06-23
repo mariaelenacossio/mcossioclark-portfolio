@@ -5,7 +5,6 @@ import emailjs from '@emailjs/browser'
 import {
   CalendarDays, FileText, Linkedin, Github, Mail, Loader2,
 } from 'lucide-react'
-import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
  * Contact. Mist background, form on the left, action cards on the
@@ -80,7 +79,7 @@ export default function Contact() {
       className="bg-mist py-24 md:py-32"
     >
       <div className="container-content">
-        <ScrollReveal>
+        <>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
             Contact
           </span>
@@ -267,7 +266,7 @@ export default function Contact() {
               </div>
             </div>
           </div>
-        </ScrollReveal>
+        </>
       </div>
     </section>
   )

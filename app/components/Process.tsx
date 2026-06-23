@@ -1,9 +1,7 @@
-import ScrollReveal from '@/app/components/ui/ScrollReveal'
-import CountUpStat from '@/app/components/ui/CountUpStat'
 
 /**
  * Process. Paper background, four mist cards with ghost numbers as
- * texture, impact strip with count-up stats below.
+ * texture, outcomes strip with short structural lines below.
  */
 
 const STEPS = [
@@ -25,7 +23,7 @@ const STEPS = [
   },
 ] as const
 
-/* Honest, structural outcome lines — no measured before/after data exists,
+/* Honest, structural outcome lines, no measured before/after data exists,
    so these describe what actually changed, not invented percentages. */
 const OUTCOMES = [
   'One-tap WhatsApp checkout',
@@ -42,7 +40,7 @@ export default function Process() {
       className="bg-paper py-24 md:py-32"
     >
       <div className="container-content">
-        <ScrollReveal>
+        <>
           <span className="font-body text-caption uppercase tracking-widest text-coral">
             Process
           </span>
@@ -84,8 +82,7 @@ export default function Process() {
             ))}
           </div>
 
-          {/* Outcomes strip — short structural-outcome lines (no count-up;
-              these are text, not metrics) */}
+          {/* Outcomes strip: short structural-outcome lines (text, not metrics) */}
           <div className="mt-10 grid grid-cols-1 gap-6 rounded-2xl bg-mist p-8 text-center sm:grid-cols-2 md:grid-cols-4">
             {OUTCOMES.map(line => (
               <p
@@ -96,7 +93,7 @@ export default function Process() {
               </p>
             ))}
           </div>
-        </ScrollReveal>
+        </>
       </div>
     </section>
   )

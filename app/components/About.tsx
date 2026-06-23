@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { Search, Code2, Layers, Cpu } from 'lucide-react'
-import ScrollReveal from '@/app/components/ui/ScrollReveal'
 
 /**
  * About section. Mist background, honest personal story on the left,
@@ -33,7 +32,7 @@ export default function About() {
       className="bg-mist py-24 md:py-32"
     >
       <div className="container-content">
-        <ScrollReveal>
+        <>
           <div className="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 
             {/* Left: story */}
@@ -121,7 +120,7 @@ export default function About() {
             </div>
 
           </div>
-        </ScrollReveal>
+        </>
       </div>
     </section>
   )
