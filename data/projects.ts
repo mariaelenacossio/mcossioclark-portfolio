@@ -1,8 +1,8 @@
 import type { Project, ProcessStep, SkillsMap } from '@/lib/types'
 
 /**
- * Project order matches the Work-section grid order in the redesign spec:
- *   [mini-pancake-co, beyond-skincare, beauty-by-amy, relocateme]
+ * Project order matches the Work-section grid order:
+ *   [mini-pancake-co, beyond-skincare, beauty-by-amy]
  *
  * The first entry is `featured: true` and renders the deep-dive pivots
  * structure on its case-study page.
@@ -261,7 +261,7 @@ export const projects: Project[] = [
     images: [
       { src: '/projects/beyond-skincare/screen-1.png', alt: 'BEYOND design system, button variants in primary, secondary, and CTA styles', caption: 'Component library, button variants across all states' },
       { src: '/projects/beyond-skincare/screen-2.png', alt: 'Light and dark theme comparison of the same product card',                    caption: 'Token-driven light and dark theme comparison'           },
-      { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel with contrast checker and component checklist', caption: 'WCAG 2.1 AA compliance audit panel'                     },
+      { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel with contrast checker and component checklist', caption: 'WCAG 2.1 AA conformance, audited with WAVE'             },
     ],
 
     /* Showcase-first hero. Outcome pays off the light/dark side-by-side
@@ -381,7 +381,7 @@ export const projects: Project[] = [
 
     metrics: [
       { value: '20+',  label: 'Documented Components' },
-      { value: 'AA',   label: 'WCAG 2.1 Compliance' },
+      { value: 'AA',   label: 'WCAG 2.1 conformance, audited with WAVE' },
       { value: '2',    label: 'Themes (Light / Dark)' },
       { value: '100%', label: 'Token-Driven UI' },
     ],
@@ -535,7 +535,7 @@ export const projects: Project[] = [
       { value: '5-step',   label: 'Booking Wizard'   },
       { value: '4 tabs',   label: 'Admin Dashboard'  },
       { value: '2 themes', label: 'Light + Dark'     },
-      { value: 'WCAG AA', label: 'Accessibility'    },
+      { value: 'WCAG AA', label: 'Conformance, audited with WAVE' },
     ],
 
     learnings: [

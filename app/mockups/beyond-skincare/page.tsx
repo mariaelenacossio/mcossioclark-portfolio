@@ -266,21 +266,21 @@ function AccessibilityScreen() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 22 }}>
         <div>
           <h2 style={{ fontSize: 26, fontWeight: 800, color: TEXT_INK, margin: 0 }}>Accessibility</h2>
-          <p style={{ fontSize: 13, color: TEXT_DIM, margin: '4px 0 0' }}>WCAG 2.1 AA audit — last run today, automatically per build.</p>
+          <p style={{ fontSize: 13, color: TEXT_DIM, margin: '4px 0 0' }}>WCAG 2.1 AA conformance, audited with WAVE.</p>
         </div>
         <span style={{
           background: SUCCESS, color: '#fff', padding: '7px 16px', borderRadius: 999,
           fontSize: 12, fontWeight: 800, letterSpacing: 1,
-        }}>✓ AA Compliant</span>
+        }}>✓ AA conformance</span>
       </div>
 
-      {/* 4 compliance tiles */}
+      {/* 4 conformance tiles */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 20 }}>
         {[
-          { l: 'Color contrast',   v: '20/20' },
-          { l: 'Keyboard nav',     v: '20/20' },
-          { l: 'Screen reader',    v: '20/20' },
-          { l: 'Touch targets',    v: '20/20' },
+          { l: 'Color contrast',   v: 'Built to AA' },
+          { l: 'Keyboard nav',     v: 'Built to AA' },
+          { l: 'Screen reader',    v: 'Built to AA' },
+          { l: 'Touch targets',    v: 'Built to AA' },
         ].map(t => (
           <div key={t.l} style={{
             background: '#fff', borderRadius: 12, padding: 16,
@@ -295,16 +295,16 @@ function AccessibilityScreen() {
         ))}
       </div>
 
-      {/* Contrast checker */}
+      {/* Brand contrast pairs, verified with WAVE (no invented ratios) */}
       <div style={{ background: '#FAFAFA', borderRadius: 12, padding: 18, border: `1px solid ${RULE}`, marginBottom: 16 }}>
-        <p style={{ fontSize: 11, fontWeight: 700, color: TEXT_DIM, letterSpacing: 1.5, textTransform: 'uppercase', margin: '0 0 12px' }}>Contrast checker</p>
+        <p style={{ fontSize: 11, fontWeight: 700, color: TEXT_DIM, letterSpacing: 1.5, textTransform: 'uppercase', margin: '0 0 12px' }}>Brand contrast</p>
         {[
-          { fg: '#072AC8', bg: '#FFFFFF', name: 'Blue on white',  ratio: '8.2:1',  grade: 'AAA' },
-          { fg: '#FCF300', bg: '#072AC8', name: 'Yellow on blue', ratio: '4.6:1',  grade: 'AA'  },
-          { fg: '#FAFAF8', bg: '#0A0A1A', name: 'White on dark',  ratio: '15.1:1', grade: 'AAA' },
+          { fg: '#072AC8', bg: '#FFFFFF', name: 'Blue on white'  },
+          { fg: '#FCF300', bg: '#072AC8', name: 'Yellow on blue' },
+          { fg: '#FAFAF8', bg: '#0A0A1A', name: 'White on dark'  },
         ].map(c => (
           <div key={c.name} style={{
-            display: 'grid', gridTemplateColumns: '80px 1fr 100px 80px',
+            display: 'grid', gridTemplateColumns: '80px 1fr auto',
             alignItems: 'center', gap: 16,
             padding: '8px 0', borderTop: c.name !== 'Blue on white' ? `1px solid ${RULE}` : 'none',
           }}>
@@ -313,11 +313,10 @@ function AccessibilityScreen() {
               fontSize: 13, fontWeight: 700, textAlign: 'center', border: c.bg === '#FFFFFF' ? `1px solid ${RULE}` : 'none',
             }}>Aa</div>
             <span style={{ fontSize: 13, color: TEXT_INK, fontWeight: 500 }}>{c.name}</span>
-            <span style={{ fontSize: 13, fontWeight: 700, color: TEXT_INK, fontFamily: 'ui-monospace, monospace' }}>{c.ratio}</span>
             <span style={{
-              background: SUCCESS, color: '#fff', padding: '3px 10px', borderRadius: 999,
+              background: SUCCESS, color: '#fff', padding: '3px 12px', borderRadius: 999,
               fontSize: 11, fontWeight: 800, textAlign: 'center', width: 'fit-content',
-            }}>{c.grade}</span>
+            }}>✓ Verified with WAVE</span>
           </div>
         ))}
       </div>
@@ -326,7 +325,7 @@ function AccessibilityScreen() {
       <div style={{ background: '#FAFAFA', borderRadius: 12, padding: 18, border: `1px solid ${RULE}`, flex: 1, overflow: 'hidden' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
           <p style={{ fontSize: 11, fontWeight: 700, color: TEXT_DIM, letterSpacing: 1.5, textTransform: 'uppercase', margin: 0 }}>Component checklist</p>
-          <p style={{ fontSize: 11, color: TEXT_DIM, margin: 0 }}>20 of 20 components passing</p>
+          <p style={{ fontSize: 11, color: TEXT_DIM, margin: 0 }}>20 components, built to WCAG 2.1 AA conformance</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
           {components.map(c => (
@@ -344,7 +343,7 @@ function AccessibilityScreen() {
           ))}
         </div>
         <p style={{ fontSize: 12, color: TEXT_DIM, margin: '14px 0 0', textAlign: 'center' }}>
-          <strong style={{ color: SUCCESS }}>94%</strong> WCAG 2.1 AA compliance across all 20+ components.
+          Audited with WAVE · WCAG 2.1 AA conformance.
         </p>
       </div>
     </div>
