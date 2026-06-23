@@ -25,11 +25,13 @@ const STEPS = [
   },
 ] as const
 
-const STATS = [
-  { value: '+34%', label: 'Conversion lift'  },
-  { value: '+52%', label: 'Booking growth'   },
-  { value: '94%',  label: 'WCAG compliance'  },
-  { value: '20+',  label: 'Projects shipped' },
+/* Honest, structural outcome lines — no measured before/after data exists,
+   so these describe what actually changed, not invented percentages. */
+const OUTCOMES = [
+  'One-tap WhatsApp checkout',
+  'Self-serve booking, not DMs',
+  'WCAG 2.1 AA, audited with WAVE',
+  '3 projects, designed and built',
 ] as const
 
 export default function Process() {
@@ -82,10 +84,16 @@ export default function Process() {
             ))}
           </div>
 
-          {/* Impact strip with count-up */}
-          <div className="mt-10 grid grid-cols-2 gap-6 rounded-2xl bg-mist p-8 text-center md:grid-cols-4">
-            {STATS.map(stat => (
-              <CountUpStat key={stat.label} value={stat.value} label={stat.label} />
+          {/* Outcomes strip — short structural-outcome lines (no count-up;
+              these are text, not metrics) */}
+          <div className="mt-10 grid grid-cols-1 gap-6 rounded-2xl bg-mist p-8 text-center sm:grid-cols-2 md:grid-cols-4">
+            {OUTCOMES.map(line => (
+              <p
+                key={line}
+                className="font-display text-[1.375rem] italic leading-tight text-ink"
+              >
+                {line}
+              </p>
             ))}
           </div>
         </ScrollReveal>

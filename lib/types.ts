@@ -115,6 +115,24 @@ export interface Project {
   pivots?:           ProjectPivot[]
   techStack?:        ProjectTechItem[]
 
+  // ── Showcase-first hero (featured case studies) ──────────────
+  /** Drives the showcase layout: the strongest visual leads, then a
+   *  one-line outcome, then ≤3 sentences of framing. Everything else
+   *  (brief, pivots, stack, learnings) sits behind a single expand.
+   *  Present → the case-study page renders showcase-first. */
+  showcase?: {
+    /** One-line outcome shown directly under the hero visual. */
+    outcome: string
+    /** 2-3 sentences of framing. No more — just enough to make
+     *  someone curious. */
+    framing: string
+    /** `src` of the lead visual. Defaults to the first image when
+     *  omitted; set it when the strongest shot isn't images[0]. The
+     *  remaining images fall through to the supporting gallery in
+     *  their original order. */
+    heroSrc?: string
+  }
+
   // ── Case-study body ──────────────────────────────────────────
   overview:      string
   problem:       string

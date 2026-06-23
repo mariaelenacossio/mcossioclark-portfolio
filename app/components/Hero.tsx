@@ -67,7 +67,7 @@ export default function Hero() {
           className="mt-6 max-w-[520px] font-body text-body-lg leading-relaxed text-ghost"
         >
           Most designers hand off to developers. I skip that step.
-          Four years of research, Figma, and shipping real code,
+          Three-plus years of research, Figma, and shipping real code,
           usually all in the same sprint.
         </motion.p>
 

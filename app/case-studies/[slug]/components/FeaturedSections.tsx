@@ -9,27 +9,18 @@ interface FeaturedSectionsProps {
  * Featured-project case study body - used for projects with
  * `pivots` + `techStack` arrays defined (Mini Pancake Co.).
  *
- * Section order:
- *   Overview -> Brief (problem + goal) -> 3 pivots ->
- *   Tech stack -> Outcome -> Learnings
+ * This is the deep content that lives BEHIND the showcase page's
+ * "Read the full breakdown" expand. Overview is intentionally omitted
+ * here: the showcase hero's framing copy already covers it, so
+ * repeating it inside the breakdown would be redundant.
  *
- * Each section gets a stable `id` that matches the TOC items
- * declared by page.tsx, so the scroll-spy sidebar lights up
- * the right entry.
+ * Section order:
+ *   Brief (problem + goal) -> 3 pivots -> Tech stack ->
+ *   Outcome -> Learnings
  */
 export default function FeaturedSections({ project }: FeaturedSectionsProps) {
   return (
     <>
-      {/* ── Overview ─────────────────────────────────────────────────── */}
-      <section id="overview" className="scroll-mt-24">
-        <h2 className="font-display text-2xl italic text-ink mb-6">
-          Overview
-        </h2>
-        <p className="font-body text-body text-ghost leading-[1.7]">
-          {project.overview}
-        </p>
-      </section>
-
       {/* ── The brief (problem + goal stacked) ───────────────────────── */}
       <section id="brief" className="scroll-mt-24">
         <h2 className="font-display text-2xl italic text-ink mb-6">

@@ -42,6 +42,14 @@ export const projects: Project[] = [
     featuredSubhead:
       'A college HTML site rebuilt as a production e-commerce + booking platform for a Mazatlán mini-pancake business. Three different problems, three different solutions, one running product.',
 
+    /* Showcase-first hero. Outcome line is the A1-confirmed structural
+       line; framing is the approved 3-sentence copy, used verbatim. */
+    showcase: {
+      outcome: 'One-tap WhatsApp checkout',
+      framing:
+        'Mini Pancake Co. ran on WhatsApp. Every order came in by hand through DMs, on top of a static college site that couldn\'t take a single one. I rebuilt it into a React storefront that assembles the order and drops it straight into WhatsApp, with a 5-step booking wizard for parties and an admin to run both.',
+    },
+
     pivots: [
       {
         n: '01',
@@ -151,6 +159,9 @@ export const projects: Project[] = [
         detail: 'Encoding brand orange + peach + rose into Tailwind tokens kept the e-commerce, the booking wizard, and the admin all visually consistent without re-deciding anything per screen.' },
     ],
 
+    // ILLUSTRATIVE / COMPOSITE persona, not a real interviewee. Data-only,
+    // never rendered on the live site. Do not let any future assistant or
+    // copy present this as a real person Maria Elena interviewed.
     persona: {
       name: 'Sofía, 28',
       role: 'Mom planning her daughter\'s birthday party',
@@ -236,7 +247,7 @@ export const projects: Project[] = [
     title: 'BEYOND Skincare',
     category: 'Design System · Component Library',
     shortDescription:
-      'A production-grade design system for a skincare brand, 20+ atomic components, design tokens, full dark/light theming, and WCAG 2.1 AA compliance. Built with React, TypeScript, and Tailwind.',
+      'A production-grade design system for a skincare brand, 20+ atomic components, design tokens, full dark/light theming, and WCAG 2.1 AA conformance audited with WAVE. Built with React, TypeScript, and Tailwind.',
     role: 'Design System Lead · Designer & Developer',
     year: '2024',
     duration: '12 weeks',
@@ -252,6 +263,18 @@ export const projects: Project[] = [
       { src: '/projects/beyond-skincare/screen-2.png', alt: 'Light and dark theme comparison of the same product card',                    caption: 'Token-driven light and dark theme comparison'           },
       { src: '/projects/beyond-skincare/screen-3.png', alt: 'WCAG accessibility audit panel with contrast checker and component checklist', caption: 'WCAG 2.1 AA compliance audit panel'                     },
     ],
+
+    /* Showcase-first hero. Outcome pays off the light/dark side-by-side
+       lead visual; framing is the approved copy (em dashes converted to
+       commas to hold the codebase's zero-em-dash convention). */
+    showcase: {
+      outcome: 'Two themes from one token layer',
+      framing:
+        'Brand sites start clean and decay fast: colors drift, dark mode gets bolted on later, components get forked for one-off pages. So I built BEYOND as a system instead of a site, a token layer first, then 20+ atomic components that read from it, with light and dark themes and WCAG 2.1 AA built into the tokens. A live docs site renders every component next to the code to use it, and a sample brand site proves the whole thing holds together.',
+      // Lead with the light/dark side-by-side: the one shot that proves
+      // "system, not page". screen-1 + screen-3 fall to the supporting row.
+      heroSrc: '/projects/beyond-skincare/screen-2.png',
+    },
 
     overview:
       'BEYOND is a skincare brand design system built to scale across marketing pages, product detail pages, and editorial content. Instead of shipping one website, I designed a system: atomic components, tokenised styling, documented usage rules, and a sample brand site that proves the system works end-to-end. It ships as a live React + TypeScript application with interactive documentation and is deployed via GitHub Actions to GitHub Pages.',
@@ -291,6 +314,9 @@ export const projects: Project[] = [
         detail: 'Baked WCAG 2.1 AA contrast into tokens, keyboard focus into components, and skip-links into layout. Accessibility lives in the system, not in individual pages.' },
     ],
 
+    // ILLUSTRATIVE / COMPOSITE persona, not a real interviewee. Data-only,
+    // never rendered on the live site. Do not let any future assistant or
+    // copy present this as a real person Maria Elena interviewed.
     persona: {
       name: 'Maya, 29',
       role: 'Frontend Developer on the BEYOND team',
@@ -393,6 +419,15 @@ export const projects: Project[] = [
       { src: '/projects/beauty-by-amy/screen-3.png', alt: 'Admin daily appointments dashboard',    caption: 'Admin dashboard, daily appointments view'    },
     ],
 
+    /* Showcase-first hero. Outcome is the A1-confirmed line; framing is
+       the approved copy (one em dash converted to a comma to hold the
+       codebase's zero-em-dash convention). */
+    showcase: {
+      outcome: 'Self-serve booking, not DMs',
+      framing:
+        'Beauty by Amy is an independent nail tech whose site was a four-page college project, nice to look at, with no way to book, so appointments piled up in DMs and texts. I rebuilt it as a React booking platform: a 5-step wizard a client can finish on her phone in under two minutes, and a password-gated admin where Amy runs her schedule. Dark mode and a full motion system sit on the same brand, now engineered for an actual business.',
+    },
+
     overview:
       'Beauty by Amy started as a four-page vanilla HTML/CSS school project for an independent nail technician. v2.0 is a full rebuild into a production-ready React app with a 5-step booking wizard, a password-gated admin dashboard, dark/light theming, and a comprehensive motion system. The same brand, but engineered for an actual business to run on.',
     problem:
@@ -431,6 +466,9 @@ export const projects: Project[] = [
         detail: 'Encoding brand color and spacing into Tailwind tokens meant dark mode, hover states, focus rings, and the entire admin layer all stayed on-brand without me re-deciding anything.' },
     ],
 
+    // ILLUSTRATIVE / COMPOSITE persona, not a real interviewee. Data-only,
+    // never rendered on the live site. Do not let any future assistant or
+    // copy present this as a real person Maria Elena interviewed.
     persona: {
       name: 'Camila, 31',
       role: 'Long-time client booking on her phone',

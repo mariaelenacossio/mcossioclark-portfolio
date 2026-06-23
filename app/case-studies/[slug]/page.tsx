@@ -3,10 +3,10 @@ import path from 'node:path'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowLeft, ChevronDown, ExternalLink, Github } from 'lucide-react'
 import { projects, getProject } from '@/data/projects'
 import type { Project, ProjectImage } from '@/lib/types'
-import CaseStudyTOC, { type TocItem } from './components/CaseStudyTOC'
 import FeaturedSections from './components/FeaturedSections'
 import StandardSections from './components/StandardSections'
 import ImageGallery from './components/ImageGallery'
@@ -61,42 +61,11 @@ export function generateMetadata(
   }
 }
 
-function buildToc(project: Project): TocItem[] {
-  if (project.featured && project.pivots && project.pivots.length > 0) {
-    return [
-      { id: 'overview', label: 'Overview' },
-      { id: 'brief',    label: 'The brief' },
-      ...project.pivots.map(p => ({
-        id: `pivot-${p.n}`,
-        label: `Pivot ${p.n} · ${p.challenge}`,
-      })),
-      ...(project.techStack && project.techStack.length > 0
-        ? [{ id: 'tech-stack', label: 'The stack' }]
-        : []),
-      { id: 'outcome',   label: 'Outcome' },
-      { id: 'learnings', label: 'What I learned' },
-    ]
-  }
-  return [
-    { id: 'overview',  label: 'Overview' },
-    { id: 'problem',   label: 'The problem' },
-    { id: 'goal',      label: 'The goal' },
-    { id: 'research',  label: 'Research' },
-    { id: 'insights',  label: 'Insights' },
-    { id: 'design',    label: 'Design' },
-    { id: 'outcome',   label: 'Outcome' },
-    { id: 'learnings', label: 'What I learned' },
-  ]
-}
-
 /**
- * Editorial Bold MC - Case Study page.
- *
- *  - paper background, top section centered with max-w-[880px]
- *  - Eyebrow (coral), Bebas display title, body-lg description
- *  - Stone meta pills, navbar-style CTA buttons
- *  - Stone metric tiles with coral numbers
- *  - Full-width gallery, then body content centered max-w-[720px]
+ * Case-study page. Every project renders showcase-first: strongest visual
+ * leads, one-line outcome under it, ≤3 sentences of framing, then
+ * meta/CTAs/metrics and the supporting screenshots, with all the deep
+ * content behind a single "Read the full breakdown" expand. No sticky TOC.
  */
 export default function CaseStudyPage(
   { params }: { params: { slug: string } },
@@ -104,8 +73,7 @@ export default function CaseStudyPage(
   const project = getProject(params.slug)
   if (!project) notFound()
 
-  const toc = buildToc(project)
-  const isFeatured = !!(project.featured && project.pivots?.length)
+  const images = existingImages(project.images)
 
   return (
     <main id="main-content" className="bg-paper pt-24">
@@ -120,9 +88,35 @@ export default function CaseStudyPage(
         </Link>
       </div>
 
-      {/* Hero */}
+      <ShowcaseCaseStudy project={project} images={images} />
+
+      {/* Next case study */}
+      <NextProjectCta currentSlug={project.slug} />
+    </main>
+  )
+}
+
+/* ─── Showcase-first layout ─────────────────────────────────────────────
+   Strongest visual leads, one-line outcome under it, ≤3 sentences of
+   framing, then meta/CTAs/metrics. Supporting screenshots stay on the
+   default path. Everything deeper sits behind a single "Read the full
+   breakdown" expand: the featured project (pivots) gets FeaturedSections,
+   everyone else gets StandardSections. No sticky TOC, with the deep
+   content collapsed, there's nothing for a sidebar to scaffold. */
+function ShowcaseCaseStudy(
+  { project, images }: { project: Project; images: ProjectImage[] },
+) {
+  const showcase   = project.showcase
+  // Lead with the designated hero (or the first image), and let the rest
+  // fall through to the supporting gallery in their original order.
+  const hero       = (showcase?.heroSrc && images.find(i => i.src === showcase.heroSrc)) || images[0]
+  const supporting = images.filter(i => i !== hero)
+  const hasPivots  = !!(project.featured && project.pivots?.length)
+
+  return (
+    <>
       <header className="container-content pb-12 pt-20 md:pb-16">
-        <div className="mx-auto max-w-[880px]">
+        <div className="mx-auto max-w-[1040px]">
           <p
             className="font-body text-caption uppercase tracking-widest"
             style={{ color: project.brand }}
@@ -134,8 +128,40 @@ export default function CaseStudyPage(
             {project.title}
           </h1>
 
-          <p className="mt-4 max-w-[640px] font-body text-body-lg text-ghost">
-            {project.shortDescription}
+          {/* Strongest visual, leads, before any prose */}
+          {hero && (
+            <figure className="mt-8 m-0">
+              <Image
+                src={hero.src}
+                alt={hero.alt}
+                width={1280}
+                height={800}
+                priority
+                className="h-auto w-full rounded-2xl shadow-warm"
+                sizes="(max-width: 1024px) 100vw, 1040px"
+              />
+              <figcaption className="mt-3 text-center font-body text-caption text-ghost">
+                {hero.caption}
+              </figcaption>
+            </figure>
+          )}
+
+          {/* One-line outcome, the payoff, directly under the visual */}
+          {showcase?.outcome && (
+            <>
+              <p className="mt-10 font-body text-caption uppercase tracking-widest text-coral">
+                Outcome
+              </p>
+              <p className="mt-2 max-w-[760px] font-display text-[2rem] italic leading-[1.1] text-ink md:text-[2.75rem]">
+                {showcase.outcome}
+              </p>
+            </>
+          )}
+
+          {/* ≤3 sentences of framing, just enough to make someone curious.
+              Falls back to the short description if no framing copy exists. */}
+          <p className="mt-5 max-w-[640px] font-body text-body-lg leading-[1.6] text-ghost">
+            {showcase?.framing ?? project.shortDescription}
           </p>
 
           {/* Meta pills */}
@@ -183,7 +209,7 @@ export default function CaseStudyPage(
             </div>
           )}
 
-          {/* Metrics */}
+          {/* Metrics, honest structural facts, scannable */}
           <div className="mt-10 grid grid-cols-2 gap-4 rounded-2xl bg-mist p-6 md:grid-cols-4">
             {project.metrics.map(m => (
               <div key={m.label}>
@@ -199,27 +225,42 @@ export default function CaseStudyPage(
         </div>
       </header>
 
-      {/* Gallery - sits in its own constrained container */}
-      <div className="mx-auto max-w-[880px] px-6 md:px-16">
-        <ImageGallery images={existingImages(project.images)} />
-      </div>
+      {/* Supporting visuals, default-visible (showing the work IS the showcase) */}
+      {supporting.length > 0 && (
+        <div className="mx-auto max-w-[1040px] px-6 md:px-16">
+          <ImageGallery images={supporting} />
+        </div>
+      )}
 
-      {/* Body */}
+      {/* Progressive disclosure, one expand, everything deep inside */}
       <div className="container-content pb-24 md:pb-32">
-        <div className="grid gap-12 lg:grid-cols-[65fr_35fr] lg:gap-16">
-          <div className="flex flex-col gap-16">
-            {isFeatured
-              ? <FeaturedSections project={project} />
-              : <StandardSections project={project} />
-            }
-          </div>
-          <CaseStudyTOC items={toc} />
+        <div className="mx-auto max-w-[760px]">
+          <details className="group border-t border-line pt-8">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl py-2 font-display text-2xl italic text-ink transition-colors duration-150 hover:text-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral [&::-webkit-details-marker]:hidden">
+              Read the full breakdown
+              <ChevronDown
+                size={24}
+                aria-hidden="true"
+                className="shrink-0 text-ghost motion-safe:transition-transform motion-safe:duration-200 group-open:rotate-180"
+              />
+            </summary>
+            {/* Toggle visibility explicitly off the parent <details>' open
+                state. Native closed-hiding varies across Chromium versions
+                (older: display:none on children; newer: a ::details-content
+                pseudo-element), so we don't rely on it, `hidden` keeps the
+                breakdown off the default path, `group-open:block` reveals it. */}
+            <div className="hidden group-open:block">
+              <div className="mt-10 flex flex-col gap-16">
+                {hasPivots
+                  ? <FeaturedSections project={project} />
+                  : <StandardSections project={project} />
+                }
+              </div>
+            </div>
+          </details>
         </div>
       </div>
-
-      {/* Next case study */}
-      <NextProjectCta currentSlug={project.slug} />
-    </main>
+    </>
   )
 }
 

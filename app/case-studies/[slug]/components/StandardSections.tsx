@@ -5,28 +5,21 @@ interface StandardSectionsProps {
 }
 
 /**
- * Standard case study body for non-featured projects.
+ * Standard case study body for projects without the featured pivots
+ * structure (BEYOND Skincare, Beauty by Amy).
  *
- * Section order per spec:
- *   Overview -> Problem -> Goal -> Research -> Insights ->
+ * This is the deep content behind the showcase page's "Read the full
+ * breakdown" expand. Overview is intentionally omitted: the showcase
+ * hero's framing copy already covers it, so repeating it inside the
+ * breakdown would be redundant.
+ *
+ * Section order:
+ *   Problem -> Goal -> Research -> Insights ->
  *   Design (iterations + design system) -> Outcome -> Learnings
- *
- * Each section has a stable `id` matching the TOC items defined in
- * page.tsx, so the scroll-spy can highlight them.
  */
 export default function StandardSections({ project }: StandardSectionsProps) {
   return (
     <>
-      {/* ── Overview ─────────────────────────────────────────────────── */}
-      <section id="overview" className="scroll-mt-24">
-        <h2 className="font-display text-2xl italic text-ink mb-6">
-          Overview
-        </h2>
-        <p className="font-body text-body text-ghost leading-[1.7]">
-          {project.overview}
-        </p>
-      </section>
-
       {/* ── Problem ──────────────────────────────────────────────────── */}
       <section id="problem" className="scroll-mt-24">
         <h2 className="font-display text-2xl italic text-ink mb-6">
