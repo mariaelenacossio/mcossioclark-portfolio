@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Dead components removed in the A3/A6 cleanup. A local file-restore tool
+# (editor "Local History" / a versioned cloud sync) keeps resurrecting them
+# on disk from old snapshots - they import nothing and are NOT on the live
+# site. Ignored so `git add -A` can't silently re-add them and undo the
+# cleanup. Do not reuse these exact paths for new components.
+/app/components/ui/CountUpStat.tsx
+/app/components/ui/ScrollReveal.tsx
+/app/components/ui/CustomCursor.tsx
+/app/components/ui/NoiseOverlay.tsx
