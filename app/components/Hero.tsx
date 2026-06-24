@@ -15,7 +15,7 @@ export default function Hero() {
     >
       <div className="container-content pb-20 pt-24">
         {/* Greeting tag */}
-        <div className="mb-10 inline-flex w-fit items-center gap-2.5 rounded-full bg-mist px-4 py-2">
+        <div className="mb-8 inline-flex w-fit items-center gap-2.5 rounded-full bg-mist px-4 py-2">
           <span className="select-none text-lg" aria-hidden="true">👋</span>
           <span className="font-body text-caption uppercase tracking-widest text-ghost">
             Hi, I&apos;m Mariaelena
@@ -25,6 +25,13 @@ export default function Hero() {
             aria-hidden="true"
           />
         </div>
+
+        {/* Positioning eyebrow. Backed by the self-built site + shipped
+            projects; deliberately makes no claim about the embedded assistant
+            (it does not exist yet). */}
+        <p className="mb-4 font-body text-caption uppercase tracking-widest text-coral">
+          AI-Native Designer &amp; Developer
+        </p>
 
         {/* Headline */}
         <h1 className="max-w-[760px] font-display text-hero italic leading-[1.0] tracking-tight text-ink">

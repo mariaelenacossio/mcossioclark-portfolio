@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
-import { DM_Serif_Display, DM_Sans } from 'next/font/google'
+import { Instrument_Serif, DM_Sans } from 'next/font/google'
 import ConditionalChrome from '@/app/components/ConditionalChrome'
 import './globals.css'
 
-/* DM Serif Display for all headlines. One weight, normal + italic. */
-const dmSerifDisplay = DM_Serif_Display({
+/* Instrument Serif for all headlines. One weight, normal + italic.
+   Self-hosted by next/font at build time (no third-party request, no CLS).
+   Structural drop-in for the previous display face: same single weight +
+   italic, so existing `font-display italic` headlines render unchanged. */
+const instrumentSerif = Instrument_Serif({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-display',
@@ -47,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSerifDisplay.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable}`}>
       <body className="relative min-h-dvh">
         <a href="#main-content" className="skip-link">
           Skip to main content
