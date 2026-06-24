@@ -297,9 +297,9 @@ export const projects: Project[] = [
       keyFindings: [
         'Successful systems separate brand tokens from component logic, the two should be independently versionable',
         'Dark mode breaks when colour is hardcoded; it works when every colour goes through a semantic token',
-        'Atomic design scales better than flat component lists when the library grows past ~15 components',
+        'As a general rule of thumb in design systems, atomic structure scales better than a flat component list once a library passes ~15 components, which is why I split BEYOND into atoms, molecules, and organisms',
         'Interactive docs beat static docs, developers copy working code, not screenshots',
-        'WCAG 2.1 AA has to be designed in from the start; retrofitting contrast and focus states is 3× the work',
+        'WCAG 2.1 AA has to be designed in from the start: retrofitting contrast and focus states afterward is broadly understood to cost far more than building them in, so I baked accessibility into the tokens from day one',
       ],
     },
 
@@ -448,7 +448,7 @@ export const projects: Project[] = [
       participants: 'Amy (the client) + informal usability checks on the booking flow with 5 friends/family in the target demographic',
       keyFindings: [
         'The v1 was a 4-page static site, no booking system at all, no admin, nothing persistent',
-        'Successful booking products use 3–5 step wizards, not single-page mega-forms',
+        'Established booking products favour short multi-step wizards over single-page mega-forms, so I built the flow as a focused 5-step wizard',
         'Service businesses need an admin dashboard, not just a public site, bookings have to land somewhere',
         'Motion design carries premium perception: page transitions, spring physics, staggered reveals',
         'Dark mode is now a baseline expectation for portfolio-grade work',

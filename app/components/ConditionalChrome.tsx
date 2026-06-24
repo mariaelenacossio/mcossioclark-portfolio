@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import Navbar from '@/app/components/Navbar'
 import Footer from '@/app/components/Footer'
+import Assistant from '@/app/components/Assistant'
 
 /**
  * Renders the portfolio chrome (Navbar, Footer) on every route EXCEPT
@@ -25,6 +26,7 @@ export default function ConditionalChrome({ children }: { children: ReactNode })
       <Navbar />
       {children}
       <Footer />
+      <Assistant />
     </>
   )
 }

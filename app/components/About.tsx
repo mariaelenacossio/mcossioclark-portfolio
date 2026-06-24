@@ -1,21 +1,16 @@
 import Image from 'next/image'
 import { Search, Code2, Layers, Cpu } from 'lucide-react'
+import { bio } from '@/data/bio'
 
 /**
  * About section. Mist background, honest personal story on the left,
  * profile photo with availability pill + 2x2 pillar grid on the right.
+ * Bio text comes from data/bio.ts (single source shared with the
+ * embedded assistant's corpus).
  */
 
-const PILLARS = [
-  { Icon: Search, title: 'Research first',
-    body: 'Talk to users before Figma.' },
-  { Icon: Code2,  title: 'Code fluency',
-    body: 'I know what is painful to build.' },
-  { Icon: Layers, title: 'Systems thinking',
-    body: 'Tokens and components, not one-off screens.' },
-  { Icon: Cpu,    title: 'AI direction',
-    body: 'I run agents. I do not just use tools.' },
-] as const
+/* Icons pair by index with bio.pillars (content lives in data/bio.ts). */
+const PILLAR_ICONS = [Search, Code2, Layers, Cpu] as const
 
 const TAGS = [
   'Vancouver, BC',
@@ -45,26 +40,13 @@ export default function About() {
                 id="about-heading"
                 className="mt-3 max-w-[480px] font-display text-display italic leading-tight text-ink"
               >
-                I design with code in mind, because I write it too.
+                {bio.headline}
               </h2>
 
               <div className="mt-6 max-w-[460px] space-y-4 font-body text-body leading-relaxed text-ghost">
-                <p>
-                  Early on I kept watching my designs come back from dev looking
-                  nothing like what I intended. So I learned to code properly. Not
-                  enough to talk to developers, enough to ship production React.
-                  That changed how I design.
-                </p>
-                <p>
-                  I&apos;ve worked across e-commerce, SaaS, and service businesses.
-                  The brief is almost always wrong about something. Finding out
-                  what before the build starts is most of the job.
-                </p>
-                <p>
-                  I also run AI agents as part of how I work, for research synthesis,
-                  rapid prototyping, and production code. Not to go faster.
-                  To do things that used to take a team.
-                </p>
+                {bio.paragraphs.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
               </div>
 
               <ul role="list" className="mt-8 flex flex-wrap gap-2">
@@ -102,20 +84,23 @@ export default function About() {
 
               {/* 2x2 pillar grid */}
               <div className="mt-5 grid grid-cols-2 gap-3">
-                {PILLARS.map(p => (
-                  <div
-                    key={p.title}
-                    className="cursor-default rounded-xl bg-paper p-5 shadow-warm transition-all duration-200 hover:-translate-y-1 hover:shadow-warm-hover"
-                  >
-                    <p.Icon size={18} className="text-coral" aria-hidden="true" />
-                    <h3 className="mt-3 font-body text-sm font-semibold text-ink">
-                      {p.title}
-                    </h3>
-                    <p className="mt-1 font-body text-caption text-ghost">
-                      {p.body}
-                    </p>
-                  </div>
-                ))}
+                {bio.pillars.map((p, i) => {
+                  const Icon = PILLAR_ICONS[i]
+                  return (
+                    <div
+                      key={p.title}
+                      className="cursor-default rounded-xl bg-paper p-5 shadow-warm transition-all duration-200 hover:-translate-y-1 hover:shadow-warm-hover"
+                    >
+                      <Icon size={18} className="text-coral" aria-hidden="true" />
+                      <h3 className="mt-3 font-body text-sm font-semibold text-ink">
+                        {p.title}
+                      </h3>
+                      <p className="mt-1 font-body text-caption text-ghost">
+                        {p.body}
+                      </p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
 
