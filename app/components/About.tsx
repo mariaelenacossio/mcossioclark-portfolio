@@ -65,7 +65,7 @@ export default function About() {
             <div>
               <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-warm">
                 <Image
-                  src="/profile.jpg"
+                  src="/profile.jpeg"
                   alt="Mariaelena Cossio Clark"
                   fill
                   className="object-cover object-top"
