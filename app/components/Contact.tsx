@@ -236,7 +236,7 @@ export default function Contact() {
                   )}
                   {status === 'sent' && 'Sent ✓'}
                   {status === 'error' && 'Try again'}
-                  {(status === 'idle' || status === 'success') && 'Send it'}
+                  {status === 'idle' && 'Send it'}
                 </button>
                 <span className="sr-only" aria-live="polite">
                   {status === 'sent' ? 'Message sent.' : ''}
