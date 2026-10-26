@@ -35,6 +35,29 @@ const config: Config = {
       transitionTimingFunction: {
         'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
+      keyframes: {
+        'reveal-sweep': {
+          from: { clipPath: 'inset(0 100% 0 0)' },
+          to:   { clipPath: 'inset(0 0% 0 0)' },
+        },
+        'success-pulse': {
+          '0%':   { transform: 'scale(1)' },
+          '50%':  { transform: 'scale(1.03)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        'error-shake': {
+          '0%':   { transform: 'translateX(0)' },
+          '25%':  { transform: 'translateX(-4px)' },
+          '50%':  { transform: 'translateX(4px)' },
+          '75%':  { transform: 'translateX(-4px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
+      animation: {
+        'reveal-sweep':  'reveal-sweep 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
+        'success-pulse': 'success-pulse 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'error-shake':   'error-shake 300ms linear',
+      },
     },
   },
   plugins: [],

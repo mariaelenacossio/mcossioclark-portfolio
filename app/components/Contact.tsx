@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import {
   CalendarDays, FileText, Linkedin, Github, Mail, Loader2,
@@ -21,7 +21,7 @@ const SOCIALS = [
   { Icon: Mail,     label: 'Email',    href: 'mailto:mariaelena.cossio@outlook.com' },
 ] as const
 
-type Status = 'idle' | 'sending' | 'success' | 'error'
+type Status = 'idle' | 'sending' | 'sent' | 'success' | 'error'
 type FieldErrors = Partial<Record<'name' | 'email' | 'message', string>>
 
 const inputClasses = (hasError: boolean) =>
@@ -34,6 +34,14 @@ export default function Contact() {
   const [form,   setForm]   = useState({ name: '', email: '', message: '' })
   const [errors, setErrors] = useState<FieldErrors>({})
   const [status, setStatus] = useState<Status>('idle')
+
+  /* Hold the button's "Sent ✓" success state for 3s before handing off
+     to the thank-you panel, so the pulse is actually visible. */
+  useEffect(() => {
+    if (status !== 'sent') return
+    const t = setTimeout(() => setStatus('success'), 3000)
+    return () => clearTimeout(t)
+  }, [status])
 
   const validate = (): FieldErrors => {
     const e: FieldErrors = {}
@@ -65,12 +73,25 @@ export default function Contact() {
     try {
       if (!formRef.current) throw new Error('Form ref missing')
       await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current, EMAILJS_PUBLIC_KEY)
-      setStatus('success')
+      setStatus('sent')
       setForm({ name: '', email: '', message: '' })
     } catch {
       setStatus('error')
     }
   }
+
+  /* Submit button's per-status look. 'sent' stays disabled (not yet
+     handed off to the thank-you panel) but isn't dimmed like 'sending' -
+     a dimmed success flash would undercut it. Hover-to-coral is dropped
+     for 'sent' only, so the success green can't be interrupted by a
+     hover flash on a button that's about to disappear anyway. */
+  const sendButton = {
+    sending: { color: 'bg-ink',         hover: true,  dim: true,  disabled: true  },
+    sent:    { color: 'bg-emerald-500', hover: false, dim: false, disabled: true  },
+    error:   { color: 'bg-ink',         hover: true,  dim: false, disabled: false },
+    idle:    { color: 'bg-ink',         hover: true,  dim: false, disabled: false },
+    success: { color: 'bg-ink',         hover: true,  dim: false, disabled: false },
+  }[status]
 
   return (
     <section
@@ -203,19 +224,23 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={status === 'sending'}
-                  aria-busy={status === 'sending'}
-                  className="mt-2 w-full rounded-full bg-ink py-4 font-body font-medium text-paper transition-colors duration-200 hover:bg-coral disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={sendButton.disabled}
+                  aria-busy={status === 'sending' || status === 'sent'}
+                  className={`mt-2 w-full rounded-full py-4 font-body font-medium text-paper transition-colors duration-200 disabled:cursor-not-allowed ${sendButton.color} ${sendButton.hover ? 'hover:bg-coral' : ''} ${sendButton.dim ? 'opacity-50' : ''} ${status === 'sent' ? 'motion-safe:animate-success-pulse' : ''} ${status === 'error' ? 'motion-safe:animate-error-shake' : ''}`}
                 >
-                  {status === 'sending' ? (
+                  {status === 'sending' && (
                     <span className="inline-flex items-center gap-2">
                       <Loader2 size={16} className="animate-spin" aria-hidden="true" />
                       Sending
                     </span>
-                  ) : (
-                    'Send it'
                   )}
+                  {status === 'sent' && 'Sent ✓'}
+                  {status === 'error' && 'Try again'}
+                  {(status === 'idle' || status === 'success') && 'Send it'}
                 </button>
+                <span className="sr-only" aria-live="polite">
+                  {status === 'sent' ? 'Message sent.' : ''}
+                </span>
               </form>
             )}
 

@@ -119,7 +119,7 @@ export default function Assistant() {
         <div
           role="dialog"
           aria-label="Ask about Mariaelena's work"
-          className={`fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-paper shadow-warm motion-safe:transition-all motion-safe:duration-200 ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+          className={`fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-paper shadow-warm motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out-expo ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-line px-4 py-3">

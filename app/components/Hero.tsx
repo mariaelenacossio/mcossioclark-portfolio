@@ -38,7 +38,7 @@ export default function Hero() {
           I design things
           <br className="hidden sm:block" />
           {' '}and then{' '}
-          <span className="not-italic text-coral">build them.</span>
+          <span className="not-italic text-coral motion-safe:animate-reveal-sweep">build them.</span>
         </h1>
 
         {/* Sub-copy */}

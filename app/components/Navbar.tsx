@@ -113,9 +113,9 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <a
               href={sectionHref('#contact')}
-              className="hidden rounded-full bg-ink px-5 py-2 font-body text-sm text-paper transition-colors duration-200 hover:bg-coral md:inline-flex no-underline"
+              className="nav-cta hidden rounded-full bg-ink px-5 py-2 font-body text-sm text-paper hover:bg-coral md:inline-flex no-underline"
             >
-              Say hello 👋
+              Say hello <span aria-hidden="true" className="wave select-none">👋</span>
             </a>
 
             <button
@@ -142,7 +142,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
+            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-7 bg-paper px-6 md:hidden"
           >
             {/* Close button, top-right */}
@@ -173,7 +173,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 + NAV_LINKS.length * 0.05, duration: 0.35 }}
+              transition={{ delay: 0.05 + NAV_LINKS.length * 0.05, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="mt-3 rounded-full bg-ink px-6 py-3 font-body text-base text-paper no-underline"
             >
               Say hello 👋
