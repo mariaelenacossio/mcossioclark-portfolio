@@ -1,12 +1,16 @@
 /**
- * Self-contained header for the dark-redesign homepage only. Not the
- * shared Navbar - ConditionalChrome hides that on "/" so the two systems
- * never render on screen together. No edits to any shared file beyond
- * the one approved pathname check.
+ * Self-contained header for the dark-redesign system - the homepage and
+ * every migrated case-study route. Not the shared Navbar -
+ * ConditionalChrome hides that wherever this header renders, so the two
+ * systems never show on screen together.
  *
- * About/Work/Process/Contact are all real sections on this page now
- * (pass one restored them); the pill CTA anchors to #contact instead of
- * a bare mailto since the section exists to scroll to.
+ * About/Work/Process/Contact are homepage sections, so the links are
+ * path-qualified (`/#about`, not `#about`): a bare hash only scrolls
+ * within the current page, which is a dead link on a case-study route
+ * (caught by the Playwright link-crawl test). `/#about` works
+ * identically on the homepage itself - same path, same-document hash
+ * scroll, no reload - and correctly navigates back to the homepage
+ * first when clicked from a case study.
  *
  * Pass two: nav link hover and the CTA pill's hover/press now use the
  * dr-ease/dr-fast motion tokens. Hover is gated to hover-capable
@@ -15,9 +19,9 @@
  * always give feedback.
  */
 const LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#work', label: 'Work' },
-  { href: '#process', label: 'Process' },
+  { href: '/#about', label: 'About' },
+  { href: '/#work', label: 'Work' },
+  { href: '/#process', label: 'Process' },
 ] as const
 
 export default function DarkHeader() {
@@ -41,7 +45,7 @@ export default function DarkHeader() {
         </nav>
 
         <a
-          href="#contact"
+          href="/#contact"
           className="rounded-dr-pill bg-dr-primary px-dr-md py-dr-xs font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline transition duration-dr-fast ease-dr-ease [@media(hover:hover)]:hover:bg-dr-ink-muted active:scale-95"
         >
           Get in touch
