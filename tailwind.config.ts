@@ -104,7 +104,7 @@ const config: Config = {
         // of motion, not a fixed "small/medium/large" scale:
         //  - fast: micro-interaction feedback (hover/press)
         //  - base: enter/exit transitions (reveals, panel open, headline load)
-        //  - slow: ambient/looping motion (scroll cue, the hero graphic loop)
+        //  - slow: ambient/looping motion (the scroll cue)
         'dr-fast': '150ms',
         'dr-base': '400ms',
         'dr-slow': '2000ms',
@@ -132,25 +132,6 @@ const config: Config = {
           '80%':  { opacity: '1' },
           '100%': { transform: 'translateY(300%)', opacity: '0' },
         },
-        // Hero motion graphic (pass two, item C). Opacity-only crossfade -
-        // 6.67%/56.67%/63.33% mark a 400ms fade (dr-base) in and out of a
-        // 6000ms loop that holds ~3000ms on the finished frame per group.
-        // dr-graphic-wireframe is the exact inverse of dr-graphic-finished
-        // so a group's two layers always sum to full opacity.
-        'dr-graphic-finished': {
-          '0%':     { opacity: '0' },
-          '6.67%':  { opacity: '1' },
-          '56.67%': { opacity: '1' },
-          '63.33%': { opacity: '0' },
-          '100%':   { opacity: '0' },
-        },
-        'dr-graphic-wireframe': {
-          '0%':     { opacity: '1' },
-          '6.67%':  { opacity: '0' },
-          '56.67%': { opacity: '0' },
-          '63.33%': { opacity: '1' },
-          '100%':   { opacity: '1' },
-        },
         // Hero text load (pass two, last item). One-shot - 'both' fill
         // mode holds the 0% state before each element's delay starts and
         // the 100% state after, so nothing needs JS to track "has it run".
@@ -165,17 +146,7 @@ const config: Config = {
         'error-shake':     'error-shake 300ms linear',
         // dr-slow (2000ms) + dr-ease, matching the named tokens above.
         'dr-scroll-cue':   'dr-scroll-cue 2000ms cubic-bezier(0.16, 1, 0.3, 1) infinite',
-        // Hero graphic groups, staggered by dr-fast (150ms) per step.
-        'dr-graphic-finished-0':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 0ms infinite',
-        'dr-graphic-finished-1':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 150ms infinite',
-        'dr-graphic-finished-2':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 300ms infinite',
-        'dr-graphic-finished-3':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 450ms infinite',
-        'dr-graphic-wireframe-0': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 0ms infinite',
-        'dr-graphic-wireframe-1': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 150ms infinite',
-        'dr-graphic-wireframe-2': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 300ms infinite',
-        'dr-graphic-wireframe-3': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 450ms infinite',
-        // dr-base (400ms) duration, staggered dr-fast (150ms) apart -
-        // same reuse pattern as the hero graphic's groups.
+        // dr-base (400ms) duration, staggered dr-fast (150ms) apart.
         'dr-headline-in-0': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 0ms both',
         'dr-headline-in-1': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both',
         'dr-headline-in-2': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
