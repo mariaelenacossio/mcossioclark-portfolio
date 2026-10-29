@@ -2,30 +2,57 @@
 
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
-import Navbar from '@/app/components/Navbar'
-import Footer from '@/app/components/Footer'
 import Assistant from '@/app/components/Assistant'
+import DarkHeader from '@/app/components/dark/DarkHeader'
+import DarkFooter from '@/app/components/dark/DarkFooter'
 
 /**
- * Renders the portfolio chrome (Navbar, Footer) on every route EXCEPT
- * `/mockups/*`. The mockup routes are internal screenshot-only pages.
- * They should render clean product UIs with no portfolio decorations.
+ * Renders chrome for every route. The dark-redesign is the only live
+ * system now - the Milan Reed Navbar/Footer are gone (see the
+ * light-system cleanup commits), and Assistant itself is dark-only, no
+ * prop needed. Three cases:
+ *
+ *  - `/mockups/*` - no chrome at all. Internal screenshot-only product
+ *    UIs, not portfolio decoration.
+ *  - `/` (homepage) - no header/footer rendered here; app/page.tsx
+ *    renders its own DarkHeader/DarkFooter directly, so this only
+ *    mounts the Assistant.
+ *  - everything else - DarkHeader + children + DarkFooter + Assistant.
+ *    This deliberately also covers any not-found or unknown route (an
+ *    unresolved case-study slug, a typo'd URL, etc.): since there's no
+ *    more light branch to fall back to, those fall through to here
+ *    too, so a 404 gets the real site chrome and app/not-found.tsx's
+ *    dark content instead of a blank or mismatched page.
+ *
+ * A trailing slash is stripped before comparing, so `/foo/` matches
+ * the same as `/foo`.
  *
  * No custom cursor. Browser default cursor everywhere.
  */
 export default function ConditionalChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  const isMockup = pathname?.startsWith('/mockups') ?? false
+  const normalizedPath = pathname?.replace(/\/$/, '') ?? ''
+  const isMockup = normalizedPath.startsWith('/mockups')
+  const isHomepage = normalizedPath === '/' || normalizedPath === ''
 
   if (isMockup) {
     return <>{children}</>
   }
 
+  if (isHomepage) {
+    return (
+      <>
+        {children}
+        <Assistant />
+      </>
+    )
+  }
+
   return (
     <>
-      <Navbar />
+      <DarkHeader />
       {children}
-      <Footer />
+      <DarkFooter />
       <Assistant />
     </>
   )

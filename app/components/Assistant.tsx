@@ -17,10 +17,15 @@ type Msg = { role: 'user' | 'assistant'; text: string }
 
 /**
  * Embedded portfolio assistant. Floating launcher + chat panel, answers
- * from the Supabase edge function (gte-small retrieval + Claude Haiku under
- * the guardrail prompt). Motion is functional only (panel reveal, gated by
- * motion-safe) — the project-grid card hover remains the one signature
- * interaction.
+ * from the Supabase edge function (gte-small retrieval + Claude Haiku
+ * under the guardrail prompt). Motion is functional only (panel reveal,
+ * gated by motion-safe, on the dr-ease/dr-base motion tokens).
+ *
+ * Dark-only: this used to carry a `dark` prop with a parallel Milan
+ * Reed branch, from when it rendered on both systems. The dark-redesign
+ * is the only live system now (see the light-system cleanup commits),
+ * so the prop and the light branch are gone - every caller renders
+ * this the same way.
  */
 export default function Assistant() {
   const [open, setOpen] = useState(false)
@@ -67,6 +72,15 @@ export default function Assistant() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  /* External open trigger - lets a teaser card elsewhere in the tree
+     (no direct parent/child relationship to this component) open the
+     same panel, without prop-drilling or a context rewrite. */
+  useEffect(() => {
+    const onExternalOpen = () => setOpen(true)
+    window.addEventListener('open-assistant', onExternalOpen)
+    return () => window.removeEventListener('open-assistant', onExternalOpen)
+  }, [])
+
   /* Keep the latest message in view. */
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight })
@@ -109,7 +123,7 @@ export default function Assistant() {
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className={`fixed bottom-5 right-5 z-50 ${open ? 'hidden' : 'inline-flex'} items-center gap-2 rounded-full bg-coral px-5 py-3 font-body text-sm font-medium text-paper shadow-warm transition-colors duration-200 hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral no-underline`}
+        className={`fixed bottom-5 right-5 z-50 ${open ? 'hidden' : 'inline-flex'} items-center gap-2 rounded-dr-pill border border-dr-hairline bg-dr-primary px-5 py-3 font-dr-body text-sm font-medium text-dr-on-primary transition-colors duration-200 hover:bg-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue no-underline`}
       >
         <span aria-hidden="true">💬</span> Ask about my work
       </button>
@@ -119,16 +133,18 @@ export default function Assistant() {
         <div
           role="dialog"
           aria-label="Ask about Mariaelena's work"
-          className={`fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-paper shadow-warm motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out-expo ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+          className={`fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-canvas motion-safe:transition-all motion-safe:duration-dr-base motion-safe:ease-dr-ease ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-line px-4 py-3">
-            <p className="font-display text-title italic leading-none text-ink">Ask about my work</p>
+          <div className="flex items-center justify-between border-b border-dr-hairline px-4 py-3">
+            <p className="font-dr-display text-base font-medium leading-none text-dr-ink">
+              Ask about my work
+            </p>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close assistant"
-              className="rounded-full p-1 text-ghost transition-colors duration-150 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+              className="rounded-full p-1 text-dr-ink-muted transition-colors duration-150 hover:text-dr-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue"
             >
               <X size={18} aria-hidden="true" />
             </button>
@@ -143,16 +159,14 @@ export default function Assistant() {
             className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
           >
             {messages.length === 0 && (
-              <p className="font-body text-caption leading-relaxed text-ghost">
+              <p className="font-dr-body text-dr-caption leading-relaxed text-dr-ink-muted">
                 Ask about Mariaelena&apos;s projects, process, or approach.
               </p>
             )}
             {messages.map((m, i) => (
               <div key={i} className={m.role === 'user' ? 'text-right' : 'text-left'}>
                 <span
-                  className={`inline-block max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 font-body text-body leading-relaxed ${
-                    m.role === 'user' ? 'bg-ink text-paper' : 'bg-mist text-ink'
-                  }`}
+                  className={`inline-block max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 font-dr-body text-dr-body leading-relaxed ${m.role === 'user' ? 'bg-dr-surface-2 text-dr-ink' : 'bg-dr-surface-1 text-dr-ink'}`}
                 >
                   {m.text}
                 </span>
@@ -160,7 +174,7 @@ export default function Assistant() {
             ))}
             {loading && (
               <div className="text-left">
-                <span className="inline-block rounded-2xl bg-mist px-3.5 py-2 font-body text-body text-ghost motion-safe:animate-pulse">
+                <span className="inline-block rounded-2xl bg-dr-surface-1 px-3.5 py-2 font-dr-body text-dr-body text-dr-ink-muted motion-safe:animate-pulse">
                   Thinking…
                 </span>
               </div>
@@ -175,7 +189,7 @@ export default function Assistant() {
                   key={h}
                   type="button"
                   onClick={() => send(h)}
-                  className="rounded-full border border-line bg-mist px-3 py-1.5 text-left font-body text-caption text-ink transition-colors duration-150 hover:border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                  className="rounded-full border border-dr-hairline bg-dr-surface-1 px-3 py-1.5 text-left font-dr-body text-dr-caption text-dr-ink transition-colors duration-150 hover:border-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue"
                 >
                   {h}
                 </button>
@@ -186,7 +200,7 @@ export default function Assistant() {
           {/* Input */}
           <form
             onSubmit={(e) => { e.preventDefault(); send(input) }}
-            className="flex items-center gap-2 border-t border-line p-3"
+            className="flex items-center gap-2 border-t border-dr-hairline p-3"
           >
             <input
               ref={inputRef}
@@ -194,13 +208,13 @@ export default function Assistant() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question…"
               aria-label="Your question"
-              className="min-w-0 flex-1 rounded-full border border-line bg-paper px-4 py-2 font-body text-body text-ink placeholder:text-ghost focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-coral"
+              className="min-w-0 flex-1 rounded-full border border-dr-hairline bg-dr-surface-1 px-4 py-2 font-dr-body text-dr-body text-dr-ink placeholder:text-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dr-accent-blue"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Send"
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-coral text-paper transition-colors duration-150 hover:bg-ink disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dr-primary text-dr-on-primary transition-colors duration-150 hover:bg-dr-ink-muted disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue"
             >
               <Send size={16} aria-hidden="true" />
             </button>
