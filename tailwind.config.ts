@@ -151,6 +151,13 @@ const config: Config = {
           '63.33%': { opacity: '1' },
           '100%':   { opacity: '1' },
         },
+        // Hero text load (pass two, last item). One-shot - 'both' fill
+        // mode holds the 0% state before each element's delay starts and
+        // the 100% state after, so nothing needs JS to track "has it run".
+        'dr-headline-in': {
+          '0%':   { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         'reveal-sweep':    'reveal-sweep 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
@@ -167,6 +174,12 @@ const config: Config = {
         'dr-graphic-wireframe-1': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 150ms infinite',
         'dr-graphic-wireframe-2': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 300ms infinite',
         'dr-graphic-wireframe-3': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 450ms infinite',
+        // dr-base (400ms) duration, staggered dr-fast (150ms) apart -
+        // same reuse pattern as the hero graphic's groups.
+        'dr-headline-in-0': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 0ms both',
+        'dr-headline-in-1': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both',
+        'dr-headline-in-2': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
+        'dr-headline-in-3': 'dr-headline-in 400ms cubic-bezier(0.16, 1, 0.3, 1) 450ms both',
       },
     },
   },
