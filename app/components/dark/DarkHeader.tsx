@@ -8,8 +8,11 @@
  * (pass one restored them); the pill CTA anchors to #contact instead of
  * a bare mailto since the section exists to scroll to.
  *
- * Pass one only, no motion: no hover transition on the pill. Pill
- * hover/press is an explicit pass-two item.
+ * Pass two: nav link hover and the CTA pill's hover/press now use the
+ * dr-ease/dr-fast motion tokens. Hover is gated to hover-capable
+ * devices ([@media(hover:hover)]) so it doesn't stick after a tap;
+ * press (active:scale) applies on touch too, a real press should
+ * always give feedback.
  */
 const LINKS = [
   { href: '#about', label: 'About' },
@@ -30,7 +33,7 @@ export default function DarkHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="font-dr-body text-dr-caption text-dr-ink-muted no-underline hover:text-dr-ink"
+              className="font-dr-body text-dr-caption text-dr-ink-muted no-underline transition-colors duration-dr-fast ease-dr-ease [@media(hover:hover)]:hover:text-dr-ink"
             >
               {link.label}
             </a>
@@ -39,7 +42,7 @@ export default function DarkHeader() {
 
         <a
           href="#contact"
-          className="rounded-dr-pill bg-dr-primary px-dr-md py-dr-xs font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline"
+          className="rounded-dr-pill bg-dr-primary px-dr-md py-dr-xs font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline transition duration-dr-fast ease-dr-ease [@media(hover:hover)]:hover:bg-dr-ink-muted active:scale-95"
         >
           Get in touch
         </a>

@@ -11,8 +11,10 @@ import HeroGraphic from '@/app/components/dark/HeroGraphic'
  * browser chrome doesn't clip it) as a min-height, not a fixed height -
  * the graphic stacked below the text at 375px can legitimately need more
  * room than the viewport, and min-height lets it grow instead of
- * clipping. A scroll cue links to #about. The hero load animation is
- * still a separate, not-yet-built pass-two item.
+ * clipping. A scroll cue links to #about. The CTA pill's hover/press
+ * uses the dr-ease/dr-fast motion tokens, hover gated to hover-capable
+ * devices. The hero load animation is still a separate, not-yet-built
+ * pass-two item.
  */
 export default function DarkHero() {
   return (
@@ -41,7 +43,7 @@ export default function DarkHero() {
           <div className="mt-dr-xl flex flex-wrap gap-dr-sm">
             <a
               href="#work"
-              className="rounded-dr-pill bg-dr-primary px-dr-lg py-dr-sm font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline hover:bg-dr-ink-muted"
+              className="rounded-dr-pill bg-dr-primary px-dr-lg py-dr-sm font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline transition duration-dr-fast ease-dr-ease [@media(hover:hover)]:hover:bg-dr-ink-muted active:scale-95"
             >
               See my work
             </a>
