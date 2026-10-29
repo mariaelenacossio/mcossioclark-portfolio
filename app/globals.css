@@ -13,7 +13,7 @@ html {
 body {
   background: #FAFAF8;
   color: #0F0F0F;
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 ::selection {

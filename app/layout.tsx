@@ -1,33 +1,17 @@
 import type { Metadata } from 'next'
-import { Instrument_Serif, DM_Sans, Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import ConditionalChrome from '@/app/components/ConditionalChrome'
 import '@fontsource-variable/mona-sans'
 import './globals.css'
 
-/* Instrument Serif for all headlines. One weight, normal + italic.
-   Self-hosted by next/font at build time (no third-party request, no CLS).
-   Structural drop-in for the previous display face: same single weight +
-   italic, so existing `font-display italic` headlines render unchanged. */
-const instrumentSerif = Instrument_Serif({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-display',
-  style: ['normal', 'italic'],
-  display: 'swap',
-})
+/* Instrument Serif and DM Sans (Milan Reed's display/body faces) used
+   to load here. Removed in the light-system cleanup - confirmed by
+   grep that nothing references font-display/font-body or their
+   --font-display/--font-body CSS variables anymore, since the
+   dark-redesign (Mona Sans + Inter below) is the only live system. */
 
-/* DM Sans for body text, labels, UI. */
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-body',
-  display: 'swap',
-})
-
-/* dark-redesign only: Inter Variable for body type on the new homepage.
-   Registers a CSS variable site-wide (next/font always does), but nothing
-   outside the homepage references --font-dr-body, so existing pages are
-   unaffected. OpenType feature settings (cv01/cv05/cv09/cv11/ss03/ss07/
-   dlig) are applied in globals.css, scoped to .dr-root only. */
+/* Inter Variable for body type, scoped to .dr-root via OpenType feature
+   settings (cv01/cv05/cv09/cv11/ss03/ss07/dlig) in globals.css. */
 const interDr = Inter({
   subsets: ['latin'],
   variable: '--font-dr-body',
@@ -53,8 +37,8 @@ export const metadata: Metadata = {
 /**
  * Root layout.
  *
- * Chrome (Navbar, Footer) renders through <ConditionalChrome>, which
- * suppresses it on /mockups/* routes. No custom cursor anywhere.
+ * Chrome (dark header/footer) renders through <ConditionalChrome>,
+ * which suppresses it on /mockups/* routes. No custom cursor anywhere.
  */
 export default function RootLayout({
   children,
@@ -62,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable} ${interDr.variable}`}>
+    <html lang="en" className={interDr.variable}>
       <body className="relative min-h-dvh">
         <a href="#main-content" className="skip-link">
           Skip to main content

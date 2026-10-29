@@ -5,19 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ── Milan Reed warm palette ───────────────────────────────
-        ink:   '#0F0F0F', // near-black with warmth, not pure #000
-        paper: '#FAFAF8', // warm white, barely off-white
-        coral: '#FF4D2E', // brighter, more energetic
-        mist:  '#F2F0EB', // section alternate background
-        line:  '#E5E2DC', // borders, dividers
-        ghost: '#94918C', // secondary text, captions
-
-        // ── dark-redesign (DESIGN.md), additive only ─────────────
-        // Prefixed dr- so it can never collide with the Milan Reed
-        // tokens above. Only the homepage uses these so far; every
-        // other page is untouched. gradient-coral dropped per review
-        // (DESIGN.md documents it but the homepage only uses one tile).
+        // ── dark-redesign (DESIGN.md) ─────────────────────────────
+        // The Milan Reed warm palette (ink/paper/coral/mist/line/ghost)
+        // that used to live here is gone - the dark-redesign is the
+        // only live system now (see the light-system cleanup commits),
+        // confirmed unused by grep across app/lib/data before removal.
+        // gradient-coral dropped per review (DESIGN.md documents it
+        // but the homepage only uses one tile).
         'dr-primary':          '#ffffff',
         'dr-on-primary':       '#000000',
         'dr-accent-blue':      '#0099ff',
@@ -34,8 +28,6 @@ const config: Config = {
         'dr-success':          '#22c55e',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
-        body:    ['var(--font-body)', 'system-ui', 'sans-serif'],
         // dark-redesign: Mona Sans in place of GT Walsheim (not licensed);
         // Inter Variable for body, feature settings applied via globals.css
         // scoped to .dr-root so it never touches existing pages.
