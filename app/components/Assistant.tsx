@@ -17,20 +17,17 @@ type Msg = { role: 'user' | 'assistant'; text: string }
 
 /**
  * Embedded portfolio assistant. Floating launcher + chat panel, answers
- * from the Supabase edge function (gte-small retrieval + Claude Haiku under
- * the guardrail prompt). Motion is functional only (panel reveal, gated by
- * motion-safe) — the project-grid card hover remains the one signature
- * interaction on the Milan Reed pages.
+ * from the Supabase edge function (gte-small retrieval + Claude Haiku
+ * under the guardrail prompt). Motion is functional only (panel reveal,
+ * gated by motion-safe, on the dr-ease/dr-base motion tokens).
  *
- * `dark`: renders on dr- tokens instead of the Milan Reed palette.
- * Defaults to false, so every page except the dark-redesign homepage
- * (the only caller that passes dark) is completely unaffected. The
- * Milan Reed branch's panel-reveal transition (ease-out-expo, 200ms) is
- * untouched. The dark branch's panel reveal now runs on the dark-redesign
- * motion tokens (dr-ease/dr-base) instead - pass two's "assistant panel
- * opening" item. Hover colors are unchanged in both branches.
+ * Dark-only: this used to carry a `dark` prop with a parallel Milan
+ * Reed branch, from when it rendered on both systems. The dark-redesign
+ * is the only live system now (see the light-system cleanup commits),
+ * so the prop and the light branch are gone - every caller renders
+ * this the same way.
  */
-export default function Assistant({ dark = false }: { dark?: boolean }) {
+export default function Assistant() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Msg[]>([])
   const [input, setInput] = useState('')
@@ -77,8 +74,7 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
 
   /* External open trigger - lets a teaser card elsewhere in the tree
      (no direct parent/child relationship to this component) open the
-     same panel, without prop-drilling or a context rewrite. Behavior
-     only; this component's own styling is untouched. */
+     same panel, without prop-drilling or a context rewrite. */
   useEffect(() => {
     const onExternalOpen = () => setOpen(true)
     window.addEventListener('open-assistant', onExternalOpen)
@@ -127,11 +123,7 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className={
-          dark
-            ? `fixed bottom-5 right-5 z-50 ${open ? 'hidden' : 'inline-flex'} items-center gap-2 rounded-dr-pill border border-dr-hairline bg-dr-primary px-5 py-3 font-dr-body text-sm font-medium text-dr-on-primary transition-colors duration-200 hover:bg-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue no-underline`
-            : `fixed bottom-5 right-5 z-50 ${open ? 'hidden' : 'inline-flex'} items-center gap-2 rounded-full bg-coral px-5 py-3 font-body text-sm font-medium text-paper shadow-warm transition-colors duration-200 hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral no-underline`
-        }
+        className={`fixed bottom-5 right-5 z-50 ${open ? 'hidden' : 'inline-flex'} items-center gap-2 rounded-dr-pill border border-dr-hairline bg-dr-primary px-5 py-3 font-dr-body text-sm font-medium text-dr-on-primary transition-colors duration-200 hover:bg-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue no-underline`}
       >
         <span aria-hidden="true">💬</span> Ask about my work
       </button>
@@ -141,26 +133,18 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
         <div
           role="dialog"
           aria-label="Ask about Mariaelena's work"
-          className={
-            dark
-              ? `fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-canvas motion-safe:transition-all motion-safe:duration-dr-base motion-safe:ease-dr-ease ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
-              : `fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-paper shadow-warm motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out-expo ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
-          }
+          className={`fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-canvas motion-safe:transition-all motion-safe:duration-dr-base motion-safe:ease-dr-ease ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
         >
           {/* Header */}
-          <div className={`flex items-center justify-between border-b px-4 py-3 ${dark ? 'border-dr-hairline' : 'border-line'}`}>
-            <p className={dark ? 'font-dr-display text-base font-medium leading-none text-dr-ink' : 'font-display text-title italic leading-none text-ink'}>
+          <div className="flex items-center justify-between border-b border-dr-hairline px-4 py-3">
+            <p className="font-dr-display text-base font-medium leading-none text-dr-ink">
               Ask about my work
             </p>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close assistant"
-              className={
-                dark
-                  ? 'rounded-full p-1 text-dr-ink-muted transition-colors duration-150 hover:text-dr-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue'
-                  : 'rounded-full p-1 text-ghost transition-colors duration-150 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral'
-              }
+              className="rounded-full p-1 text-dr-ink-muted transition-colors duration-150 hover:text-dr-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue"
             >
               <X size={18} aria-hidden="true" />
             </button>
@@ -175,18 +159,14 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
             className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
           >
             {messages.length === 0 && (
-              <p className={dark ? 'font-dr-body text-dr-caption leading-relaxed text-dr-ink-muted' : 'font-body text-caption leading-relaxed text-ghost'}>
+              <p className="font-dr-body text-dr-caption leading-relaxed text-dr-ink-muted">
                 Ask about Mariaelena&apos;s projects, process, or approach.
               </p>
             )}
             {messages.map((m, i) => (
               <div key={i} className={m.role === 'user' ? 'text-right' : 'text-left'}>
                 <span
-                  className={
-                    dark
-                      ? `inline-block max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 font-dr-body text-dr-body leading-relaxed ${m.role === 'user' ? 'bg-dr-surface-2 text-dr-ink' : 'bg-dr-surface-1 text-dr-ink'}`
-                      : `inline-block max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 font-body text-body leading-relaxed ${m.role === 'user' ? 'bg-ink text-paper' : 'bg-mist text-ink'}`
-                  }
+                  className={`inline-block max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 font-dr-body text-dr-body leading-relaxed ${m.role === 'user' ? 'bg-dr-surface-2 text-dr-ink' : 'bg-dr-surface-1 text-dr-ink'}`}
                 >
                   {m.text}
                 </span>
@@ -194,11 +174,7 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
             ))}
             {loading && (
               <div className="text-left">
-                <span className={
-                  dark
-                    ? 'inline-block rounded-2xl bg-dr-surface-1 px-3.5 py-2 font-dr-body text-dr-body text-dr-ink-muted motion-safe:animate-pulse'
-                    : 'inline-block rounded-2xl bg-mist px-3.5 py-2 font-body text-body text-ghost motion-safe:animate-pulse'
-                }>
+                <span className="inline-block rounded-2xl bg-dr-surface-1 px-3.5 py-2 font-dr-body text-dr-body text-dr-ink-muted motion-safe:animate-pulse">
                   Thinking…
                 </span>
               </div>
@@ -213,11 +189,7 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
                   key={h}
                   type="button"
                   onClick={() => send(h)}
-                  className={
-                    dark
-                      ? 'rounded-full border border-dr-hairline bg-dr-surface-1 px-3 py-1.5 text-left font-dr-body text-dr-caption text-dr-ink transition-colors duration-150 hover:border-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue'
-                      : 'rounded-full border border-line bg-mist px-3 py-1.5 text-left font-body text-caption text-ink transition-colors duration-150 hover:border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral'
-                  }
+                  className="rounded-full border border-dr-hairline bg-dr-surface-1 px-3 py-1.5 text-left font-dr-body text-dr-caption text-dr-ink transition-colors duration-150 hover:border-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue"
                 >
                   {h}
                 </button>
@@ -228,7 +200,7 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
           {/* Input */}
           <form
             onSubmit={(e) => { e.preventDefault(); send(input) }}
-            className={`flex items-center gap-2 border-t p-3 ${dark ? 'border-dr-hairline' : 'border-line'}`}
+            className="flex items-center gap-2 border-t border-dr-hairline p-3"
           >
             <input
               ref={inputRef}
@@ -236,21 +208,13 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question…"
               aria-label="Your question"
-              className={
-                dark
-                  ? 'min-w-0 flex-1 rounded-full border border-dr-hairline bg-dr-surface-1 px-4 py-2 font-dr-body text-dr-body text-dr-ink placeholder:text-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dr-accent-blue'
-                  : 'min-w-0 flex-1 rounded-full border border-line bg-paper px-4 py-2 font-body text-body text-ink placeholder:text-ghost focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-coral'
-              }
+              className="min-w-0 flex-1 rounded-full border border-dr-hairline bg-dr-surface-1 px-4 py-2 font-dr-body text-dr-body text-dr-ink placeholder:text-dr-ink-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dr-accent-blue"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Send"
-              className={
-                dark
-                  ? 'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dr-primary text-dr-on-primary transition-colors duration-150 hover:bg-dr-ink-muted disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue'
-                  : 'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-coral text-paper transition-colors duration-150 hover:bg-ink disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral'
-              }
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dr-primary text-dr-on-primary transition-colors duration-150 hover:bg-dr-ink-muted disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dr-accent-blue"
             >
               <Send size={16} aria-hidden="true" />
             </button>

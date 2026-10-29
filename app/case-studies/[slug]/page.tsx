@@ -81,7 +81,7 @@ export default function CaseStudyPage(
 
   return (
     <div className="dr-root min-h-dvh">
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1} className="outline-none">
         <DarkCaseStudyShowcase project={project} images={images} />
         <DarkNextProjectCta currentSlug={project.slug} />
       </main>

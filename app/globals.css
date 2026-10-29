@@ -64,11 +64,16 @@ body {
 }
 
 @layer components {
-  /* Keyboard skip-link, hidden until focused. */
+  /* Keyboard skip-link, hidden until focused. White primary pill with
+     the accent-blue focus ring from DESIGN.md - the dark system is the
+     only live one now, so this matches it instead of Milan Reed. It
+     renders before <ConditionalChrome> in layout.tsx, outside .dr-root,
+     so the ring is set explicitly here rather than relying on
+     .dr-root :focus-visible above. */
   .skip-link {
     @apply sr-only;
   }
   .skip-link:focus {
-    @apply not-sr-only fixed left-4 top-4 z-[60] rounded-full bg-ink px-4 py-2 font-body text-sm text-paper;
+    @apply not-sr-only fixed left-4 top-4 z-[60] rounded-dr-pill bg-dr-primary px-dr-md py-dr-sm font-dr-body text-sm font-medium text-dr-on-primary outline outline-2 outline-offset-2 outline-dr-accent-blue;
   }
 }

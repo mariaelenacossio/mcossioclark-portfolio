@@ -15,9 +15,22 @@ async function hasVisibleFocusRing(page: Page) {
 
 /**
  * Covers item 6: visible focus throughout, details open via Enter/Space,
- * Escape closes the assistant.
+ * Escape closes the assistant, plus the skip link (restyled onto dr-
+ * tokens as part of the light-system cleanup).
  */
 test.describe('Keyboard access', () => {
+  test('the skip link appears on the first Tab and Enter moves focus to main content', async ({ page }) => {
+    await page.goto('/')
+    const skipLink = page.getByRole('link', { name: 'Skip to main content' })
+
+    await page.keyboard.press('Tab')
+    await expect(skipLink).toBeFocused()
+    await expect(skipLink).toBeVisible()
+
+    await page.keyboard.press('Enter')
+    await expect(page.locator('#main-content')).toBeFocused()
+  })
+
   test('tabbing through the homepage always shows a visible focus ring', async ({ page }) => {
     await page.goto('/')
     const stops = 20

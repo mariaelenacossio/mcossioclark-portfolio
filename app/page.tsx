@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <div className="dr-root min-h-dvh">
       <DarkHeader />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1} className="outline-none">
         <DarkHero />
         <DarkAbout />
         <DarkWork />

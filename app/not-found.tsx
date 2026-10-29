@@ -17,7 +17,8 @@ export default function NotFound() {
     <div className="dr-root min-h-dvh">
       <main
         id="main-content"
-        className="flex min-h-[calc(100svh-56px)] flex-col items-center justify-center px-dr-xl text-center"
+        tabIndex={-1}
+        className="flex min-h-[calc(100svh-56px)] flex-col items-center justify-center px-dr-xl text-center outline-none"
       >
         <p className="font-dr-body text-dr-caption uppercase tracking-[0.08em] text-dr-ink-muted">
           404
