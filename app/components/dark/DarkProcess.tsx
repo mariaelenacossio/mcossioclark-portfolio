@@ -1,6 +1,8 @@
+import ScrollReveal from '@/app/components/dark/ScrollReveal'
+
 /**
  * Dark-redesign Process section. Same content/copy as the live
- * Process.tsx. Pass one only, no motion.
+ * Process.tsx. Pass two: fades/slides in once on scroll (ScrollReveal).
  */
 const STEPS = [
   { number: '01', title: 'Discover', body: 'Listen first. Interviews, recordings, analytics. The actual problem is rarely the stated one.' },
@@ -19,7 +21,7 @@ const OUTCOMES = [
 export default function DarkProcess() {
   return (
     <section id="process" aria-labelledby="process-heading" className="px-dr-xl py-dr-section">
-      <div className="mx-auto max-w-[1199px]">
+      <ScrollReveal className="mx-auto max-w-[1199px]">
         <span className="font-dr-body text-dr-caption uppercase tracking-[0.08em] text-dr-ink-muted">
           Process
         </span>
@@ -58,7 +60,7 @@ export default function DarkProcess() {
             </p>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

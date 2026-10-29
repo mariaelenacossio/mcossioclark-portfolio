@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { Search, Code2, Layers, Cpu } from 'lucide-react'
 import { bio } from '@/data/bio'
+import ScrollReveal from '@/app/components/dark/ScrollReveal'
 
 /**
  * Dark-redesign About section. Same content as the live About.tsx (same
  * bio.ts source, same headshot) - only the visual system changes.
- * Pass one only, no motion: no hover transitions on the pillar cards.
+ * Pass two: the whole section fades/slides in once on scroll (ScrollReveal).
  */
 const PILLAR_ICONS = [Search, Code2, Layers, Cpu] as const
 
@@ -14,7 +15,7 @@ const TAGS = ['Vancouver, BC', 'Open to remote', 'Bilingual EN / ES', 'Design + 
 export default function DarkAbout() {
   return (
     <section id="about" aria-labelledby="about-heading" className="px-dr-xl py-dr-section">
-      <div className="mx-auto grid max-w-[1199px] grid-cols-1 items-start gap-dr-xxl md:grid-cols-2">
+      <ScrollReveal className="mx-auto grid max-w-[1199px] grid-cols-1 items-start gap-dr-xxl md:grid-cols-2">
         {/* Left: story */}
         <div>
           <span className="font-dr-body text-dr-caption uppercase tracking-[0.08em] text-dr-ink-muted">
@@ -67,7 +68,7 @@ export default function DarkAbout() {
             })}
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

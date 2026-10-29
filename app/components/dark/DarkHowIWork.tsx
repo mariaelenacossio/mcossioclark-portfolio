@@ -1,6 +1,8 @@
+import ScrollReveal from '@/app/components/dark/ScrollReveal'
+
 /**
  * Dark-redesign "How I work with AI" section. Same content/copy as the
- * live HowIWork.tsx. Pass one only, no motion.
+ * live HowIWork.tsx. Pass two: fades/slides in once on scroll (ScrollReveal).
  */
 const STEPS = [
   {
@@ -25,7 +27,7 @@ const TOOLS = ['Claude', 'Cursor', 'v0', 'Framer', 'GitHub Copilot', 'Figma AI']
 export default function DarkHowIWork() {
   return (
     <section id="ai-workflow" aria-labelledby="ai-heading" className="bg-dr-surface-1 px-dr-xl py-dr-section">
-      <div className="mx-auto max-w-[1199px]">
+      <ScrollReveal className="mx-auto max-w-[1199px]">
         <span className="font-dr-body text-dr-caption uppercase tracking-[0.08em] text-dr-ink-muted">
           How I work with AI
         </span>
@@ -78,7 +80,7 @@ export default function DarkHowIWork() {
             ))}
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

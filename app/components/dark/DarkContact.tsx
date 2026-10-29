@@ -5,6 +5,7 @@ import emailjs from '@emailjs/browser'
 import {
   CalendarDays, FileText, Linkedin, Github, Mail, Loader2, AlertCircle, Check,
 } from 'lucide-react'
+import ScrollReveal from '@/app/components/dark/ScrollReveal'
 
 /**
  * Dark-redesign Contact section. Same logic, same EmailJS config, same
@@ -21,6 +22,8 @@ import {
  * literal spec, resolving the deviation flagged in pass one. Error state
  * is unchanged: icon + text + aria-live, no color, since DESIGN.md has
  * no semantic-error token.
+ *
+ * Pass two: the section fades/slides in once on scroll (ScrollReveal).
  */
 
 const EMAILJS_SERVICE_ID  = 'service_6y1v4fl'
@@ -102,7 +105,7 @@ export default function DarkContact() {
 
   return (
     <section id="contact" aria-labelledby="contact-heading" className="bg-dr-surface-1 px-dr-xl py-dr-section">
-      <div className="mx-auto max-w-[1199px]">
+      <ScrollReveal className="mx-auto max-w-[1199px]">
         <span className="font-dr-body text-dr-caption uppercase tracking-[0.08em] text-dr-ink-muted">
           Contact
         </span>
@@ -261,7 +264,7 @@ export default function DarkContact() {
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

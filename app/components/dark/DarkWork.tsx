@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { projects } from '@/data/projects'
 import AssistantTeaserCard from '@/app/components/dark/AssistantTeaserCard'
+import ScrollReveal from '@/app/components/dark/ScrollReveal'
 
 /**
  * Dark-redesign work section. Structure:
@@ -22,7 +23,8 @@ import AssistantTeaserCard from '@/app/components/dark/AssistantTeaserCard'
  * Pass two: each project card lifts slightly on hover (translateY +
  * border color, dr-ease/dr-fast), gated to hover-capable devices and to
  * prefers-reduced-motion. The image itself still doesn't zoom or crop -
- * that was the pass-one bug fix, not something to reintroduce here.
+ * that was the pass-one bug fix, not something to reintroduce here. The
+ * whole grid also fades/slides in once on scroll (ScrollReveal).
  */
 
 const featured = projects.find(p => p.featured)
@@ -78,11 +80,11 @@ function DarkProjectCard({ project, featured: isFeatured }: { project: (typeof p
 export default function DarkWork() {
   return (
     <section id="work" aria-label="Selected work" className="px-dr-xl pb-dr-section">
-      <div className="mx-auto grid max-w-[1199px] grid-cols-1 gap-dr-lg md:grid-cols-2">
+      <ScrollReveal className="mx-auto grid max-w-[1199px] grid-cols-1 gap-dr-lg md:grid-cols-2">
         {featured && <DarkProjectCard project={featured} featured />}
         {rest.map(p => <DarkProjectCard key={p.id} project={p} />)}
         <AssistantTeaserCard />
-      </div>
+      </ScrollReveal>
     </section>
   )
 }
