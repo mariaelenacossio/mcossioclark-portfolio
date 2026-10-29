@@ -12,9 +12,6 @@ const config: Config = {
         mist:  '#F2F0EB', // section alternate background
         line:  '#E5E2DC', // borders, dividers
         ghost: '#94918C', // secondary text, captions
-        card:  '#EDEBE6', // card background (slightly darker than mist)
-        // Legacy alias kept so unrewritten leaf components don't break.
-        stone: '#EDEBE6',
 
         // ── dark-redesign (DESIGN.md), additive only ─────────────
         // Prefixed dr- so it can never collide with the Milan Reed
