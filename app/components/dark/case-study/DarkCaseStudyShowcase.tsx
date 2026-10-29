@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronDown, ExternalLink, Github } from 'lucide-react'
 import type { Project, ProjectImage } from '@/lib/types'
 import DarkImageGallery from './DarkImageGallery'
 import DarkFeaturedSections from './DarkFeaturedSections'
+import DarkStandardSections from './DarkStandardSections'
 import ScrollReveal from '@/app/components/dark/ScrollReveal'
 
 interface DarkCaseStudyShowcaseProps {
@@ -19,10 +20,10 @@ interface DarkCaseStudyShowcaseProps {
  * same mechanism as the light page (no JS, no sticky TOC), restyled on
  * dr- tokens with the chevron's rotate transition on the motion tokens.
  *
- * Mini Pancake Co. is the only project with the pivots/featured shape
- * so far, so this only wires up DarkFeaturedSections - a dark
- * StandardSections (BEYOND Skincare, Beauty by Amy's shape) isn't
- * needed until those two migrate.
+ * Branches the same way the light ShowcaseCaseStudy does: a project
+ * with pivots (Mini Pancake Co.) gets DarkFeaturedSections, everyone
+ * else gets DarkStandardSections (BEYOND Skincare, and Beauty by Amy
+ * once it migrates).
  *
  * Color notes (no coral, no invented accents):
  *  - category eyebrow was per-project brand hex -> dr-ink-muted, same
@@ -34,6 +35,7 @@ export default function DarkCaseStudyShowcase({ project, images }: DarkCaseStudy
   const showcase   = project.showcase
   const hero       = (showcase?.heroSrc && images.find(i => i.src === showcase.heroSrc)) || images[0]
   const supporting = images.filter(i => i !== hero)
+  const hasPivots  = !!(project.featured && project.pivots?.length)
 
   return (
     <>
@@ -169,7 +171,10 @@ export default function DarkCaseStudyShowcase({ project, images }: DarkCaseStudy
             </summary>
             <div className="hidden group-open:block">
               <div className="mt-dr-xl flex flex-col gap-dr-xxl">
-                <DarkFeaturedSections project={project} />
+                {hasPivots
+                  ? <DarkFeaturedSections project={project} />
+                  : <DarkStandardSections project={project} />
+                }
               </div>
             </div>
           </details>
