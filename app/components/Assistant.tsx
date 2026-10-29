@@ -24,9 +24,11 @@ type Msg = { role: 'user' | 'assistant'; text: string }
  *
  * `dark`: renders on dr- tokens instead of the Milan Reed palette.
  * Defaults to false, so every page except the dark-redesign homepage
- * (the only caller that passes dark) is completely unaffected. Existing
- * transitions (panel reveal, hover colors) are kept as-is here - they're
- * pre-existing, already-approved motion, not new decorative motion.
+ * (the only caller that passes dark) is completely unaffected. The
+ * Milan Reed branch's panel-reveal transition (ease-out-expo, 200ms) is
+ * untouched. The dark branch's panel reveal now runs on the dark-redesign
+ * motion tokens (dr-ease/dr-base) instead - pass two's "assistant panel
+ * opening" item. Hover colors are unchanged in both branches.
  */
 export default function Assistant({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = useState(false)
@@ -141,7 +143,7 @@ export default function Assistant({ dark = false }: { dark?: boolean }) {
           aria-label="Ask about Mariaelena's work"
           className={
             dark
-              ? `fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-canvas motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out-expo ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
+              ? `fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-canvas motion-safe:transition-all motion-safe:duration-dr-base motion-safe:ease-dr-ease ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
               : `fixed bottom-5 right-5 z-50 flex h-[min(32rem,80vh)] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-paper shadow-warm motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out-expo ${entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
           }
         >
