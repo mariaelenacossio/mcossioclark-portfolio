@@ -7,12 +7,12 @@ interface DarkStandardSectionsProps {
 
 /**
  * Dark-redesign standard case-study body - used for projects without the
- * featured pivots structure (BEYOND Skincare, Beauty by Amy once it
- * migrates too). Same content/order as the light StandardSections:
- * Problem -> Goal -> Research -> Insights -> Design (iterations + design
- * system) -> Outcome -> Learnings. Overview is intentionally omitted,
- * same reasoning as the light version - the showcase hero's framing
- * already covers it.
+ * featured pivots structure (BEYOND Skincare, Beauty by Amy). Same
+ * content/order as the light StandardSections: Problem -> Goal ->
+ * Research -> Insights -> Design (iterations + design system) ->
+ * Outcome -> Learnings. Overview is intentionally omitted, same
+ * reasoning as the light version - the showcase hero's framing already
+ * covers it.
  *
  * Every card reuses the bg-dr-surface-1/text-dr-ink-muted pairing
  * already load-bearing across the rest of the dark system (About's
@@ -20,11 +20,18 @@ interface DarkStandardSectionsProps {
  * pairing. Insight badges are bg-dr-surface-2/text-dr-ink with a
  * dr-hairline ring (not solid white) - solid white is reserved for CTAs
  * and the chosen-option state so it keeps meaning something. Design
- * system swatches keep the project's real hex colors (that's documented
- * fact about BEYOND's own palette, not site decoration - same reasoning
- * as "colors inside screenshots stay") with the hex shown as visible
- * text next to each swatch, so nothing depends on color alone, and a
- * dr-hairline ring instead of the light border.
+ * system swatches keep each project's real hex colors (documented fact
+ * about its own palette, not site decoration - same reasoning as
+ * "colors inside screenshots stay") with the hex shown as visible text
+ * next to each swatch, so nothing depends on color alone.
+ *
+ * The swatch ring is dr-ink-muted, not dr-hairline: Beauty by Amy's
+ * #1A1714 (near-black warm text color) sits at ~1.03:1 contrast against
+ * dr-surface-1, and a dr-hairline ring would only add ~1.18:1 against
+ * the swatch itself - both essentially invisible. dr-ink-muted gives
+ * ~6.26:1 against that swatch, clearly visible regardless of which hex
+ * the data throws at it. The swatch itself was also enlarged (20px to
+ * 32px) so it reads as a color block rather than a thin line.
  *
  * No coral, no invented accent color: the hypothesis callout's border,
  * the iteration version pill, and the "key components" bullet marker
@@ -183,7 +190,7 @@ export default function DarkStandardSections({ project }: DarkStandardSectionsPr
                   return (
                     <li key={c} className="flex items-center gap-dr-sm">
                       <span
-                        className="h-5 w-5 shrink-0 rounded-dr-xs border border-dr-hairline"
+                        className="h-8 w-8 shrink-0 rounded-dr-sm border border-dr-ink-muted"
                         style={{ backgroundColor: hex }}
                         aria-hidden="true"
                       />

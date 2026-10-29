@@ -5,4 +5,4 @@
  * Add a slug here when that case study migrates - nothing else needs
  * to change to keep its light chrome/layout working until it does.
  */
-export const DARK_CASE_STUDY_SLUGS: string[] = ['mini-pancake-co', 'beyond-skincare']
+export const DARK_CASE_STUDY_SLUGS: string[] = ['mini-pancake-co', 'beyond-skincare', 'beauty-by-amy']
