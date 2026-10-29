@@ -132,6 +132,25 @@ const config: Config = {
           '80%':  { opacity: '1' },
           '100%': { transform: 'translateY(300%)', opacity: '0' },
         },
+        // Hero motion graphic (pass two, item C). Opacity-only crossfade -
+        // 6.67%/56.67%/63.33% mark a 400ms fade (dr-base) in and out of a
+        // 6000ms loop that holds ~3000ms on the finished frame per group.
+        // dr-graphic-wireframe is the exact inverse of dr-graphic-finished
+        // so a group's two layers always sum to full opacity.
+        'dr-graphic-finished': {
+          '0%':     { opacity: '0' },
+          '6.67%':  { opacity: '1' },
+          '56.67%': { opacity: '1' },
+          '63.33%': { opacity: '0' },
+          '100%':   { opacity: '0' },
+        },
+        'dr-graphic-wireframe': {
+          '0%':     { opacity: '1' },
+          '6.67%':  { opacity: '0' },
+          '56.67%': { opacity: '0' },
+          '63.33%': { opacity: '1' },
+          '100%':   { opacity: '1' },
+        },
       },
       animation: {
         'reveal-sweep':    'reveal-sweep 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
@@ -139,6 +158,15 @@ const config: Config = {
         'error-shake':     'error-shake 300ms linear',
         // dr-slow (2000ms) + dr-ease, matching the named tokens above.
         'dr-scroll-cue':   'dr-scroll-cue 2000ms cubic-bezier(0.16, 1, 0.3, 1) infinite',
+        // Hero graphic groups, staggered by dr-fast (150ms) per step.
+        'dr-graphic-finished-0':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 0ms infinite',
+        'dr-graphic-finished-1':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 150ms infinite',
+        'dr-graphic-finished-2':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 300ms infinite',
+        'dr-graphic-finished-3':  'dr-graphic-finished 6000ms cubic-bezier(0.16, 1, 0.3, 1) 450ms infinite',
+        'dr-graphic-wireframe-0': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 0ms infinite',
+        'dr-graphic-wireframe-1': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 150ms infinite',
+        'dr-graphic-wireframe-2': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 300ms infinite',
+        'dr-graphic-wireframe-3': 'dr-graphic-wireframe 6000ms cubic-bezier(0.16, 1, 0.3, 1) 450ms infinite',
       },
     },
   },
