@@ -19,8 +19,10 @@ import AssistantTeaserCard from '@/app/components/dark/AssistantTeaserCard'
  * (surface-1, padded, rounded) at the image's true 16:10 ratio, so
  * object-cover never actually crops anything, featured or not.
  *
- * Pass one only, no motion: no hover transitions/transforms on cards or
- * images. Card hover lift is explicitly a pass-two item.
+ * Pass two: each project card lifts slightly on hover (translateY +
+ * border color, dr-ease/dr-fast), gated to hover-capable devices and to
+ * prefers-reduced-motion. The image itself still doesn't zoom or crop -
+ * that was the pass-one bug fix, not something to reintroduce here.
  */
 
 const featured = projects.find(p => p.featured)
@@ -31,7 +33,7 @@ function DarkProjectCard({ project, featured: isFeatured }: { project: (typeof p
     <Link
       href={`/case-studies/${project.id}`}
       aria-label={`Read case study: ${project.title}`}
-      className={`block overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-surface-1 no-underline ${isFeatured ? 'md:col-span-2' : ''}`}
+      className={`block overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-surface-1 no-underline transition duration-dr-fast ease-dr-ease motion-safe:[@media(hover:hover)]:hover:-translate-y-1 [@media(hover:hover)]:hover:border-dr-ink-muted ${isFeatured ? 'md:col-span-2' : ''}`}
     >
       {/* product-mockup-tile frame: identical surface/padding/radius on
           all three, image shown at its true 16:10 ratio - no crop. */}
