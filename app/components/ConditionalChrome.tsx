@@ -31,7 +31,7 @@ export default function ConditionalChrome({ children }: { children: ReactNode })
     return (
       <>
         {children}
-        <Assistant />
+        <Assistant dark />
       </>
     )
   }

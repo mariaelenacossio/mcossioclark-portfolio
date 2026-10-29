@@ -3,6 +3,9 @@
  * near-black canvas. Content unchanged from the live Milan Reed hero -
  * only the visual system changes. Eyebrow uses ink-muted, not
  * accent-blue: DESIGN.md is explicit that the blue is never decorative.
+ *
+ * Pass one only, no motion: no hover transition on the pill, no hero
+ * load animation. The hero headline load is an explicit pass-two item.
  */
 export default function DarkHero() {
   return (
@@ -30,7 +33,7 @@ export default function DarkHero() {
         <div className="mt-dr-xl flex flex-wrap gap-dr-sm">
           <a
             href="#work"
-            className="rounded-dr-pill bg-dr-primary px-dr-lg py-dr-sm font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline transition-colors duration-150 hover:bg-dr-ink-muted"
+            className="rounded-dr-pill bg-dr-primary px-dr-lg py-dr-sm font-dr-body text-dr-caption font-medium text-dr-on-primary no-underline hover:bg-dr-ink-muted"
           >
             See my work
           </a>

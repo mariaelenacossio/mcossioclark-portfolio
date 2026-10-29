@@ -5,13 +5,22 @@ import { projects } from '@/data/projects'
 import AssistantTeaserCard from '@/app/components/dark/AssistantTeaserCard'
 
 /**
- * Dark-redesign work section (Direction A). No About/Process section
- * between Hero and this - work starts immediately. Structure:
+ * Dark-redesign work section. Structure:
  *   1. Mini Pancake Co. (featured: true) - full-width highlight
  *   2. BEYOND + Beauty by Amy - 2-up pair
  *   3. "Ask me about my work" - the one gradient-spotlight-card (violet),
  *      dispatches `open-assistant` so the floating Assistant panel opens.
  *      One gradient tile total, per DESIGN.md ("one or two, never three").
+ *
+ * Screenshot frames: all three real source images are 2560x1600 (16:10).
+ * The featured tile previously used aspect-[21/9], which mismatched that
+ * ratio and cropped real content - that was the "visible edge/overflow"
+ * bug. Every frame now uses the same product-mockup-tile treatment
+ * (surface-1, padded, rounded) at the image's true 16:10 ratio, so
+ * object-cover never actually crops anything, featured or not.
+ *
+ * Pass one only, no motion: no hover transitions/transforms on cards or
+ * images. Card hover lift is explicitly a pass-two item.
  */
 
 const featured = projects.find(p => p.featured)
@@ -22,21 +31,25 @@ function DarkProjectCard({ project, featured: isFeatured }: { project: (typeof p
     <Link
       href={`/case-studies/${project.id}`}
       aria-label={`Read case study: ${project.title}`}
-      className={`group block overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-surface-1 no-underline transition-colors duration-150 hover:border-dr-ink-muted ${isFeatured ? 'md:col-span-2' : ''}`}
+      className={`block overflow-hidden rounded-dr-xl border border-dr-hairline bg-dr-surface-1 no-underline ${isFeatured ? 'md:col-span-2' : ''}`}
     >
-      <div className={`relative overflow-hidden ${isFeatured ? 'aspect-[21/9]' : 'aspect-[16/10]'}`}>
-        {project.images?.[0] && (
-          <Image
-            src={project.images[0].src}
-            alt={project.title}
-            fill
-            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            sizes={isFeatured ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
-          />
-        )}
+      {/* product-mockup-tile frame: identical surface/padding/radius on
+          all three, image shown at its true 16:10 ratio - no crop. */}
+      <div className="p-dr-md">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-dr-lg bg-dr-canvas">
+          {project.images?.[0] && (
+            <Image
+              src={project.images[0].src}
+              alt={project.title}
+              fill
+              className="object-cover object-top"
+              sizes={isFeatured ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+            />
+          )}
+        </div>
       </div>
 
-      <div className="p-dr-lg">
+      <div className="px-dr-lg pb-dr-lg">
         <div className="flex items-center gap-dr-xs font-dr-body text-dr-caption text-dr-ink-muted">
           <span>{project.year}</span>
           <span aria-hidden="true">·</span>
@@ -53,7 +66,7 @@ function DarkProjectCard({ project, featured: isFeatured }: { project: (typeof p
 
         <div className="mt-dr-md flex items-center gap-dr-xxs font-dr-body text-dr-caption font-medium text-dr-ink">
           Read case study
-          <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-1" />
+          <ArrowRight size={13} aria-hidden="true" />
         </div>
       </div>
     </Link>
