@@ -1,17 +1,21 @@
+import ScrollCue from '@/app/components/dark/ScrollCue'
+
 /**
  * Dark-redesign hero (Direction A). Poster-scale display type, white on
  * near-black canvas. Content unchanged from the live Milan Reed hero -
  * only the visual system changes. Eyebrow uses ink-muted, not
  * accent-blue: DESIGN.md is explicit that the blue is never decorative.
  *
- * Pass one only, no motion: no hover transition on the pill, no hero
- * load animation. The hero headline load is an explicit pass-two item.
+ * Pass two: fills the viewport below the 56px sticky header (100svh so
+ * mobile browser chrome doesn't clip it), with a scroll cue linking to
+ * #about. The hero load animation and headline motion are still a
+ * separate, not-yet-built pass-two item.
  */
 export default function DarkHero() {
   return (
     <section
       aria-label="Intro"
-      className="flex min-h-[70vh] flex-col justify-center px-dr-xl py-dr-section"
+      className="relative flex h-[calc(100svh-56px)] flex-col justify-center px-dr-xl py-dr-section"
     >
       <div className="mx-auto w-full max-w-[1199px]">
         <p className="mb-dr-md font-dr-body text-dr-caption uppercase tracking-[0.08em] text-dr-ink-muted">
@@ -39,6 +43,8 @@ export default function DarkHero() {
           </a>
         </div>
       </div>
+
+      <ScrollCue />
     </section>
   )
 }

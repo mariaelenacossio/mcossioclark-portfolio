@@ -93,6 +93,21 @@ const config: Config = {
       },
       transitionTimingFunction: {
         'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        // dark-redesign's one signature curve (pass two). Same shape as
+        // out-expo above - kept as its own dr- token rather than reusing
+        // the Milan Reed name, so the two systems' motion stays independent
+        // even though the curve itself is intentionally the same.
+        'dr-ease': 'cubic-bezier(0.16, 1, 0.3, 1)',
+      },
+      transitionDuration: {
+        // dark-redesign's three durations (pass two). Each maps to a kind
+        // of motion, not a fixed "small/medium/large" scale:
+        //  - fast: micro-interaction feedback (hover/press)
+        //  - base: enter/exit transitions (reveals, panel open, headline load)
+        //  - slow: ambient/looping motion (scroll cue, the hero graphic loop)
+        'dr-fast': '150ms',
+        'dr-base': '400ms',
+        'dr-slow': '2000ms',
       },
       keyframes: {
         'reveal-sweep': {
@@ -111,11 +126,19 @@ const config: Config = {
           '75%':  { transform: 'translateX(-4px)' },
           '100%': { transform: 'translateX(0)' },
         },
+        'dr-scroll-cue': {
+          '0%':   { transform: 'translateY(-100%)', opacity: '0' },
+          '20%':  { opacity: '1' },
+          '80%':  { opacity: '1' },
+          '100%': { transform: 'translateY(300%)', opacity: '0' },
+        },
       },
       animation: {
-        'reveal-sweep':  'reveal-sweep 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
-        'success-pulse': 'success-pulse 250ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'error-shake':   'error-shake 300ms linear',
+        'reveal-sweep':    'reveal-sweep 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both',
+        'success-pulse':   'success-pulse 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'error-shake':     'error-shake 300ms linear',
+        // dr-slow (2000ms) + dr-ease, matching the named tokens above.
+        'dr-scroll-cue':   'dr-scroll-cue 2000ms cubic-bezier(0.16, 1, 0.3, 1) infinite',
       },
     },
   },

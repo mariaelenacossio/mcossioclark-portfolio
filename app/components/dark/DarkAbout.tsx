@@ -40,9 +40,9 @@ export default function DarkAbout() {
 
         {/* Right: photo + pillars */}
         <div>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-dr-xl">
+          <div className="relative aspect-square overflow-hidden rounded-dr-xl">
             <Image
-              src="/profile.png"
+              src="/profile.jpeg"
               alt="Mariaelena Cossio Clark"
               fill
               className="object-cover object-top"

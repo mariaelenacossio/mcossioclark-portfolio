@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import {
-  CalendarDays, FileText, Linkedin, Github, Mail, Loader2, AlertCircle,
+  CalendarDays, FileText, Linkedin, Github, Mail, Loader2, AlertCircle, Check,
 } from 'lucide-react'
 
 /**
@@ -14,11 +14,13 @@ import {
  * (already shipped, already approved in an earlier pass), not new
  * decorative motion, so "pass one, no motion" doesn't apply to them.
  *
- * Color note (see color audit): no semantic-error token exists in
- * DESIGN.md (only semantic-success, scoped to "glyph fill, not
- * surface"). Error state here is communicated with an icon + text +
- * aria-live, not a color, rather than inventing a red or repurposing a
- * gradient color outside its documented card-only use.
+ * Color note (approved pass-one feedback): the transient "sent" button
+ * state is now the same white primary pill as idle, with a small
+ * semantic-success check glyph - not a green button surface. That keeps
+ * semantic-success scoped to "glyph fill, not surface" per DESIGN.md's
+ * literal spec, resolving the deviation flagged in pass one. Error state
+ * is unchanged: icon + text + aria-live, no color, since DESIGN.md has
+ * no semantic-error token.
  */
 
 const EMAILJS_SERVICE_ID  = 'service_6y1v4fl'
@@ -90,12 +92,13 @@ export default function DarkContact() {
 
   const sendButton = {
     sending: { color: 'bg-dr-surface-2', dim: true,  disabled: true  },
-    sent:    { color: 'bg-dr-success',   dim: false, disabled: true  },
+    sent:    { color: 'bg-dr-primary',   dim: false, disabled: true  },
     error:   { color: 'bg-dr-surface-2', dim: false, disabled: false },
     idle:    { color: 'bg-dr-primary',   dim: false, disabled: false },
     success: { color: 'bg-dr-primary',   dim: false, disabled: false },
   }[status]
-  const buttonTextColor = status === 'idle' || status === 'success' ? 'text-dr-on-primary' : 'text-dr-ink'
+  const buttonTextColor =
+    status === 'idle' || status === 'success' || status === 'sent' ? 'text-dr-on-primary' : 'text-dr-ink'
 
   return (
     <section id="contact" aria-labelledby="contact-heading" className="bg-dr-surface-1 px-dr-xl py-dr-section">
@@ -206,7 +209,12 @@ export default function DarkContact() {
                     Sending
                   </span>
                 )}
-                {status === 'sent' && 'Sent ✓'}
+                {status === 'sent' && (
+                  <span className="inline-flex items-center gap-dr-xs">
+                    <Check size={16} className="text-dr-success" aria-hidden="true" />
+                    Sent
+                  </span>
+                )}
                 {status === 'error' && 'Try again'}
                 {status === 'idle' && 'Send it'}
               </button>
