@@ -10,6 +10,9 @@ import type { Project, ProjectImage } from '@/lib/types'
 import FeaturedSections from './components/FeaturedSections'
 import StandardSections from './components/StandardSections'
 import ImageGallery from './components/ImageGallery'
+import { DARK_CASE_STUDY_SLUGS } from '@/lib/darkRedesign'
+import DarkCaseStudyShowcase from '@/app/components/dark/case-study/DarkCaseStudyShowcase'
+import DarkNextProjectCta from '@/app/components/dark/case-study/DarkNextProjectCta'
 
 /**
  * Server-side filter - only keep images whose source files exist under
@@ -66,6 +69,12 @@ export function generateMetadata(
  * leads, one-line outcome under it, ≤3 sentences of framing, then
  * meta/CTAs/metrics and the supporting screenshots, with all the deep
  * content behind a single "Read the full breakdown" expand. No sticky TOC.
+ *
+ * Dark-redesign migration is per-slug (see lib/darkRedesign.ts): a slug
+ * in DARK_CASE_STUDY_SLUGS renders the dark tree below; every other
+ * slug falls through to the light ShowcaseCaseStudy/NextProjectCta
+ * functions further down this file, completely unchanged. Content
+ * (project data) is identical either way - only the rendering differs.
  */
 export default function CaseStudyPage(
   { params }: { params: { slug: string } },
@@ -74,6 +83,17 @@ export default function CaseStudyPage(
   if (!project) notFound()
 
   const images = existingImages(project.images)
+
+  if (DARK_CASE_STUDY_SLUGS.includes(project.slug)) {
+    return (
+      <div className="dr-root min-h-dvh">
+        <main id="main-content">
+          <DarkCaseStudyShowcase project={project} images={images} />
+          <DarkNextProjectCta currentSlug={project.slug} />
+        </main>
+      </div>
+    )
+  }
 
   return (
     <main id="main-content" className="bg-paper pt-24">
