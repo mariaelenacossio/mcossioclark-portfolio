@@ -67,6 +67,16 @@ export default function Assistant() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  /* External open trigger - lets a teaser card elsewhere in the tree
+     (no direct parent/child relationship to this component) open the
+     same panel, without prop-drilling or a context rewrite. Behavior
+     only; this component's own styling is untouched. */
+  useEffect(() => {
+    const onExternalOpen = () => setOpen(true)
+    window.addEventListener('open-assistant', onExternalOpen)
+    return () => window.removeEventListener('open-assistant', onExternalOpen)
+  }, [])
+
   /* Keep the latest message in view. */
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight })

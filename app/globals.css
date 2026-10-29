@@ -21,6 +21,26 @@ body {
   color: #FAFAF8;
 }
 
+/* dark-redesign homepage only. Scoped to .dr-root so nothing here can
+   leak onto any other page - Inter's OpenType character variants are
+   the documented DESIGN.md brand voice (cv01/05/09/11, ss03/ss07, dlig),
+   applied only where .dr-root wraps the tree. */
+.dr-root {
+  background: #090909;
+  color: #ffffff;
+  font-family: var(--font-dr-body), ui-sans-serif, system-ui;
+  font-feature-settings: 'cv01', 'cv05', 'cv09', 'cv11', 'ss03', 'ss07', 'dlig';
+}
+.dr-root ::selection {
+  background: #0099ff;
+  color: #ffffff;
+}
+.dr-root :focus-visible {
+  outline: 2px solid #0099ff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 :focus-visible {
   outline: 2px solid #FF4D2E;
   outline-offset: 2px;

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { Instrument_Serif, DM_Sans } from 'next/font/google'
+import { Instrument_Serif, DM_Sans, Inter } from 'next/font/google'
 import ConditionalChrome from '@/app/components/ConditionalChrome'
+import '@fontsource-variable/mona-sans'
 import './globals.css'
 
 /* Instrument Serif for all headlines. One weight, normal + italic.
@@ -19,6 +20,17 @@ const instrumentSerif = Instrument_Serif({
 const dmSans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-body',
+  display: 'swap',
+})
+
+/* dark-redesign only: Inter Variable for body type on the new homepage.
+   Registers a CSS variable site-wide (next/font always does), but nothing
+   outside the homepage references --font-dr-body, so existing pages are
+   unaffected. OpenType feature settings (cv01/cv05/cv09/cv11/ss03/ss07/
+   dlig) are applied in globals.css, scoped to .dr-root only. */
+const interDr = Inter({
+  subsets: ['latin'],
+  variable: '--font-dr-body',
   display: 'swap',
 })
 
@@ -50,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${instrumentSerif.variable} ${dmSans.variable} ${interDr.variable}`}>
       <body className="relative min-h-dvh">
         <a href="#main-content" className="skip-link">
           Skip to main content

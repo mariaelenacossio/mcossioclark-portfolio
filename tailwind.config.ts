@@ -15,10 +15,35 @@ const config: Config = {
         card:  '#EDEBE6', // card background (slightly darker than mist)
         // Legacy alias kept so unrewritten leaf components don't break.
         stone: '#EDEBE6',
+
+        // ── dark-redesign (DESIGN.md), additive only ─────────────
+        // Prefixed dr- so it can never collide with the Milan Reed
+        // tokens above. Only the homepage uses these so far; every
+        // other page is untouched. gradient-coral dropped per review
+        // (DESIGN.md documents it but the homepage only uses one tile).
+        'dr-primary':          '#ffffff',
+        'dr-on-primary':       '#000000',
+        'dr-accent-blue':      '#0099ff',
+        'dr-ink':              '#ffffff',
+        'dr-ink-muted':        '#999999',
+        'dr-canvas':           '#090909',
+        'dr-surface-1':        '#141414',
+        'dr-surface-2':        '#1c1c1c',
+        'dr-hairline':         '#262626',
+        'dr-hairline-soft':    '#1a1a1a',
+        'dr-gradient-violet':  '#6a4cf5',
+        'dr-gradient-magenta': '#d44df0',
+        'dr-gradient-orange':  '#ff7a3d',
+        'dr-success':          '#22c55e',
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],
         body:    ['var(--font-body)', 'system-ui', 'sans-serif'],
+        // dark-redesign: Mona Sans in place of GT Walsheim (not licensed);
+        // Inter Variable for body, feature settings applied via globals.css
+        // scoped to .dr-root so it never touches existing pages.
+        'dr-display': ['"Mona Sans Variable"', 'ui-sans-serif', 'system-ui'],
+        'dr-body':    ['var(--font-dr-body)', 'ui-sans-serif', 'system-ui'],
       },
       fontSize: {
         'hero':    ['clamp(3.5rem, 8vw, 7.5rem)',   { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
@@ -27,6 +52,40 @@ const config: Config = {
         'body-lg': ['1.125rem',                     { lineHeight: '1.75' }],
         'body':    ['1rem',                         { lineHeight: '1.7'  }],
         'caption': ['0.8125rem',                    { lineHeight: '1.5', letterSpacing: '0.04em' }],
+
+        // ── dark-redesign type scale (DESIGN.md) ──────────────────
+        // xxl/xl/lg are fluid (clamp); letter-spacing is in em, not a fixed
+        // px, because DESIGN.md requires tracking to scale WITH size ("keep
+        // the percentage") - -5.5px/110px = -4.25px/85px = -3.1px/62px is
+        // exactly -5% at every one of those three tiers, so -0.05em
+        // reproduces the documented ratio at any size the clamp lands on.
+        'dr-display-xxl': ['clamp(3.5rem, 9vw, 6.875rem)', { lineHeight: '0.85', letterSpacing: '-0.05em', fontWeight: '500' }],
+        'dr-display-xl':  ['clamp(2.75rem, 7vw, 5.3125rem)', { lineHeight: '0.95', letterSpacing: '-0.05em', fontWeight: '500' }],
+        'dr-display-lg':  ['clamp(2.25rem, 5vw, 3.875rem)', { lineHeight: '1.00', letterSpacing: '-0.05em', fontWeight: '500' }],
+        'dr-display-md':  ['2rem',   { lineHeight: '1.13', letterSpacing: '-1.0px', fontWeight: '500' }],
+        'dr-subhead':     ['1.5rem', { lineHeight: '1.30', letterSpacing: '-0.01px' }],
+        'dr-body-lg':     ['1.125rem', { lineHeight: '1.30', letterSpacing: '-0.18px' }],
+        'dr-body':        ['0.9375rem', { lineHeight: '1.30', letterSpacing: '-0.15px' }],
+        'dr-caption':     ['0.8125rem', { lineHeight: '1.20', letterSpacing: '-0.13px', fontWeight: '500' }],
+      },
+      borderRadius: {
+        'dr-xs':  '4px',
+        'dr-sm':  '6px',
+        'dr-md':  '10px',
+        'dr-lg':  '15px',
+        'dr-xl':  '20px',
+        'dr-xxl': '30px',
+        'dr-pill': '100px',
+      },
+      spacing: {
+        'dr-xxs':     '4px',
+        'dr-xs':      '8px',
+        'dr-sm':      '12px',
+        'dr-md':      '15px',
+        'dr-lg':      '20px',
+        'dr-xl':      '30px',
+        'dr-xxl':     '40px',
+        'dr-section': '96px',
       },
       boxShadow: {
         'warm':       '0 4px 24px -4px rgba(15,15,15,0.08)',

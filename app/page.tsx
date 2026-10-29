@@ -1,33 +1,30 @@
-import Hero      from '@/app/components/Hero'
-import About     from '@/app/components/About'
-import Work      from '@/app/components/Work'
-import HowIWork  from '@/app/components/HowIWork'
-import Process   from '@/app/components/Process'
-import Contact   from '@/app/components/Contact'
+import DarkHeader from '@/app/components/dark/DarkHeader'
+import DarkHero   from '@/app/components/dark/DarkHero'
+import DarkWork   from '@/app/components/dark/DarkWork'
+import DarkFooter from '@/app/components/dark/DarkFooter'
 
 /**
- * Homepage - composes the six homepage sections in the order specified
- * by the redesign brief.
+ * Homepage - dark-redesign, Direction A ("Poster Hero + Flat Showcase
+ * Grid"): work starts immediately after the hero, no About/Process
+ * section in between. This is a homepage-only first pass on the
+ * dark-redesign branch - every other route is still the live Milan Reed
+ * system, untouched. About/Process/Contact aren't separate routes yet,
+ * so DarkHeader intentionally doesn't link to them; Contact is a working
+ * mailto in the header and footer in the meantime.
  *
- *   Hero       → bg paper       (no border-t, sits below sticky nav)
- *   About      → bg paper
- *   Work       → bg mist
- *   HowIWork   → bg paper
- *   Process    → bg mist
- *   Contact    → bg paper
- *
- * Background alternation between paper/mist gives the rhythm without
- * needing dividers or borders.
+ * ConditionalChrome hides the shared Navbar/Footer on "/" specifically
+ * (see that file) so the old and new systems never render together -
+ * this component supplies its own header/footer instead.
  */
 export default function Home() {
   return (
-    <main id="main-content">
-      <Hero />
-      <About />
-      <Work />
-      <HowIWork />
-      <Process />
-      <Contact />
-    </main>
+    <div className="dr-root min-h-dvh">
+      <DarkHeader />
+      <main id="main-content">
+        <DarkHero />
+        <DarkWork />
+      </main>
+      <DarkFooter />
+    </div>
   )
 }
