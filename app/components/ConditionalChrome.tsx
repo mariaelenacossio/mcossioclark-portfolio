@@ -2,24 +2,30 @@
 
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
-import Navbar from '@/app/components/Navbar'
-import Footer from '@/app/components/Footer'
 import Assistant from '@/app/components/Assistant'
 import DarkHeader from '@/app/components/dark/DarkHeader'
 import DarkFooter from '@/app/components/dark/DarkFooter'
-import { DARK_CASE_STUDY_SLUGS } from '@/lib/darkRedesign'
 
 /**
- * Renders the portfolio chrome (Navbar, Footer) on every route EXCEPT
- * `/mockups/*`. The mockup routes are internal screenshot-only pages.
- * They should render clean product UIs with no portfolio decorations.
+ * Renders chrome for every route. The dark-redesign is the only live
+ * system now - the Milan Reed Navbar/Footer/light Assistant are gone
+ * (see the light-system cleanup commits). Three cases:
  *
- * `/` and any case-study route in DARK_CASE_STUDY_SLUGS render the dark
- * chrome instead: those pages are self-contained (dr- tokens) so they
- * aren't sandwiched between the old light-system chrome. Assistant still
- * mounts everywhere - the homepage's teaser tile opens the same panel.
- * A trailing slash is stripped before comparing, so `/case-studies/
- * mini-pancake-co/` matches the same as without one.
+ *  - `/mockups/*` - no chrome at all. Internal screenshot-only product
+ *    UIs, not portfolio decoration.
+ *  - `/` (homepage) - no header/footer rendered here; app/page.tsx
+ *    renders its own DarkHeader/DarkFooter directly, so this only
+ *    mounts the dark Assistant.
+ *  - everything else - DarkHeader + children + DarkFooter + dark
+ *    Assistant. This deliberately also covers any not-found or unknown
+ *    route (an unresolved case-study slug, a typo'd URL, etc.): since
+ *    there's no more light branch to fall back to, those fall through
+ *    to here too, so a 404 gets the real site chrome and
+ *    app/not-found.tsx's dark content instead of a blank or
+ *    mismatched page.
+ *
+ * A trailing slash is stripped before comparing, so `/foo/` matches
+ * the same as `/foo`.
  *
  * No custom cursor. Browser default cursor everywhere.
  */
@@ -27,22 +33,16 @@ export default function ConditionalChrome({ children }: { children: ReactNode })
   const pathname = usePathname()
   const normalizedPath = pathname?.replace(/\/$/, '') ?? ''
   const isMockup = normalizedPath.startsWith('/mockups')
-  const isDarkHomepage = normalizedPath === '/' || normalizedPath === ''
-  const isDarkCaseStudy = DARK_CASE_STUDY_SLUGS.some(
-    slug => normalizedPath === `/case-studies/${slug}`,
-  )
-  const isDark = isDarkHomepage || isDarkCaseStudy
+  const isHomepage = normalizedPath === '/' || normalizedPath === ''
 
   if (isMockup) {
     return <>{children}</>
   }
 
-  if (isDark) {
+  if (isHomepage) {
     return (
       <>
-        {!isDarkHomepage && <DarkHeader />}
         {children}
-        {!isDarkHomepage && <DarkFooter />}
         <Assistant dark />
       </>
     )
@@ -50,10 +50,10 @@ export default function ConditionalChrome({ children }: { children: ReactNode })
 
   return (
     <>
-      <Navbar />
+      <DarkHeader />
       {children}
-      <Footer />
-      <Assistant />
+      <DarkFooter />
+      <Assistant dark />
     </>
   )
 }
